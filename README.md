@@ -1,4 +1,4 @@
-# Google Books Search
+# Principal Carer
 
 ## Description
 
@@ -18,17 +18,21 @@ Github repository :link: https://github.com/avpizarro/principalcarer.git
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Attributions](#attributions)
 - [License](#license)
 - [Questions](#questions)
 
 ## Installation
 
-Visit this link to start using the app :link: https://fierce-ridge-94216.herokuapp.com/
+Visit this link to start using the app :link: 
 
 ## Usage
 
-Search for a book using any term and ten results will display. You can click save to add a book to your list. Visit the Saved page to see your book shelf and remove any book.
 
+
+## Attributions
+
+![logo](./client/public/logo32.png) icon by Bharat from the Noun Project
 ## License
 
 This Source Code Form is subject to the terms of the MIT License.
