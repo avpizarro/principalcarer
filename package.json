@@ -38,5 +38,9 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.12.7",
     "socket.io": "^4.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
   }
 }
