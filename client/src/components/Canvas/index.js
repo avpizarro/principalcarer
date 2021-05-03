@@ -59,7 +59,7 @@ function Canvas() {
 
   const mouseClicked = (p5) => {
     p5.loadImage(Sun, (img) => {
-      p5.image(img, 0, 0, 50, 50);
+      p5.image(img, 5, 5, 50, 50);
     });
     p5.square(p5.mouseX, p5.mouseY, 50, 4);
     const data = {
