@@ -1,10 +1,16 @@
+import React from "react";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPalette, faTimes, faExpandAlt, faExpandArrowsAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import 'bulma/css/bulma.css'
+import MainContainer from "./components/MainContainer";
 import './App.css';
 
-import Canvas from "./components/Canvas"
+library.add(faPalette, faTimes, faExpandAlt,faExpandArrowsAlt, faPlus );
 
 function App() {
+
   return (
-    <Canvas />
+    <MainContainer />
   );
 }
 

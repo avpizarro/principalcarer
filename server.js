@@ -5,7 +5,7 @@ const app = express();
 const socketIo = require("socket.io");
 const PORT = process.env.PORT || 3001;
 
-const books = require("./routes/api/medication");
+const medications = require("./routes/api/medication");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -17,31 +17,39 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Use routes
-app.use("/api/books", books);
+app.use("/api/medication", medications);
 
 // DB config
 const db = require("./config/keys").mongoURI;
 
 // Connect to the Mongo DB
 mongoose
-//   .connect(db)
+  //   .connect(db)
   .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
-// process.env.MONGODB_URI || "mongodb://localhost/principalcarer",
 
-//Start the API Server
+// Start the API Server
 const server = app.listen(PORT, () =>
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 );
 
+// app.listen(PORT, () =>
+//   console.log(`🌎 ==> API server now on port ${PORT}!`)
+// );
+
 const io = socketIo(server);
 
-// Start ce
 io.on("connection", (socket) => {
-
   console.log("New client connected " + socket.id);
   socket.emit("message", "This is a message from the server");
 
- 
+  socket.on("clientMessage", (message) => console.log(message));
+
+  socket.on("mouse", data => {
+    console.log(data);
+   socket.broadcast.emit("mouse", data)})
+   socket.on("square", data => {
+    console.log(data);
+   socket.broadcast.emit("square", data)})
 });
