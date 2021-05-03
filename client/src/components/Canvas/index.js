@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
 import Sun from "../../images/26.png";
@@ -22,12 +21,12 @@ function Canvas() {
   };
 
   const draw = (p5) => {
-    p5.loadImage(Sun, (img) => {
-      p5.image(img, 0, 0, 50, 50);
-    });
-    p5.noStroke();
-    p5.fill(255, 215, 0);
-    p5.circle(250, 250, 100);
+    // p5.loadImage(Sun, (img) => {
+    //   p5.image(img, 0, 0, 50, 50);
+    // });
+    // p5.noStroke();
+    // p5.fill(255, 215, 0);
+    // p5.circle(0, 0, 100);
     p5.noStroke();
     p5.fill(255, 165, 0);
     p5.ellipse(mouseCoordinates.x, mouseCoordinates.y, 20, 20);
@@ -59,6 +58,9 @@ function Canvas() {
   };
 
   const mouseClicked = (p5) => {
+    p5.loadImage(Sun, (img) => {
+      p5.image(img, 0, 0, 50, 50);
+    });
     p5.square(p5.mouseX, p5.mouseY, 50, 4);
     const data = {
       x: p5.mouseX,

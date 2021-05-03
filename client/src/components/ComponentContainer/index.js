@@ -1,9 +1,10 @@
+import uuid from 'react-uuid';
 import "./style.css";
-import { v4 as uuidv4 } from 'uuid';
 
 function ComponentContainer({ children }) {
+
   return (
-    <div className="column componentContainer" id={uuidv4()} >
+    <div className="column componentContainer" id={uuid} >
       {children}
     </div>
   );
