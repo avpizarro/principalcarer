@@ -1,4 +1,7 @@
 const express = require("express");
+// const jwt = require("jsonwebtoken");
+
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 const app = express();
@@ -6,6 +9,7 @@ const socketIo = require("socket.io");
 const PORT = process.env.PORT || 3001;
 
 const medications = require("./routes/api/medication");
+const login = require("./routes/api/login");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +22,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Use routes
 app.use("/api/medication", medications);
+app.use("/api/login", login);
 
 // DB config
 const db = require("./config/keys").mongoURI;
@@ -48,8 +53,11 @@ io.on("connection", (socket) => {
 
   socket.on("mouse", data => {
     console.log(data);
-   socket.broadcast.emit("mouse", data)})
+   socket.broadcast.emit("mouse", data)});
+
    socket.on("square", data => {
     console.log(data);
-   socket.broadcast.emit("square", data)})
+   socket.broadcast.emit("square", data)});
+
+   socket.on("disconnect", () => console.log("Client disconnected"));
 });

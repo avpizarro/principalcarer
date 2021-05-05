@@ -1,11 +1,23 @@
-import uuid from 'react-uuid';
-import "./style.css";
+import ExpandButton from "../ExpandButton";
 
-function ComponentContainer({ children }) {
-
+function ComponentContainer({
+  children,
+  Expand,
+  ExpandComponent,
+  CloseComponent,
+  id,
+  btnId,
+  key
+}) {
   return (
-    <div className="column componentContainer" id={uuid} >
+    <div className="column componentContainer" id={id} key={key}>
       {children}
+      <ExpandButton
+        btnId={btnId}
+        Expand={Expand}
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+      />
     </div>
   );
 }

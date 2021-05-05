@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Akzidenz";
+  src: local("Akzidenz"),
+    url(./fonts/Akzidenz-grotesk-bold.ttf) format("truetype");
+}
+
+body {
+  font-family: "Akzidenz", sans-serif;
+}
+
 .componentContainer {
     margin-left: 5px;
     margin-right: 5px;

@@ -1,5 +1,6 @@
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
+import ExpandButton from "../ExpandButton";
 import Sun from "../../images/26.png";
 
 const socket = socketIOClient();
