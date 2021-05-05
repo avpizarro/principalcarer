@@ -49,10 +49,10 @@ function MainContainer() {
 
   const modules = [
     { module: <Home />, id: "Home" },
-    // { module: <Canvas />, id: "parent" },
+    { module: <Canvas />, id: "parent" },
     { module: <Clock />, id: "Clock" },
-    { module: <Medication />, id: "Medication" },
     { module: <Calendar />, id: "Calendar" },
+    { module: <Medication />, id: "Medication" },
     { module: <Entertainement />, id: "Entertainement" },
     { module: <Shopping />, id: "Shopping" },
     { module: <Tasks />, id: "Tasks" },

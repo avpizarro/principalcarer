@@ -1,5 +1,5 @@
 
-function Modal({ children, show, message, close }) {
+function Modal({ children, show, close, fullName, setFullName, relationship, setRelationship, username, setUsername, password, setPassword }) {
   if (!show) {
     return null;
   }

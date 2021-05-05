@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 
 function SignUpForm(props) {
+
   return (
-    <div
+    <form
       className="is-container columns is-centered"
-      style={{ margin: "20px" }}
+      style={{ margin: "20px", zIndex: "1000"}}
     >
       <div className="column is-8">
         <Form.Label size="medium">
@@ -19,9 +20,9 @@ function SignUpForm(props) {
         <Form.Field>
           <Form.Control>
             <Form.Input
-              placeholder="Full Name"
-              value={props.username}
-              onChange={props.setUsername}
+              placeholder="Username"
+              value={props.fullName}
+              onChange={props.setFullName}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="user" />
@@ -69,8 +70,8 @@ function SignUpForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Password"
-              value={props.username}
-              onChange={props.setUsername}
+              value={props.password}
+              onChange={props.setPassword}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="lock" />
@@ -83,11 +84,11 @@ function SignUpForm(props) {
 
         <Form.Field>
           <Form.Control>
-            <Button ClassName="button is-success">Sign Up</Button>
+            <Button ClassName="button" onClick={props.SignUpSubmit}>Sign Up</Button>
           </Form.Control>
         </Form.Field>
       </div>
-    </div>
+    </form>
   );
 }
 
