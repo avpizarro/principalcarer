@@ -1,6 +1,5 @@
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
-import ExpandButton from "../ExpandButton";
 import Sun from "../../images/26.png";
 
 const socket = socketIOClient();
@@ -18,6 +17,9 @@ function Canvas() {
         canvasOuter.clientHeight
       );
       renderer.parent(canvasOuter);
+      renderer.mouseClicked((p5) => 
+        console.log("I am inside the canvas"));
+        
     }
   };
 
@@ -83,7 +85,7 @@ function Canvas() {
       windowResized={windowResized}
       draw={draw}
       resizeCanvas={resizeCanvas}
-      mousePressed={mouseClicked}
+      mouseClicked={mouseClicked}
     />
   );
 }

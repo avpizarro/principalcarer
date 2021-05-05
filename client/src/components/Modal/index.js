@@ -1,0 +1,29 @@
+
+function Modal({ children, show, message, close }) {
+  if (!show) {
+    return null;
+  }
+
+  return (
+    <div
+      className="modal is-active"
+      style={{ minHeight: "100px", height: "fit-content" }}
+    >
+      <div className="modal-background"></div>
+
+      <div className="modal-content ml-6 mr-6">
+        <div className="media-content mt-4">
+          <div className="content">
+            {children}
+          </div>
+        </div>
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={close}
+        ></button>
+      </div>
+    </div>
+  );
+}
+export default Modal;

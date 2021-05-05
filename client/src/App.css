@@ -8,6 +8,12 @@ body {
   font-family: "Akzidenz", sans-serif;
 }
 
+.mainContainer {
+  max-width: 90%;
+  margin: auto;
+  margin-top: 40px;
+}
+
 .componentContainer {
     margin-left: 5px;
     margin-right: 5px;
@@ -17,8 +23,13 @@ body {
     border-color: black;
     border-radius: 20px;
     min-height:60px;
-    min-width: 180px;
+    min-width: 200px;
     position: relative;
     padding: 0;
   }
 
+  .select:not(.is-multiple):not(.is-loading)::after {
+    border-color: #9c56f3;
+    right: 1.125em;
+    z-index: 4;
+    }

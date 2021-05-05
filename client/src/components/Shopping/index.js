@@ -7,7 +7,7 @@ function Shopping() {
         className="ml-3"
         src={shopping}
         alt="Shopping"
-        style={{ height: "100px" }}
+        style={{ height: "100px", zIndex: "4" }}
       />
     </div>
   );

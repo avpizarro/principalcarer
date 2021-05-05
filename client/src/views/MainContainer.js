@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-import Canvas from "../Canvas";
-import Budget from "../Budget";
-import Calendar from "../Calendar";
-import Clock from "../Clock";
-import Entertainement from "../Entertainement";
-import Home from "../Home";
-import Medication from "../Medication";
-import Shopping from "../Shopping";
-import SocialLife from "../SocialLife";
-import Tasks from "../Tasks";
-import "./style.css";
 
-import ComponentContainer from "../ComponentContainer";
+import ComponentContainer from "../components/ComponentContainer";
+import Canvas from "../components/Canvas";
+import Budget from "../components/Budget";
+import Calendar from "../components/Calendar";
+import Clock from "../components/Clock";
+import Entertainement from "../components/Entertainement";
+import Home from "../components/Home";
+import Medication from "../components/Medication";
+import Shopping from "../components/Shopping";
+import SocialLife from "../components/SocialLife";
+import Tasks from "../components/Tasks";
 
 function MainContainer() {
   const [height, setHeight] = useState();
@@ -47,46 +46,28 @@ function MainContainer() {
     }
   }, [height]);
 
+
   const modules = [
-    { module: <Home />,
-      id: "Home",
-    },
-    { module: <Canvas />,
-      id: "parent",
-    },
-    { module: <Clock />,
-      id: "Clock",
-    },
-    { module: <Medication />,
-      id: "Medication",
-    },
-    { module:     <Calendar />,
-      id: "Calendar",
-    },
-    { module: <Entertainement />,
-      id: "Entertainement",
-    },
-    { module: <Shopping />,
-      id: "Shopping",
-    },
-    { module:  <Tasks />,
-      id: "Tasks",
-    },
-    { module:   <Budget />,
-      id: "Budget",
-    },
-    { module: <SocialLife />,
-      id: "SocialLife",
-    },
+    { module: <Home />, id: "Home" },
+    // { module: <Canvas />, id: "parent" },
+    { module: <Clock />, id: "Clock" },
+    { module: <Medication />, id: "Medication" },
+    { module: <Calendar />, id: "Calendar" },
+    { module: <Entertainement />, id: "Entertainement" },
+    { module: <Shopping />, id: "Shopping" },
+    { module: <Tasks />, id: "Tasks" },
+    { module: <Budget />, id: "Budget" },
+    { module: <SocialLife />, id: "SocialLife" },
   ];
 
   return (
     <div className="is-container columns is-multiline mainContainer">
-      {modules.map((module) => { 
-        const btn = `btn${module.id}`
+
+      {modules.map((module) => {
+        const btn = `btn${module.id}`;
         return (
           <ComponentContainer
-          key={uuid()}
+            key={uuid()}
             id={module.id}
             btnId={btn}
             Expand={Expand}
@@ -95,7 +76,8 @@ function MainContainer() {
           >
             {module.module}
           </ComponentContainer>
-      )})}
+        );
+      })}
 
     </div>
   );
