@@ -10,7 +10,7 @@ function ComponentContainer({
   key
 }) {
   return (
-    <div className="column componentContainer" id={id} key={key}>
+    <div>
       {children}
       <ExpandButton
         btnId={btnId}

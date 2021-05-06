@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 
-function SignUpForm(props) {
+function SignUpForm({ fullName, relationship, username, password, changeFullName, changeRelationship, changeUsername, changePassword, signUpSubmit}) {
 
   return (
     <form
@@ -21,8 +21,8 @@ function SignUpForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Username"
-              value={props.fullName}
-              onChange={props.setFullName}
+              value={fullName}
+              onChange={changeFullName}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="user" />
@@ -37,8 +37,8 @@ function SignUpForm(props) {
           <Form.Field kind="group">
             <Form.Control>
               <Form.Select
-                value={props.relationship}
-                onChange={props.setRelationship}
+                value={relationship}
+                onChange={changeRelationship}
               >
                 <option value="select-dropdown">
                   What is your relationship to Nina?
@@ -54,8 +54,8 @@ function SignUpForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Username"
-              value={props.username}
-              onChange={props.setUsername}
+              value={username}
+              onChange={changeUsername}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="user" />
@@ -70,8 +70,8 @@ function SignUpForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Password"
-              value={props.password}
-              onChange={props.setPassword}
+              value={password}
+              onChange={changePassword}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="lock" />
@@ -84,7 +84,7 @@ function SignUpForm(props) {
 
         <Form.Field>
           <Form.Control>
-            <Button ClassName="button" onClick={props.SignUpSubmit}>Sign Up</Button>
+            <Button className="button" onClick={signUpSubmit}>Sign Up</Button>
           </Form.Control>
         </Form.Field>
       </div>

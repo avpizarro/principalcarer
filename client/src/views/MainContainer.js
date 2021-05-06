@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 
-import ComponentContainer from "../components/ComponentContainer";
+// import ComponentContainer from "../components/ComponentContainer";
+import ExpandButton from "../components/ExpandButton";
 import Canvas from "../components/Canvas";
 import Budget from "../components/Budget";
 import Calendar from "../components/Calendar";
@@ -46,7 +47,6 @@ function MainContainer() {
     }
   }, [height]);
 
-
   const modules = [
     { module: <Home />, id: "Home" },
     { module: <Canvas />, id: "parent" },
@@ -62,23 +62,24 @@ function MainContainer() {
 
   return (
     <div className="is-container columns is-multiline mainContainer">
-
       {modules.map((module) => {
         const btn = `btn${module.id}`;
         return (
-          <ComponentContainer
+          <div
             key={uuid()}
+            className="column componentContainer"
             id={module.id}
-            btnId={btn}
-            Expand={Expand}
-            ExpandComponent={ExpandComponent}
-            CloseComponent={CloseComponent}
           >
             {module.module}
-          </ComponentContainer>
+            <ExpandButton
+              btnId={btn}
+              Expand={Expand}
+              ExpandComponent={ExpandComponent}
+              CloseComponent={CloseComponent}
+            />
+          </div>
         );
       })}
-
     </div>
   );
 }

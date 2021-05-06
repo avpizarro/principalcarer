@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faPalette,
@@ -37,76 +37,7 @@ library.add(
 );
 
 function App() {
-  const [newUser, setNewUser] = useState({
-    fullName: "",
-    relationship: "",
-    username: "",
-    password: "",
-  });
-  const [newLoginUser, setNewLoginUser] = useState({});
-
-  const [fullName, setNewUserFullName] = useState();
-  const [username, setNewUsername] = useState();
-  const [relationship, setNewUserRelationship] = useState();
-  const [password, setNewUserPassword] = useState();
-  const [loginUsername, setLoginUsername] = useState();
-  const [loginPassword, setLoginPassword] = useState();
-
-  const setFullName = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setNewUserFullName(e.target.value);
-  };
-  const setRelationship = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setNewUserRelationship(e.target.value);
-  };
-  const setUsername = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setNewUsername(e.target.value);
-  };
-  const setPassword = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setNewUserPassword(e.target.value);
-  };
-
-  const SignUpSubmit = (e) => {
-    e.preventDefault();
-    const user = {
-      fullName: fullName,
-      relationship: relationship,
-      username: username,
-      password: password,
-    };
-    setNewUser(user);
-    console.log(newUser);
-  };
-  
-  const setNewLoginUsername = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setLoginUsername(e.target.value);
-  };
-  
-  const setNewLoginPassword = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    setLoginPassword(e.target.value);
-  }
-  
-  const LoginSubmit = (e) => {
-    e.preventDefault();
-    const loginUser = {
-      username: loginUsername,
-      password: loginPassword,
-    };
-    setNewLoginUser(loginUser);
-    console.log(newLoginUser);
-  };
-
+  // Handle MODAL display
   // Set state to show or hide the modal component
   const [show, setShow] = useState(false);
   const [modalChildren, setModalChildren] = useState(<></>);
@@ -114,46 +45,142 @@ function App() {
   // Function to close the Modal
   const closeModal = () => setShow(false);
 
-  // Display the submit form on Modal
-  const ShowSignUpForm = () => {
+  // Handle the SIGN UP FORM data
+  const [user, setUser] = useState({
+    fullName: "",
+    relationship: "",
+    username: "",
+    password: "",
+  });
+
+  const [fullName, setFullName] = useState();
+  const [username, setUsername] = useState();
+  const [relationship, setRelationship] = useState();
+  const [password, setPassword] = useState();
+
+  const handleFullNameChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setFullName(e.target.value);
+  };
+  const handlRelationshipChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setRelationship(e.target.value);
+  };
+  const handleUsernameChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setUsername(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setPassword(e.target.value);
+  };
+
+  const signUpSubmit = (e) => {
+    e.preventDefault();
+    const userToAdd = {
+      fullName: fullName,
+      relationship: relationship,
+      username: username,
+      password: password,
+    };
+    setUser(userToAdd);
+    console.log(user);
+  };
+
+  // Display SIGN UP FORM on Modal
+  const showSignUpForm = () => {
     setModalChildren(
       <SignUpForm
         username={username}
         relationship={relationship}
         fullName={fullName}
         password={password}
-        setFullName={setFullName}
-        setRelationship={setRelationship}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        SignUpSubmit={SignUpSubmit}
+        changeFullName={handleFullNameChange}
+        changeRelationship={handlRelationshipChange}
+        changeUsername={handleUsernameChange}
+        changePassword={handlePasswordChange}
+        signUpSubmit={signUpSubmit}
       />
     );
     setShow(true);
+  };
+// -----------------END ----------------
+
+  // Handle the LOGIN FORM data
+  const [newLoginUser, setNewLoginUser] = useState({
+
+  });
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [count, setCount] = useState(0);
+
+  // const logUsername = "";
+  // const logPassword = "";
+
+  const handleLoginUsernameChange = (e) => {
+    e.preventDefault();
+    console.log("userNameChange ETV->", e.target.value);
+    setLoginUsername(e.target.value);
+    console.log("This is the loginUser", loginUsername);
   };
 
-  // Display login form on Modal
-  const ShowLoginForm = () => {
+  const handleLoginPasswordChange = (e) => {
+    e.preventDefault();
+    console.log("passwordChange ETV->", e.target.value);
+    setLoginPassword(e.target.value);
+    console.log("This is the loginUser", loginUsername);
+  };
+
+  const loginSubmit = (e) => {
+    e.preventDefault();
+    const loginUser = {
+      username: loginUsername,
+      password: loginPassword
+    };
+    setNewLoginUser(loginUser);
+    setCount(count+1)
+    console.log("loginUser about to be submitted to state =->", loginUser);
+    console.log("loginUser that should be in state =->", newLoginUser);
+
+    //console.log("This guy is logging in", newLoginUser);
+  };
+
+  // Display LOGIN FORM on Modal
+  const showLoginForm = () => {
     setModalChildren(
       <LoginForm
-        Username={loginUsername}
-        password={loginPassword}
-        setPassword={setNewLoginPassword}
-        setUsername={setNewLoginUsername}
-        SignUpSubmit={LoginSubmit}
+        // username={loginUsername}
+        // password={loginPassword}
+        changeUsername={handleLoginUsernameChange}
+        changePassword={handleLoginPasswordChange}
+        loginSubmit={loginSubmit}
       />
     );
     setShow(true);
   };
+  // ----------END-------------
+
+  // Display Name of NEW USER on Modal
+  useEffect(() => {
+      console.log(newLoginUser);
+      console.log(count);
+      setModalChildren(
+        <div style={{ color: "white" }}>
+          <span>Your are now logged in: </span>
+          {newLoginUser.username}
+          {newLoginUser.password}
+        </div>
+      );
+  }, [count]);
 
   return (
     <div>
-      <Navbar ShowSignUpForm={ShowSignUpForm} ShowLoginForm={ShowLoginForm} />
-      <Modal
-        show={show}
-        close={closeModal}
-        children={modalChildren}
-      />
+      <Navbar showSignUpForm={showSignUpForm} showLoginForm={showLoginForm} />
+      <Modal show={show} close={closeModal} children={modalChildren} />
       <MainContainer />
       <Footer />
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Brand from "../../images/brand.png";
 
 function Navbar(props) {
@@ -58,10 +59,10 @@ function Navbar(props) {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a  className="button" onClick={props.ShowSignUpForm}>
+              <a  className="button" onClick={props.showSignUpForm}>
                 <strong>Sign up</strong>
               </a>
-              <a  className="button is-light" onClick={props.ShowLoginForm}>
+              <a  className="button is-light" onClick={props.showLoginForm}>
                 Log in
               </a>
             </div>

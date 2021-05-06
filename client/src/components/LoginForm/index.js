@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 
-function LoginForm(props) {
+function LoginForm({ username, password, changeUsername, changePassword, loginSubmit}) {
 
   return (
     <div
@@ -16,8 +16,8 @@ function LoginForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Username"
-              value={props.username}
-              onChange={props.setUsername}
+              value={username}
+              onChange={changeUsername}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="user" />
@@ -32,8 +32,8 @@ function LoginForm(props) {
           <Form.Control>
             <Form.Input
               placeholder="Password"
-              value={props.password}
-              onChange={props.setPassword}
+              value={password}
+              onChange={changePassword}
             />
             <Icon align="left" size="small">
               <FontAwesomeIcon icon="lock" />
@@ -46,7 +46,7 @@ function LoginForm(props) {
 
         <Form.Field>
           <Form.Control>
-            <Button ClassName="button is-success" onClick={props.SignUpSubmit}>Login</Button>
+            <Button className="button" onClick={loginSubmit}>Login</Button>
           </Form.Control>
         </Form.Field>
       </div>
