@@ -11,7 +11,7 @@ function Canvas() {
   const setup = (p5) => {
     if (document.getElementById("parent")) {
       const canvasOuter = document.getElementById("parent");
-      console.log(canvasOuter.clientWidth, canvasOuter.clientHeight);
+      // console.log(canvasOuter.clientWidth, canvasOuter.clientHeight);
       const renderer = p5.createCanvas(
         canvasOuter.clientWidth,
         canvasOuter.clientHeight
