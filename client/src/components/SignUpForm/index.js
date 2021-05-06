@@ -1,12 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 
-function SignUpForm({ fullName, relationship, username, password, changeFullName, changeRelationship, changeUsername, changePassword, signUpSubmit}) {
-
+function SignUpForm({
+  fullName,
+  relationship,
+  username,
+  password,
+  changeFullName,
+  changeRelationship,
+  changeUsername,
+  changePassword,
+  signUpSubmit,
+  isOptionActive,
+  changeClass,
+}) {
   return (
     <form
       className="is-container columns is-centered"
-      style={{ margin: "20px", zIndex: "1000"}}
+      style={{ margin: "20px", zIndex: "1000" }}
     >
       <div className="column is-8">
         <Form.Label size="medium">
@@ -36,16 +47,15 @@ function SignUpForm({ fullName, relationship, username, password, changeFullName
         <Form.Field>
           <Form.Field kind="group">
             <Form.Control>
-              <Form.Select
-                value={relationship}
-                onChange={changeRelationship}
-              >
+              <Form.Select value={relationship} onChange={changeRelationship}>
+                {/* <select className="select" value={relationship} onChange={changeClass}> */}
                 <option value="select-dropdown">
                   What is your relationship to Nina?
                 </option>
-                <option value="with-options">Family</option>
-                <option value="with-options">Friend</option>
-                <option value="with-options">Carer</option>
+                <option value="Family">Family</option>
+                <option value="Friend">Friend</option>
+                <option value="Carer">Carer</option>
+                {/* </select> */}
               </Form.Select>
             </Form.Control>
           </Form.Field>
@@ -84,7 +94,9 @@ function SignUpForm({ fullName, relationship, username, password, changeFullName
 
         <Form.Field>
           <Form.Control>
-            <Button className="button" onClick={signUpSubmit}>Sign Up</Button>
+            <Button className="button" onClick={signUpSubmit}>
+              Sign Up
+            </Button>
           </Form.Control>
         </Form.Field>
       </div>

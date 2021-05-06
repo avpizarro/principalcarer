@@ -43,11 +43,6 @@ function Canvas() {
     p5.resizeCanvas(canvasOuter.clientWidth, canvasOuter.clientHeight, true);
   };
 
-  const resizeCanvas = (p5) => {
-    const canvasOuter = document.getElementById("parent");
-    p5.resizeCanvas(canvasOuter.clientWidth, canvasOuter.clientHeight, true);
-  };
-
   const mouseDragged = (p5) => {
     p5.noStroke();
     p5.fill(255, 69, 0);
@@ -84,7 +79,6 @@ function Canvas() {
       mouseDragged={mouseDragged}
       windowResized={windowResized}
       draw={draw}
-      resizeCanvas={resizeCanvas}
       mouseClicked={mouseClicked}
     />
   );

@@ -49,7 +49,6 @@ function MainContainer() {
 
   const modules = [
     { module: <Home />, id: "Home" },
-    { module: <Canvas />, id: "parent" },
     { module: <Clock />, id: "Clock" },
     { module: <Calendar />, id: "Calendar" },
     { module: <Medication />, id: "Medication" },
@@ -58,12 +57,32 @@ function MainContainer() {
     { module: <Tasks />, id: "Tasks" },
     { module: <Budget />, id: "Budget" },
     { module: <SocialLife />, id: "SocialLife" },
+    { module: <Canvas />, id: "parent" },
   ];
 
   return (
+    <div className="footerFriend">
     <div className="is-container columns is-multiline mainContainer">
       {modules.map((module) => {
         const btn = `btn${module.id}`;
+
+        if (module.id === "parent") {
+          return (
+            <div
+              key={uuid()}
+              className="column is-12 componentContainer"
+              id={module.id}
+            >
+              {module.module}
+              <ExpandButton
+                btnId={btn}
+                Expand={Expand}
+                ExpandComponent={ExpandComponent}
+                CloseComponent={CloseComponent}
+              />
+            </div>
+          );
+        }
         return (
           <div
             key={uuid()}
@@ -80,6 +99,7 @@ function MainContainer() {
           </div>
         );
       })}
+    </div>
     </div>
   );
 }

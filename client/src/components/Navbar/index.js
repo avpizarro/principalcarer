@@ -2,75 +2,100 @@
 import Brand from "../../images/brand.png";
 
 function Navbar(props) {
-  return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <a className="navbar-item">
-          <img src={Brand} alt="Logo"></img>
+  if (props.mobileNavigation) {
+    return (
+      <nav
+        class="navbar is-transparent"
+        role="navigation"
+        aria-label="dropdown navigation"
+      >
+        <a class="navbar-item">
+          <a className="navbar-item">
+            <img src={Brand} alt="Logo" />
+          </a>
         </a>
 
-        <a
-          
-          role="button"
-          className="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
+        <div class="navbar-item has-dropdown is-active">
+          <a class="navbar-link" onClick={props.closeMobileNavigation}>Menu</a>
 
-      <div id="navbarBasicExample" className="navbar-menu">
-        <div className="navbar-start">
-          <a  className="navbar-item">
-            Home
+          <div class="navbar-dropdown is-boxed">
+            <div className="navbar-item">
+              <div className="buttons">
+                <a className="button" onClick={props.showSignUpForm}>
+                  <strong>Sign up</strong>
+                </a>
+                <a className="button is-light" onClick={props.showLoginForm}>
+                  Log in
+                </a>
+              </div>
+            </div>
+            <a class="navbar-item">Documents</a>
+            <a class="navbar-item">About</a>
+            <a className="navbar-item">Jobs</a>
+            <a className="navbar-item">Contact</a>
+            <hr className="navbar-divider"></hr>
+            <a className="navbar-item">Report an issue</a>
+          </div>
+        </div>
+      </nav>
+    );
+  } else {
+    return (
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
+          <a className="navbar-item">
+            <img src={Brand} alt="Logo" />
           </a>
 
-          <a  className="navbar-item">
-            Documentation
+          <a
+            role="button"
+            className="navbar-burger"
+            aria-label="menu"
+            aria-expanded="true"
+            data-target="navbarBasicExample"
+            onClick={props.showMobileNavigation}
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </a>
+        </div>
 
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a  className="navbar-link">
-              More
-            </a>
+        <div id="navbarBasicExample" className="navbar-menu">
+          <div className="navbar-start">
+            <a className="navbar-item">Home</a>
 
-            <div className="navbar-dropdown">
-              <a  className="navbar-item">
-                About
-              </a>
-              <a  className="navbar-item">
-                Jobs
-              </a>
-              <a  className="navbar-item">
-                Contact
-              </a>
-              <hr className="navbar-divider"></hr>
-              <a  className="navbar-item">
-                Report an issue
-              </a>
+            <a className="navbar-item">Documents</a>
+
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a className="navbar-link">More</a>
+
+              <div className="navbar-dropdown">
+                <a className="navbar-item">About</a>
+                <a className="navbar-item">Jobs</a>
+                <a className="navbar-item">Contact</a>
+                <hr className="navbar-divider"></hr>
+                <a className="navbar-item">Report an issue</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
+                <a className="button" onClick={props.showSignUpForm}>
+                  <strong>Sign up</strong>
+                </a>
+                <a className="button is-light" onClick={props.showLoginForm}>
+                  Log in
+                </a>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <a  className="button" onClick={props.showSignUpForm}>
-                <strong>Sign up</strong>
-              </a>
-              <a  className="button is-light" onClick={props.showLoginForm}>
-                Log in
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+      </nav>
+    );
+  }
 }
 
 export default Navbar;
