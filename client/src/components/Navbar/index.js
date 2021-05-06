@@ -10,9 +10,7 @@ function Navbar(props) {
         aria-label="dropdown navigation"
       >
         <a class="navbar-item">
-          <a className="navbar-item">
             <img src={Brand} alt="Logo" />
-          </a>
         </a>
 
         <div class="navbar-item has-dropdown is-active">

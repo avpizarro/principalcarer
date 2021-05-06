@@ -1,6 +1,6 @@
+// Import hooks from react
 import { useState } from "react";
-// import { useEffect } from "react";
-
+// Import fontawesome and individual icons
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faPalette,
@@ -14,8 +14,13 @@ import {
   faUser,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
+// Import css framework
 import "bulma/css/bulma.css";
 
+// Import own stylesheet
+import "./App.css";
+
+// Import components
 import Navbar from "./components/Navbar";
 import Modal from "./components/Modal";
 import MainContainer from "./views/MainContainer";
@@ -23,8 +28,7 @@ import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import Footer from "./components/Footer";
 
-import "./App.css";
-
+// Add the Fontawesome icons to the library so they can be used by components
 library.add(
   faPalette,
   faTimes,
@@ -59,12 +63,12 @@ function App() {
   // Handle MODAL display
   // Set state to show or hide the modal component
   const [show, setShow] = useState(false);
-  const [modalChildren, setModalChildren] = useState(<></>);
 
   // Function to close the Modal
   const closeModal = () => setShow(false);
 
   // Handle the SIGN UP FORM data
+  // Set States
   const [user, setUser] = useState({
     fullName: "",
     relationship: "",
@@ -77,6 +81,7 @@ function App() {
   const [relationship, setRelationship] = useState();
   const [password, setPassword] = useState();
 
+  // Set functions to get the User inputs
   const handleFullNameChange = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -99,6 +104,7 @@ function App() {
     setPassword(e.target.value);
   };
 
+  // Submit the User input
   const signUpSubmit = (e) => {
     e.preventDefault();
     const userToAdd = {
@@ -108,33 +114,19 @@ function App() {
       password: password,
     };
     setUser(userToAdd);
+    setModalInfo("signUpMessage");
     console.log(user);
-    setModalChildren(
-      <div style={{ color: "white" }} className="has-text-centered">
-        <span className="mt-0 is-size-4">
-          Welcome <span> {userToAdd.fullName} </span>
-        </span>
-      </div>
-    );
   };
 
   // Display SIGN UP FORM on Modal
   const showSignUpForm = () => {
-    setModalChildren(
-      <SignUpForm
-        relationship={relationship}
-        changeFullName={handleFullNameChange}
-        changeRelationship={handlRelationshipChange}
-        changeUsername={handleUsernameChange}
-        changePassword={handlePasswordChange}
-        signUpSubmit={signUpSubmit}
-      />
-    );
+    setModalInfo("signUpForm");
     setShow(true);
   };
   // -----------------END ----------------
 
   // Handle the LOGIN FORM data
+  // Set States
   const [newLoginUser, setNewLoginUser] = useState({
     loginUsername: "",
     loginPassword: "",
@@ -142,58 +134,84 @@ function App() {
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  // const logUsername = "";
-  // const logPassword = "";
-
-  const handleLoginUsernameChange = async (e) => {
+  // Set functions to get the User inputs
+  const handleLoginUsernameChange = (e) => {
     e.preventDefault();
     console.log("User to LOGIN Username", e.target.value);
-    await setLoginUsername(e.target.value);
+    setLoginUsername(e.target.value);
   };
 
-  const handleLoginPasswordChange = async (e) => {
+  const handleLoginPasswordChange = (e) => {
     e.preventDefault();
     console.log("User to LOGIN Password", e.target.value);
-    await setLoginPassword(e.target.value);
+    setLoginPassword(e.target.value);
   };
-
-  const loginSubmit = async (e) => {
+ // Submit the User input
+  const loginSubmit = (e) => {
     e.preventDefault();
     const loginUser = {
       loginUsername: loginUsername,
       loginPassword: loginPassword,
     };
-    await setNewLoginUser(loginUser);
+    console.log("New USER to login", loginUser);
+    setNewLoginUser(loginUser);
     console.log("New USER to login", loginUser);
     console.log("USER in State", newLoginUser);
-    setModalChildren(
-      <div style={{ color: "white" }} className="has-text-centered">
-        <span className="mt-0 is-size-4">
-       <span>{loginUser.loginUsername}</span>, you have logged in succesfully
-        </span>
-      </div>
-    );
+    setModalInfo("loginMessage");
   };
 
   // Display LOGIN FORM on Modal
   const showLoginForm = () => {
-    setModalChildren(
-      <LoginForm
-        changeUsername={handleLoginUsernameChange}
-        changePassword={handleLoginPasswordChange}
-        loginSubmit={loginSubmit}
-      />
-    );
+    setModalInfo("loginForm");
     setShow(true);
   };
   // ----------END-------------
 
-  // Display Name of NEW USER on Modal
-  // useEffect(() => {
-  //   console.log(newLoginUser);
-  //   );
-  // }, [modalChildren]);
+  // Set INFO to display on modal
+  // State to define what to display
+  const [modalInfo, setModalInfo] = useState("");
 
+  const displayInModal = () => {
+    if (modalInfo === "loginForm") {
+      return (
+        <LoginForm
+          changeUsername={handleLoginUsernameChange}
+          changePassword={handleLoginPasswordChange}
+          loginSubmit={loginSubmit}
+        />
+      );
+    } else if (modalInfo === "signUpForm") {
+      return (
+        <SignUpForm
+          relationship={relationship}
+          changeFullName={handleFullNameChange}
+          changeRelationship={handlRelationshipChange}
+          changeUsername={handleUsernameChange}
+          changePassword={handlePasswordChange}
+          signUpSubmit={signUpSubmit}
+        />
+      );
+    } else if (modalInfo === "loginMessage") {
+      return (
+        <div style={{ color: "white" }} className="has-text-centered">
+          <span className="mt-0 is-size-4">
+            <span>{newLoginUser.loginUsername}</span>, you have logged in
+            succesfully.
+          </span>
+        </div>
+      );
+    } else if (modalInfo === "signUpMessage") {
+      return (
+        <div style={{ color: "white" }} className="has-text-centered">
+          <span className="mt-0 is-size-4">
+            Welcome <span> {user.fullName} </span>
+          </span>
+        </div>
+      );
+    }
+  };
+
+  // Render
   return (
     <div>
       <Navbar
@@ -203,7 +221,7 @@ function App() {
         showMobileNavigation={showMobileNavigation}
         closeMobileNavigation={closeMobileNavigation}
       />
-      <Modal show={show} close={closeModal} children={modalChildren} />
+      <Modal show={show} close={closeModal} children={displayInModal()} />
       <MainContainer />
       <Footer />
     </div>

@@ -29,36 +29,26 @@ function MainContainer() {
     if (component.clientWidth > component.clientHeight) {
       setHeight(`${component.clientWidth}px`);
       setExpand(true);
-      console.log(
-        "Expand HEIGHT:",
-        e.target.parentNode.clientHeight
-      );
+      console.log("Expand HEIGHT:", e.target.parentNode.clientHeight);
     }
   };
 
   const CloseComponent = (e) => {
     console.log("I am trying to close");
     const elementToCloseId = e.target.parentNode.getAttribute("id");
-    console.log(elementToCloseId);
-
     setComponentId(elementToCloseId);
-
-    const elementRef = elementToCloseId + "Ref";
-
-    for (let i = 0; i < refs.length; i++) {
-      if (elementRef === refs[i]) {
-        console.log(refs[i].current.clientHeight);
-        setHeight(refs[i].current.clientHeight);
-      }
-      setHeight("60px");
-      setHeight(previousHeight);
-    }
-    console.log(elementRef);
-    console.log(
-      "CLOSE HEIGHT: ",
-      e.target.parentNode.clientHeight
-    );
+    setHeight(previousHeight);
     setExpand(false);
+
+    // Trial code to only get the previous height from separate components:
+    // const elementRef = elementToCloseId + "Ref";
+    // for (let i = 0; i < refs.length; i++) {
+    //   if (elementRef === refs[i]) {
+    //     console.log(refs[i].current.clientHeight);
+    //     setHeight(refs[i].current.clientHeight);
+    //   }
+    // }
+    
   };
 
   useEffect(() => {
@@ -78,18 +68,18 @@ function MainContainer() {
   const socialLifeRef = useRef();
   const parentRef = useRef();
 
-  const refs = [
-    homeRef,
-    clockRef,
-    calendarRef,
-    medicationRef,
-    entertainementRef,
-    shoppingRef,
-    tasksRef,
-    budgetRef,
-    socialLifeRef,
-    parentRef,
-  ];
+  // const refs = [
+  //   homeRef,
+  //   clockRef,
+  //   calendarRef,
+  //   medicationRef,
+  //   entertainementRef,
+  //   shoppingRef,
+  //   tasksRef,
+  //   budgetRef,
+  //   socialLifeRef,
+  //   parentRef,
+  // ];
 
   const modules = [
     { module: <Home />, id: "home", ref: homeRef },
