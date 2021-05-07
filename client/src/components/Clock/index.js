@@ -49,7 +49,7 @@ function Clock({ showAddClock, children, changeCity, getCityTimezone }) {
         className="columns is-12 is-container is-centered is-mobile is-multiline clock"
         style={{ marginTop: "3px" }}
       >
-        <OneClock city="Melbourne" />
+        <OneClock city="Melbourne" children={<Moment format="hh:mm a" />} />
         <div
           className="column is-6 is-centered has-text-weight-bolds p-0"
           style={{ color: "black", textAlign: "center" }}

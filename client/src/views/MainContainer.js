@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
 import axios from "axios";
+import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
 
@@ -41,7 +42,8 @@ function MainContainer() {
       setExpand(true);
     }
     if (elementToOpenId === "clock") {
-      setShowAddClock(true)
+      setShowAddClock(true);
+      setShowNewClock(true);
       setExpand(true);
     }
   };
@@ -111,9 +113,15 @@ function MainContainer() {
   console.log(initialCity, initialTimezone);
 
   const [showAddClock, setShowAddClock] = useState(false);
-  const [city, setCity] = useState("");
-  const [timezone, setTimezone] = useState("");
-  const [showNewClock, setShowNewClock] = useState(false);
+  const [city, setCity] = useState(initialCity || "");
+  const [timezone, setTimezone] = useState(initialTimezone || "");
+  const [showNewClock, setShowNewClock] = useState(true);
+
+  useEffect(() => {
+    if (!city) {
+      setShowNewClock(false);
+    }
+  })
 
   const getCityTimezone = () => {
     if (city) {
@@ -128,18 +136,24 @@ function MainContainer() {
       console.log(chosenTimeZone);
       setTimezone(chosenTimeZone[0]);
       setShowNewClock(true);
-      // localStorage.setItem("city", city);
-      // localStorage.setItem("timezone", chosenTimeZone[0]);
+      localStorage.setItem("city", city);
+      localStorage.setItem("timezone", chosenTimeZone[0]);
     } else {
       return "Choose a different City";
     }
+    console.log(showNewClock);
   };
 
   const showClockChildren = () => {
     if (!showNewClock) {
       return null;
     }
-    <OneClock city={city} tz={timezone} />
+    return (
+      <OneClock
+        city={city}
+        children={<Moment format="hh:mm a" tz={timezone} />}
+      />
+    );
   };
 
   const changeCity = (e) => {
