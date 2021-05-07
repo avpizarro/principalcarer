@@ -1,6 +1,4 @@
-/* .clock{
-  background-image: url("../../images/map1.png");
-background-size: 60px;
-background-position-x: center;
-background-repeat: no-repeat;
-} */
+.clockImage {
+  position: "relative";
+  top: "5px";
+}

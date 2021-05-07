@@ -1,0 +1,8 @@
+.medication {
+  background-image: url("../../images/pill.gif");
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position-x: 0.75rem;
+  min-height: "60px";
+}
+

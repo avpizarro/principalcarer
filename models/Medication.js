@@ -7,27 +7,36 @@ const medicationSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  // dose: {
-  //   type: String,
-  //   default: "",
-  // },
-  // dosage: {
-  //   amount: {
-  //     type: Number,
-  //     default: 0,
-  //   },
-  //   time: {
-  //     type: Number,
-  //   },
-  // },
-  // purpose: {
-  //   type: String,
-  //   default: "",
-  // },
-  // quantity: {
-  //   type: Number,
-  //   default: 0,
-  // }
+  dose: {
+    type: String,
+    default: "",
+  },
+  dosage: {
+    amount: {
+      type: Number,
+      default: 0,
+    },
+    unit: {
+      type: String,
+      default: "",
+    },
+    time: {
+      type: Number,
+      default: 0,
+    },
+    timeUnit: {
+      type: String,
+      default: "",
+    },
+  },
+  purpose: {
+    type: String,
+    default: "",
+  },
+  quantity: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Medication = mongoose.model("Medication", medicationSchema);

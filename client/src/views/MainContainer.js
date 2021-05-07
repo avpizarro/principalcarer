@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
+import axios from "axios";
+// import "moment-timezone";
+// import moment from "moment-timezone";
 
 // import ComponentContainer from "../components/ComponentContainer";
 import ExpandButton from "../components/ExpandButton";
@@ -7,6 +10,7 @@ import Canvas from "../components/Canvas";
 import Budget from "../components/Budget";
 import Calendar from "../components/Calendar";
 import Clock from "../components/Clock";
+import OneClock from "../components/OneClock";
 import Entertainement from "../components/Entertainement";
 import Home from "../components/Home";
 import Medication from "../components/Medication";
@@ -15,8 +19,9 @@ import SocialLife from "../components/SocialLife";
 import Tasks from "../components/Tasks";
 
 function MainContainer() {
-  const [previousHeight, setPreviousHeight] = useState();
-  const [height, setHeight] = useState();
+  const [previousHeight, setPreviousHeight] = useState("");
+  const [height, setHeight] = useState("");
+
   const [Expand, setExpand] = useState(false);
   const [componentId, setComponentId] = useState("");
 
@@ -31,31 +36,41 @@ function MainContainer() {
       setExpand(true);
       console.log("Expand HEIGHT:", e.target.parentNode.clientHeight);
     }
+    if (elementToOpenId === "medication") {
+      setShowMed(true);
+      setExpand(true);
+    }
+    if (elementToOpenId === "clock") {
+      console.log();
+      setExpand(true);
+    }
   };
 
   const CloseComponent = (e) => {
     console.log("I am trying to close");
     const elementToCloseId = e.target.parentNode.getAttribute("id");
     setComponentId(elementToCloseId);
+    console.log("This is the previous height: ", previousHeight);
     setHeight(previousHeight);
+    // setHeight("60px");
     setExpand(false);
-
-    // Trial code to only get the previous height from separate components:
-    // const elementRef = elementToCloseId + "Ref";
-    // for (let i = 0; i < refs.length; i++) {
-    //   if (elementRef === refs[i]) {
-    //     console.log(refs[i].current.clientHeight);
-    //     setHeight(refs[i].current.clientHeight);
-    //   }
-    // }
-    
+    setShowMed(false);
   };
+
+  // Define Medication State
+  const [medication, setMedication] = useState([]);
+  const [showMed, setShowMed] = useState(false);
 
   useEffect(() => {
     if (componentId) {
       document.getElementById(componentId).style.height = height;
     }
   }, [height]);
+
+  useEffect(() => {
+    loadMedicine();
+    // console.log("Console.log medication:", medication);
+  }, []);
 
   const homeRef = useRef();
   const clockRef = useRef();
@@ -68,24 +83,119 @@ function MainContainer() {
   const socialLifeRef = useRef();
   const parentRef = useRef();
 
-  // const refs = [
-  //   homeRef,
-  //   clockRef,
-  //   calendarRef,
-  //   medicationRef,
-  //   entertainementRef,
-  //   shoppingRef,
-  //   tasksRef,
-  //   budgetRef,
-  //   socialLifeRef,
-  //   parentRef,
-  // ];
+  // Get the Medication List
+  function loadMedicine() {
+    axios
+      .get("api/medication")
+      .then((res) => {
+        // console.log(res.data);
+        const medicationList = res.data.map((item) => {
+          return {
+            name: item.name,
+            dose: item.dose,
+            dosage: item.dosage,
+            purpose: item.purpose,
+            quantity: item.quantity,
+          };
+        });
+        setMedication(medicationList);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // Get timeZones and add new clock
+
+  // const initialCity = localStorage.getItem("city");
+  // const initialTimezone = localStorage.getItem("timezone");
+  // console.log(initialCity, initialTimezone);
+
+  // const [showAddClock, setShowAddClock] = useState(false);
+  // const [city, setCity] = useState("");
+  // const [timezone, setTimezone] = useState("");
+  // const [showNewClock, setShowNewClock] = useState(false);
+
+  // const getCityTimezone = () => {
+  //   if (city) {
+  //     const allTimeZones = moment.tz.names();
+  //     console.log(allTimeZones);
+  //     const chosenTimeZone = allTimeZones.filter((tz) => {
+  //       if (tz.includes(city)) {
+  //         return tz;
+  //       }
+  //       return null;
+  //     });
+  //     console.log(chosenTimeZone);
+  //     setTimezone(chosenTimeZone[0]);
+  //     setShowNewClock(true);
+  //     // localStorage.setItem("city", city);
+  //     // localStorage.setItem("timezone", chosenTimeZone[0]);
+  //   } else {
+  //     return "Choose a different City";
+  //   }
+  // };
+
+  // const showClockChildren = () => {
+  //   if (!showNewClock) {
+  //     return null;
+  //   }
+  //   <OneClock city={city} tz={timezone} />
+  // };
+
+  // const changeCity = (e) => {
+  //   e.preventDefault();
+  //   const chosenCity = e.target.value;
+  //   console.log(chosenCity);
+  //   setCity(chosenCity.replace(" ", "_"));
+  // };
 
   const modules = [
     { module: <Home />, id: "home", ref: homeRef },
-    { module: <Clock />, id: "clock", ref: clockRef },
+    {
+      module: (
+        <Clock
+          // showAddClock={showAddClock}
+          // // children={showClockChildren()}
+          // changeCity={changeCity}
+          // getCityTimezone={getCityTimezone}
+        />
+      ),
+      id: "clock",
+      ref: clockRef,
+    },
+    // { module: <OneClock />, id: "clock", ref: clockRef },
     { module: <Calendar />, id: "calendar", ref: calendarRef },
-    { module: <Medication />, id: "medication", ref: medicationRef },
+    {
+      module: (
+        <Medication
+          showMed={showMed}
+          children={
+            <div className="table-container">
+              <table className="table">
+                {/* <thead><tr>Medication List</tr></thead> */}
+                <tbody>
+                  {medication.map((item) => {
+                    return (
+                      <tr key={uuid()}>
+                        <td>{item.name}</td>
+                        <td>{item.dose}</td>
+                        <td>
+                          {item.dosage.amount}
+                          <span>every</span>
+                          {item.dosage.time}
+                        </td>
+                        <td>{item.quantity}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          }
+        />
+      ),
+      id: "medication",
+      ref: medicationRef,
+    },
     {
       module: <Entertainement />,
       id: "entertainement",
@@ -95,7 +205,6 @@ function MainContainer() {
     { module: <Tasks />, id: "tasks", ref: tasksRef },
     { module: <Budget />, id: "budget", ref: budgetRef },
     { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
-    { module: <Canvas />, id: "parent", ref: parentRef },
   ];
 
   return (
@@ -103,28 +212,8 @@ function MainContainer() {
       <div className="is-container columns is-multiline mainContainer">
         {modules.map((module) => {
           const btn = `btn${module.id}`;
-
-          if (module.id === "parent") {
-            return (
-              <div
-                key={uuid()}
-                ref={module.ref}
-                className="column is-12 componentContainer"
-                id={module.id}
-              >
-                {module.module}
-                <ExpandButton
-                  btnId={btn}
-                  Expand={Expand}
-                  ExpandComponent={ExpandComponent}
-                  CloseComponent={CloseComponent}
-                />
-              </div>
-            );
-          }
           return (
             <div
-              key={uuid()}
               ref={module.ref}
               className="column componentContainer"
               id={module.id}
@@ -139,6 +228,19 @@ function MainContainer() {
             </div>
           );
         })}
+        <div
+          ref={parentRef}
+          className="column is-12 componentContainer"
+          id={"parent"}
+        >
+          <Canvas />
+          <ExpandButton
+            btnId={"btnparent"}
+            Expand={Expand}
+            ExpandComponent={ExpandComponent}
+            CloseComponent={CloseComponent}
+          />
+        </div>
       </div>
     </div>
   );

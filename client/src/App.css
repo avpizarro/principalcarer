@@ -32,6 +32,7 @@ body {
     min-width: 200px;
     position: relative;
     padding: 0;
+    height: fit-content;
   }
 
   .select:not(.is-multiple):not(.is-loading)::after {
@@ -40,6 +41,12 @@ body {
     z-index: 4;
   }
   
+  .clockImage {
+    max-height: "20px";
+    max-width: "20px";
+    position: "relative";
+    top: "5px";
+  }
   /* .navbar-link:not(.is-arrowless)::after {
       border-color: #8745dd;
     }

@@ -23,7 +23,6 @@ function ExpandButton(props) {
       onClick={props.CloseComponent}
     >
       <span className="icon is-large closeExpandButtonIcon">
-        {" "}
         <FontAwesomeIcon icon="times" size="2x" />
       </span>
     </button>
