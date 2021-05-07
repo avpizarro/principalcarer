@@ -32,7 +32,6 @@ body {
     min-width: 200px;
     position: relative;
     padding: 0;
-    height: fit-content;
   }
 
   .select:not(.is-multiple):not(.is-loading)::after {

@@ -10,7 +10,7 @@ function Medication({ children, showMed }) {
           style={{ marginTop: "0px" }}
         >
           <div
-            className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+            className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
             style={{ color: "black", textAlign: "center" }}
           >
             <div>
@@ -34,7 +34,7 @@ function Medication({ children, showMed }) {
         style={{ marginTop: "0px" }}
       >
         <div
-          className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 mt-4"
+          className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-4"
           style={{ color: "black", textAlign: "center" }}
         >
           <div>

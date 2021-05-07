@@ -5,7 +5,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
 
-// import ComponentContainer from "../components/ComponentContainer";
+import API from "../utils/API";
 import ExpandButton from "../components/ExpandButton";
 import Canvas from "../components/Canvas";
 import Budget from "../components/Budget";
@@ -72,6 +72,7 @@ function MainContainer() {
 
   useEffect(() => {
     loadMedicine();
+    loadClocks();
     // console.log("Console.log medication:", medication);
   }, []);
 
@@ -110,12 +111,13 @@ function MainContainer() {
 
   const initialCity = localStorage.getItem("city");
   const initialTimezone = localStorage.getItem("timezone");
-  console.log(initialCity, initialTimezone);
 
   const [showAddClock, setShowAddClock] = useState(false);
   const [city, setCity] = useState(initialCity || "");
   const [timezone, setTimezone] = useState(initialTimezone || "");
   const [showNewClock, setShowNewClock] = useState(true);
+
+  const [clocks, setClocks] = useState([]);
 
   useEffect(() => {
     if (!city) {
@@ -123,6 +125,25 @@ function MainContainer() {
     }
   })
 
+  function loadClocks () {
+    API.getClocks()
+      .then((res) => {
+        console.log(res.data);
+        const clocksList = res.data.map((item) => {
+          return {
+            city: item.city,
+            timezone: item.timezone,
+          };
+        });
+        setClocks(clocksList);
+      })
+      .catch((err) => console.log(err));
+  }
+
+function addClock (clock) {
+  axios.post("api/clock", clock)
+}
+  
   const getCityTimezone = () => {
     if (city) {
       const allTimeZones = moment.tz.names();
@@ -149,11 +170,12 @@ function MainContainer() {
       return null;
     }
     return (
+      clocks.map(clock => { return (
       <OneClock
-        city={city}
-        children={<Moment format="hh:mm a" tz={timezone} />}
+        city={clock.city}
+        children={<Moment format="hh:mm a" tz={clock.timezone} />}
       />
-    );
+    )}));
   };
 
   const changeCity = (e) => {

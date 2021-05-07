@@ -3,8 +3,8 @@ const router = require("express").Router();
 // Medication Model
 const Medication = require("../../models/Medication");
 
-// @route GET api/medications
-// @desc Get All medications
+// @route GET api/medication
+// @desc Get All medication
 // @access Public
 router.get("/", (req, res) => {
   Medication.find()
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     .then((medications) => res.json(medications));
 });
 
-// @route POST api/medications
+// @route POST api/medication
 // @desc Add medication
 // @access Public
 router.post("/post", (req, res) => {
@@ -21,8 +21,8 @@ router.post("/post", (req, res) => {
     .catch((err) => res.status(404).json({ success: false }));
 });
 
-// @route DELETE api/books
-// @desc Delete a book
+// @route DELETE api/medication
+// @desc Delete a medication
 // @access Public
 router.delete("/:id", (req, res) => {
   Medication.findById(req.params.id)

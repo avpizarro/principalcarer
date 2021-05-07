@@ -50,6 +50,22 @@ const appointmentSeed = [
   },
 ];
 
+const clockSeed = [
+  {
+    city: "Melbourne",
+    timezone: "",
+  },
+  {
+    city: "Bogota",
+    timezone: "America/Bogota",
+  },
+  {
+    city: "Nasssau",
+    timezone: "America/Nassau",
+  },
+
+];
+
 db.Medication.remove({})
   .then(() => db.Medication.collection.insertMany(medicationSeed))
   .then((data) => {
@@ -63,6 +79,17 @@ db.Medication.remove({})
 
 db.Appointment.remove({})
   .then(() => db.Appointment.collection.insertMany(appointmentSeed))
+  .then((data) => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+
+  db.Clock.remove({})
+  .then(() => db.Clock.collection.insertMany(clockSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);
