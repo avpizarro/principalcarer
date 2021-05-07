@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
 import axios from "axios";
-// import "moment-timezone";
-// import moment from "moment-timezone";
+import "moment-timezone";
+import moment from "moment-timezone";
 
 // import ComponentContainer from "../components/ComponentContainer";
 import ExpandButton from "../components/ExpandButton";
@@ -41,7 +41,7 @@ function MainContainer() {
       setExpand(true);
     }
     if (elementToOpenId === "clock") {
-      console.log();
+      setShowAddClock(true)
       setExpand(true);
     }
   };
@@ -52,9 +52,10 @@ function MainContainer() {
     setComponentId(elementToCloseId);
     console.log("This is the previous height: ", previousHeight);
     setHeight(previousHeight);
-    // setHeight("60px");
+    setHeight("210px");
     setExpand(false);
     setShowMed(false);
+    setShowAddClock(false);
   };
 
   // Define Medication State
@@ -105,58 +106,58 @@ function MainContainer() {
 
   // Get timeZones and add new clock
 
-  // const initialCity = localStorage.getItem("city");
-  // const initialTimezone = localStorage.getItem("timezone");
-  // console.log(initialCity, initialTimezone);
+  const initialCity = localStorage.getItem("city");
+  const initialTimezone = localStorage.getItem("timezone");
+  console.log(initialCity, initialTimezone);
 
-  // const [showAddClock, setShowAddClock] = useState(false);
-  // const [city, setCity] = useState("");
-  // const [timezone, setTimezone] = useState("");
-  // const [showNewClock, setShowNewClock] = useState(false);
+  const [showAddClock, setShowAddClock] = useState(false);
+  const [city, setCity] = useState("");
+  const [timezone, setTimezone] = useState("");
+  const [showNewClock, setShowNewClock] = useState(false);
 
-  // const getCityTimezone = () => {
-  //   if (city) {
-  //     const allTimeZones = moment.tz.names();
-  //     console.log(allTimeZones);
-  //     const chosenTimeZone = allTimeZones.filter((tz) => {
-  //       if (tz.includes(city)) {
-  //         return tz;
-  //       }
-  //       return null;
-  //     });
-  //     console.log(chosenTimeZone);
-  //     setTimezone(chosenTimeZone[0]);
-  //     setShowNewClock(true);
-  //     // localStorage.setItem("city", city);
-  //     // localStorage.setItem("timezone", chosenTimeZone[0]);
-  //   } else {
-  //     return "Choose a different City";
-  //   }
-  // };
+  const getCityTimezone = () => {
+    if (city) {
+      const allTimeZones = moment.tz.names();
+      console.log(allTimeZones);
+      const chosenTimeZone = allTimeZones.filter((tz) => {
+        if (tz.includes(city)) {
+          return tz;
+        }
+        return null;
+      });
+      console.log(chosenTimeZone);
+      setTimezone(chosenTimeZone[0]);
+      setShowNewClock(true);
+      // localStorage.setItem("city", city);
+      // localStorage.setItem("timezone", chosenTimeZone[0]);
+    } else {
+      return "Choose a different City";
+    }
+  };
 
-  // const showClockChildren = () => {
-  //   if (!showNewClock) {
-  //     return null;
-  //   }
-  //   <OneClock city={city} tz={timezone} />
-  // };
+  const showClockChildren = () => {
+    if (!showNewClock) {
+      return null;
+    }
+    <OneClock city={city} tz={timezone} />
+  };
 
-  // const changeCity = (e) => {
-  //   e.preventDefault();
-  //   const chosenCity = e.target.value;
-  //   console.log(chosenCity);
-  //   setCity(chosenCity.replace(" ", "_"));
-  // };
+  const changeCity = (e) => {
+    e.preventDefault();
+    const chosenCity = e.target.value;
+    console.log(chosenCity);
+    setCity(chosenCity.replace(" ", "_"));
+  };
 
   const modules = [
     { module: <Home />, id: "home", ref: homeRef },
     {
       module: (
         <Clock
-          // showAddClock={showAddClock}
-          // // children={showClockChildren()}
-          // changeCity={changeCity}
-          // getCityTimezone={getCityTimezone}
+          showAddClock={showAddClock}
+          children={showClockChildren()}
+          changeCity={changeCity}
+          getCityTimezone={getCityTimezone}
         />
       ),
       id: "clock",
