@@ -102,52 +102,42 @@ function MainContainer() {
       .catch((err) => console.log(err));
   }
 
-  // Get timeZones and add new clock
-
-  const initialCity = localStorage.getItem("city");
-  const initialTimezone = localStorage.getItem("timezone");
-
+  // Set states for Clock component
   const [showAddClock, setShowAddClock] = useState(false);
-  const [city, setCity] = useState(initialCity || "");
-  const [timezone, setTimezone] = useState(initialTimezone || "");
-
+  const [city, setCity] = useState("");
+  const [timezone, setTimezone] = useState("");
   const [clocks, setClocks] = useState([]);
   const [clockHelp, setClockHelp] = useState(false);
-
-  // useEffect(() => {
-  //   if (!city) {
-  //     setShowNewClock(false);
-  //   }
-  // });
-
+  
+  // Get the clocks from DB and create function to display them
   function loadClocks() {
     API.getClocks()
-      .then((res) => {
-        console.log(res.data);
-        const clocksList = res.data.map((item) => {
-          return {
-            city: item.city,
-            timezone: item.timezone,
-            id: item._id
-          };
-        });
-        setClocks(clocksList);
-      })
-      .catch((err) => console.log(err));
+    .then((res) => {
+      const clocksList = res.data.map((item) => {
+        return {
+          city: item.city,
+          timezone: item.timezone,
+          id: item._id,
+        };
+      });
+      setClocks(clocksList);
+    })
+    .catch((err) => console.log(err));
   }
-
+  
+  // Function to save a new clock
   function addClock(clock) {
     API.saveClock(clock);
   }
-
+  
+  // Function to delete a clock and update the clocks displayed
   function removeClock(e) {
-    const clockToDeleteId = e.target.parentNode.getAttribute("id")
-    console.log("I am being clicked: ",e.target.parentNode);
-    console.log(clockToDeleteId)
-    API.deleteClock(clockToDeleteId)
+    const clockToDeleteId = e.target.parentNode.getAttribute("id");
+    API.deleteClock(clockToDeleteId);
     loadClocks();
   }
-
+  
+  // Get timeZones for new clock and save new clock
   const getCityTimezone = () => {
     if (city) {
       const allTimeZones = moment.tz.names();
@@ -157,39 +147,38 @@ function MainContainer() {
         }
         return null;
       });
-      if(chosenTimeZone[0]){
-      console.log(chosenTimeZone);
-      setTimezone(chosenTimeZone[0]);
-      localStorage.setItem("city", city);
-      localStorage.setItem("timezone", chosenTimeZone[0]);
-      addClock({
-        city: city.replace("_", " "),
-        timezone: chosenTimeZone[0],
-      });
-      setClockHelp(false);
-      loadClocks();
+      if (chosenTimeZone[0]) {
+        setTimezone(chosenTimeZone[0]);
+        addClock({
+          city: city.replace("_", " "),
+          timezone: chosenTimeZone[0],
+        });
+        setClockHelp(false);
+        loadClocks();
+      } else {
+        setClockHelp(true);
+      }
     } else {
-      setClockHelp(true)
-    }
-    } else {
-      return setClockHelp(true)
-      ;
+      return setClockHelp(true);
     }
   };
 
+  // Function to display message if no timezone or city found 
   const showChildrenHelp = () => {
-    if(!clockHelp) {
-      return null
+    if (!clockHelp) {
+      return null;
     } else {
-      return (<p class="help">Choose another city</p>)
+      return <p class="help">Choose another city</p>;
     }
-  }
+  };
+
+  // Function to display the delete clock option or not
   const showClockChildren = () => {
     if (!showAddClock) {
       return clocks.map((clock) => {
         return (
           <OneClock
-          id={clock.id}
+            id={clock.id}
             city={clock.city}
             children={<Moment format="hh:mm a" tz={clock.timezone} />}
           />
@@ -199,17 +188,19 @@ function MainContainer() {
     return clocks.map((clock) => {
       return (
         <OneClock
-        id={clock.id}
+          id={clock.id}
           city={clock.city}
           children={
             <>
               <Moment format="hh:mm a" tz={clock.timezone} />
-              <br></br> <button
-              style={{ borderStyle: "none", background: "white" }}
-              onClick={removeClock}
-            ><span>
-              <FontAwesomeIcon icon="minus" />
-              </span>
+              <br></br>{" "}
+              <button
+                style={{ borderStyle: "none", background: "white" }}
+                onClick={removeClock}
+              >
+                <span>
+                  <FontAwesomeIcon icon="minus" />
+                </span>
               </button>
             </>
           }
@@ -218,13 +209,14 @@ function MainContainer() {
     });
   };
 
+  // Function to get the user chosen city and make it usable to find a timezone
   const changeCity = (e) => {
     e.preventDefault();
     const chosenCity = e.target.value;
-    console.log(chosenCity);
     setCity(chosenCity.replace(" ", "_"));
   };
 
+  // Function to display the main components
   const modules = [
     { module: <Home />, id: "home", ref: homeRef },
     {
@@ -240,7 +232,6 @@ function MainContainer() {
       id: "clock",
       ref: clockRef,
     },
-    // { module: <OneClock />, id: "clock", ref: clockRef },
     { module: <Calendar />, id: "calendar", ref: calendarRef },
     {
       module: (
@@ -249,7 +240,6 @@ function MainContainer() {
           children={
             <div className="table-container">
               <table className="table">
-                {/* <thead><tr>Medication List</tr></thead> */}
                 <tbody>
                   {medication.map((item) => {
                     return (
@@ -285,11 +275,13 @@ function MainContainer() {
     { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
   ];
 
+  // Call useEffect to display the user updates
   useEffect(() => {
     loadMedicine();
     loadClocks();
   }, []);
 
+  // Render
   return (
     <div className="footerFriend">
       <div className="is-container columns is-multiline mainContainer">
