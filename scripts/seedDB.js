@@ -14,7 +14,7 @@ const medicationSeed = [
     purpose:
       "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
     quantity: 30,
-    unit: "tablet(s)",
+    unit: "tablets",
   },
   {
     name: "Quetiapina XR",
@@ -23,7 +23,7 @@ const medicationSeed = [
     purpose:
       "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
     quantity: 60,
-    unit: "tablet(s)",
+    unit: "tablets",
   },
   {
     name: "Sertralina",
@@ -32,7 +32,7 @@ const medicationSeed = [
     purpose:
       "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
     quantity: 180,
-    unit: "tablet(s)",
+    unit: "tablets",
   },
 ];
 

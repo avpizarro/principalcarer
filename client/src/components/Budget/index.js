@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Bank from "../../images/pigBank.png";
 import "./style.css";
 
+import Chart from "../Chart";
+
 function Budget({
   children,
   showBudget,
@@ -144,7 +146,7 @@ function Budget({
                   </span>
                 </button>
               </div>
-
+              <Chart />
               <canvas id="myChart"></canvas>
             </div>
             {/* -----END------ */}

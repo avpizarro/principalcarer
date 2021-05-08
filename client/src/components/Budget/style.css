@@ -2,20 +2,6 @@
   min-height: "60px";
 }
 
-table {
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
 .error {
   color: red;
 }
@@ -32,18 +18,6 @@ tr:nth-child(even) {
   text-decoration: underline;
 }
 
-.form {
-  margin-top: 25px;
-  width: 100%;
-}
-
-.transactions {
-  text-align: left;
-  max-height: 300px;
-  overflow: auto;
-  width: 90%;
-  margin: 0 auto;
-}
 
 @media screen and (min-width:768px) and (max-width:934px) {
 .closedBudget {
