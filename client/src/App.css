@@ -4,10 +4,18 @@
     url(./fonts/Akzidenz-grotesk-bold.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "Akzidenz-Light";
+  src: local("Akzidenz-Light"),
+    url(./fonts/Akzidenz-grotesk-light.ttf) format("truetype");
+}
+
 body {
   font-family: "Akzidenz", sans-serif;
   position: relative;
   overflow: auto;
+  /* background-color: #f8f8ff; */
+  /* z-index: -2; */
 }
 
 .footerFriend {
@@ -21,36 +29,32 @@ body {
 }
 
 .componentContainer {
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 20px;
-    border-style: solid;
-    border-width: 4px;
-    border-color: black;
-    border-radius: 20px;
-    min-height:60px;
-    min-width: 200px;
-    position: relative;
-    padding: 0;
-  }
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  border-radius: 20px;
+  min-height: 60px;
+  min-width: 200px;
+  position: relative;
+  padding: 0;
+}
 
-  .select:not(.is-multiple):not(.is-loading)::after {
-    border-color: #9c56f3;
-    right: 1.125em;
-    z-index: 4;
-  }
-  
-  .clockImage {
-    max-height: "20px";
-    max-width: "20px";
-    position: "relative";
-    top: "5px";
-  }
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: #9c56f3;
+  right: 1.125em;
+  z-index: 4;
+}
 
-  /* .navbar-link:not(.is-arrowless)::after {
-      border-color: #8745dd;
-    }
+.clockImage {
+  max-height: "20px";
+  max-width: "20px";
+  position: "relative";
+  top: "5px";
+}
 
-    .navbar-item:hover, .navbar-item:focus, .navbaritem:active{
-      border-color: #8745dd !important;
-    } */
+button > span {
+  pointer-events: none;
+} 

@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
-import axios from "axios";
 import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
@@ -20,9 +19,9 @@ import Medication from "../components/Medication";
 import Shopping from "../components/Shopping";
 import SocialLife from "../components/SocialLife";
 import Tasks from "../components/Tasks";
+import AddMedication from "../components/AddMedication";
 
 function MainContainer() {
-
   // Set the states and functions to expand the components on click
   const [previousHeight, setPreviousHeight] = useState("");
   const [height, setHeight] = useState("");
@@ -35,12 +34,12 @@ function MainContainer() {
     const elementToOpenId = e.target.parentNode.getAttribute("id");
     setComponentId(elementToOpenId);
     setPreviousHeight(e.target.parentNode.clientHeight);
-    const component = e.target.parentNode;
-    if (component.clientWidth > component.clientHeight) {
-      setHeight(`${component.clientWidth}px`);
-      setExpand(true);
-      console.log("Expand HEIGHT:", e.target.parentNode.clientHeight);
-    }
+    // const component = e.target.parentNode;
+    // if (component.clientWidth > component.clientHeight) {
+    // setHeight(`${component.clientWidth}px`);
+    setHeight(`${600}px`);
+    setExpand(true);
+    // }
     if (elementToOpenId === "medication") {
       setShowMed(true);
       setExpand(true);
@@ -57,7 +56,6 @@ function MainContainer() {
       setShowCanvas(true);
       setExpand(true);
     }
-
   };
 
   const CloseComponent = (e) => {
@@ -66,22 +64,28 @@ function MainContainer() {
     setComponentId(elementToCloseId);
     console.log("This is the previous height: ", previousHeight);
     // setHeight(previousHeight);
-    setHeight("210px");
-    setExpand(false);
-    setShowMed(false);
-    setShowAddClock(false);
-    setShowBudget(false);
-    setShowCanvas(false);
-
+    if (elementToCloseId === "shopping") {
+      setHeight("120px");
+      setExpand(false);
+    } else if (elementToCloseId === "clock") {
+      setHeight("230px");
+      setExpand(false);
+      setShowAddClock(false);
+    } else {
+      setHeight("60px");
+      setExpand(false);
+      setShowMed(false);
+      setShowBudget(false);
+      setShowCanvas(false);
+    }
   };
 
-// Define Budget State
-const [budget, setBudget] = useState([]);
-const [showBudget, setShowBudget] = useState(false);
+  // Define Budget State
+  const [budget, setBudget] = useState([]);
+  const [showBudget, setShowBudget] = useState(false);
 
-
-// Define Canvas States
-const [showCanvas, setShowCanvas] = useState(false);
+  // Define Canvas States
+  const [showCanvas, setShowCanvas] = useState(false);
 
   // Define Medication State
   const [medication, setMedication] = useState([]);
@@ -106,8 +110,7 @@ const [showCanvas, setShowCanvas] = useState(false);
 
   // Get the Medication List
   function loadMedicine() {
-    axios
-      .get("api/medication")
+    API.getMedication()
       .then((res) => {
         // console.log(res.data);
         const medicationList = res.data.map((item) => {
@@ -117,6 +120,8 @@ const [showCanvas, setShowCanvas] = useState(false);
             dosage: item.dosage,
             purpose: item.purpose,
             quantity: item.quantity,
+            unit: item.unit,
+            id: item._id,
           };
         });
         setMedication(medicationList);
@@ -124,41 +129,110 @@ const [showCanvas, setShowCanvas] = useState(false);
       .catch((err) => console.log(err));
   }
 
+  const [medName, setMedName] = useState("");
+  const [medDose, setMedDose] = useState("");
+  const [medDosage, setMedDosage] = useState("");
+  const [medQuantity, setMedQuantity] = useState("");
+  const [medUnit, setMedUnit] = useState("");
+
+  // Set functions to get the User inputs
+  const handleMedNameChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setMedName(e.target.value);
+  };
+
+  const handleMedDoseChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setMedDose(e.target.value);
+  };
+  const handleMedDosageChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setMedDosage(e.target.value);
+  };
+  const handleMedQuantityChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setMedQuantity(e.target.value);
+  };
+  const handleMedUnit = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setMedUnit(e.target.value);
+  };
+
+  // Submit the User input to save the new medication
+  const submitMedData = async (e) => {
+    e.preventDefault();
+    const medToAdd = {
+      name: medName,
+      dose: medDose,
+      dosage: medDosage,
+      quantity: medQuantity,
+      unit: medUnit,
+    };
+    API.saveMedication(medToAdd);
+    await loadMedicine();
+    setShowMedChildren("showMed");
+  };
+
+  // Function to delete a clock and update the clocks displayed
+  const removeMedication = (e) => {
+    const medToDeleteId = e.target.parentNode.getAttribute("id");
+    console.log(e.target.parentNode);
+    console.log(
+      "Cliked and will remove: ",
+      e.target.parentNode.getAttribute("id")
+    );
+    API.deleteMedication(medToDeleteId);
+    const medicationsToDisplay = medication.filter(
+      (med) => med.id !== medToDeleteId
+    );
+    console.log(medicationsToDisplay);
+    setMedication(medicationsToDisplay);
+    setReload(true);
+    loadMedicine();
+    // setShowMedChildren("showMed");
+  };
+
   // Set states for Clock component
   const [showAddClock, setShowAddClock] = useState(false);
   const [city, setCity] = useState("");
-  const [timezone, setTimezone] = useState("");
   const [clocks, setClocks] = useState([]);
   const [clockHelp, setClockHelp] = useState(false);
-  
+
   // Get the clocks from DB and create function to display them
   function loadClocks() {
     API.getClocks()
-    .then((res) => {
-      const clocksList = res.data.map((item) => {
-        return {
-          city: item.city,
-          timezone: item.timezone,
-          id: item._id,
-        };
-      });
-      setClocks(clocksList);
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        const clocksList = res.data.map((item) => {
+          return {
+            city: item.city,
+            timezone: item.timezone,
+            id: item._id,
+          };
+        });
+        setClocks(clocksList);
+      })
+      .catch((err) => console.log(err));
   }
-  
+
   // Function to save a new clock
   function addClock(clock) {
     API.saveClock(clock);
   }
-  
+
+  const [reload, setReload] = useState(false);
   // Function to delete a clock and update the clocks displayed
   function removeClock(e) {
     const clockToDeleteId = e.target.parentNode.getAttribute("id");
     API.deleteClock(clockToDeleteId);
+    setReload(true);
     loadClocks();
   }
-  
+
   // Get timeZones for new clock and save new clock
   const getCityTimezone = () => {
     if (city) {
@@ -170,7 +244,6 @@ const [showCanvas, setShowCanvas] = useState(false);
         return null;
       });
       if (chosenTimeZone[0]) {
-        setTimezone(chosenTimeZone[0]);
         addClock({
           city: city.replace("_", " "),
           timezone: chosenTimeZone[0],
@@ -185,7 +258,7 @@ const [showCanvas, setShowCanvas] = useState(false);
     }
   };
 
-  // Function to display message if no timezone or city found 
+  // Function to display message if no timezone or city found
   const showChildrenHelp = () => {
     if (!clockHelp) {
       return null;
@@ -238,6 +311,164 @@ const [showCanvas, setShowCanvas] = useState(false);
     setCity(chosenCity.replace(" ", "_"));
   };
 
+  const [showMedChildren, setShowMedChildren] = useState("showMed");
+
+  const clickToShowAddMed = () => {
+    console.log("Clicked");
+    setShowMedChildren("showAddMedication");
+  };
+
+  const clickToShowRemoveMed = () => {
+    setShowMedChildren("showRemoveMedication");
+  };
+
+  const MedChildrenToShow = () => {
+    if (showMedChildren === "showMed") {
+      return (
+        <div className="table-container column is-12">
+          <ul style={{ margin: "auto", maxWidth: "75%" }}>
+            {medication.map((item) => {
+              const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
+              const dosage = `${item.dosage}`;
+              return (
+                <div key={uuid()} id={item.id}>
+                  <li
+                    style={{
+                      fontFamily: "Akzidenz-Light",
+                      textAlign: "center",
+                    }}
+                    className="is-size-7"
+                  >
+                    {text}
+                  </li>
+                  <li
+                    style={{
+                      fontFamily: "Akzidenz-Light",
+                      textAlign: "center",
+                    }}
+                    className="is-size-7 mb-4"
+                  >
+                    {dosage}
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
+          <button
+            style={{
+              borderStyle: "none",
+              background: "#F9F9F9",
+              margin: "5px",
+            }}
+            onClick={clickToShowAddMed}
+          >
+            <span>
+              <FontAwesomeIcon icon="plus" size="1x" />
+            </span>
+          </button>
+          <button
+            style={{
+              borderStyle: "none",
+              background: "#F9F9F9",
+              margin: "5px",
+            }}
+            onClick={clickToShowRemoveMed}
+          >
+            <span>
+              <FontAwesomeIcon icon="minus" size="1x" />
+            </span>
+          </button>
+        </div>
+      );
+    }
+    if (showMedChildren === "showAddMedication") {
+      return (
+        <AddMedication
+          changeName={handleMedNameChange}
+          changeDose={handleMedDoseChange}
+          changeDosage={handleMedDosageChange}
+          changeQuantity={handleMedQuantityChange}
+          changeUnit={handleMedUnit}
+          submitMedData={submitMedData}
+        />
+      );
+    } else if (showMedChildren === "showRemoveMedication") {
+      return (
+        <div className="table-container column is-12">
+          <ul style={{ margin: "auto", maxWidth: "75%" }}>
+            {medication.map((item) => {
+              const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
+              const dosage = `${item.dosage}`;
+              return (
+                <>
+                  <div key={uuid()} id={item.id}>
+                    <li
+                      style={{
+                        fontFamily: "Akzidenz-Light",
+                        textAlign: "center",
+                      }}
+                      className="is-size-7"
+                    >
+                      {text}
+                    </li>
+                    <li
+                      style={{
+                        fontFamily: "Akzidenz-Light",
+                        textAlign: "center",
+                      }}
+                      className="is-size-7"
+                    >
+                      {dosage}
+                    </li>
+                    <button
+                      style={{
+                        borderStyle: "none",
+                        background: "#F9F9F9",
+                        margin: "5px",
+                        width: "20px",
+                        height: "20px",
+                      }}
+                      id={item.id}
+                      onClick={removeMedication}
+                    >
+                      <span>
+                        <FontAwesomeIcon
+                          icon="minus"
+                          size="1x"
+                          style={{ marginBottom: "10px" }}
+                        />
+                      </span>
+                    </button>
+                  </div>
+                </>
+              );
+            })}
+          </ul>
+          <button
+            style={{
+              borderStyle: "none",
+              background: "transparent",
+              margin: "0px",
+              width: "20px",
+              height: "20px",
+            }}
+            onClick={() => {
+              setShowMedChildren("showMed");
+            }}
+          >
+            <span>
+              <FontAwesomeIcon
+                icon="long-arrow-alt-left"
+                size="1x"
+                style={{ marginBottom: "10px" }}
+              />
+            </span>
+          </button>
+        </div>
+      );
+    }
+  };
+
   // Function to display the main components
   const modules = [
     { module: <Home />, id: "home", ref: homeRef },
@@ -256,33 +487,7 @@ const [showCanvas, setShowCanvas] = useState(false);
     },
     { module: <Calendar />, id: "calendar", ref: calendarRef },
     {
-      module: (
-        <Medication
-          showMed={showMed}
-          children={
-            <div className="table-container">
-              <table className="table">
-                <tbody>
-                  {medication.map((item) => {
-                    return (
-                      <tr key={uuid()}>
-                        <td>{item.name}</td>
-                        <td>{item.dose}</td>
-                        <td>
-                          {item.dosage.amount}
-                          <span>every</span>
-                          {item.dosage.time}
-                        </td>
-                        <td>{item.quantity}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          }
-        />
-      ),
+      module: <Medication showMed={showMed} children={MedChildrenToShow()} />,
       id: "medication",
       ref: medicationRef,
     },
@@ -293,7 +498,11 @@ const [showCanvas, setShowCanvas] = useState(false);
     },
     { module: <Shopping />, id: "shopping", ref: shoppingRef },
     { module: <Tasks />, id: "tasks", ref: tasksRef },
-    { module: <Budget  showBudget={showBudget}/>, id: "budget", ref: budgetRef },
+    {
+      module: <Budget showBudget={showBudget} />,
+      id: "budget",
+      ref: budgetRef,
+    },
     { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
   ];
 
@@ -301,7 +510,7 @@ const [showCanvas, setShowCanvas] = useState(false);
   useEffect(() => {
     loadMedicine();
     loadClocks();
-  }, []);
+  }, [reload]);
 
   // Render
   return (
@@ -330,7 +539,7 @@ const [showCanvas, setShowCanvas] = useState(false);
           className="column is-12 componentContainer"
           id={"parent"}
         >
-          <Canvas showCanvas={showCanvas}/>
+          <Canvas showCanvas={showCanvas} />
           <ExpandButton
             btnId={"btnparent"}
             Expand={Expand}

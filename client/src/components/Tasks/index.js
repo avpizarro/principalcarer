@@ -1,4 +1,3 @@
-import Book from "../../images/book.gif";
 import "./style.css";
 
 function Tasks({ children, showTask }) {

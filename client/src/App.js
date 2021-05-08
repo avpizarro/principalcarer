@@ -14,7 +14,9 @@ import {
   faUser,
   faClock,
   faMinus,
+  faLongArrowAltLeft,
 } from "@fortawesome/free-solid-svg-icons";
+
 // Import css framework
 import "bulma/css/bulma.css";
 
@@ -41,7 +43,8 @@ library.add(
   faCheck,
   faUser,
   faClock,
-  faMinus
+  faMinus,
+  faLongArrowAltLeft
 );
 
 function App() {
@@ -148,7 +151,7 @@ function App() {
     console.log("User to LOGIN Password", e.target.value);
     setLoginPassword(e.target.value);
   };
- // Submit the User input
+  // Submit the User input
   const loginSubmit = (e) => {
     e.preventDefault();
     const loginUser = {

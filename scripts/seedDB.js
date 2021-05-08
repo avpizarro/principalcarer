@@ -10,22 +10,26 @@ const medicationSeed = [
   {
     name: "Quetiapina",
     dose: "100mg",
-    dosage: {
-      amount: 1,
-      time: "8am",
-    },
-    purpose: "",
+    dosage: "2 tablets every 24 hours",
+    purpose: "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
     quantity: 30,
+    unit: "tablet(s)"
   },
   {
-    name: "Quetiapina",
+    name: "Quetiapina XR",
     dose: "200mg",
-    dosage: {
-      amount: 1,
-      time: "8am",
-    },
-    purpose: "",
+    dosage: "1 daily tablet at 7pm",
+    purpose: "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
     quantity: 60,
+    unit: "tablet(s)"
+  },
+  {
+    name: "Sertralina",
+    dose: "50mg",
+    dosage: "2 tables every 24 hours",
+    purpose: "Quetiapine rebalances dopamine and serotonin to improve thinking, mood, and behavior.",
+    quantity: 180,
+    unit: "tablet(s)"
   },
 ];
 

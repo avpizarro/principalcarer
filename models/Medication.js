@@ -12,22 +12,8 @@ const medicationSchema = new mongoose.Schema({
     default: "",
   },
   dosage: {
-    amount: {
-      type: Number,
-      default: 0,
-    },
-    unit: {
-      type: String,
-      default: "",
-    },
-    time: {
-      type: Number,
-      default: 0,
-    },
-    timeUnit: {
-      type: String,
-      default: "",
-    },
+   type: String,
+   default: "",
   },
   purpose: {
     type: String,
@@ -36,6 +22,10 @@ const medicationSchema = new mongoose.Schema({
   quantity: {
     type: Number,
     default: 0,
+  },
+  unit: {
+    type: String,
+    default: "",
   },
 });
 
