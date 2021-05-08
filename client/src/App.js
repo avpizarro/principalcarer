@@ -13,6 +13,7 @@ import {
   faCheck,
   faUser,
   faClock,
+  faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 // Import css framework
 import "bulma/css/bulma.css";
@@ -39,7 +40,8 @@ library.add(
   faLock,
   faCheck,
   faUser,
-  faClock
+  faClock,
+  faMinus
 );
 
 function App() {

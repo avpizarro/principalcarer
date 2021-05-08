@@ -2,7 +2,7 @@ import "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
 
-function Clock({ showAddClock, children, changeCity, getCityTimezone }) {
+function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp }) {
   if (!showAddClock) {
     return (
       <div>
@@ -55,6 +55,7 @@ function Clock({ showAddClock, children, changeCity, getCityTimezone }) {
               <FontAwesomeIcon icon="plus" size="1x" />
             </button>
           </div>
+          {childrenHelp}
         </div>
       </div>
     </div>

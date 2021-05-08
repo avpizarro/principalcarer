@@ -4,7 +4,9 @@ import axios from "axios";
 import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import "./style.css";
 import API from "../utils/API";
 import ExpandButton from "../components/ExpandButton";
 import Canvas from "../components/Canvas";
@@ -43,7 +45,6 @@ function MainContainer() {
     }
     if (elementToOpenId === "clock") {
       setShowAddClock(true);
-      setShowNewClock(true);
       setExpand(true);
     }
   };
@@ -69,12 +70,6 @@ function MainContainer() {
       document.getElementById(componentId).style.height = height;
     }
   }, [height]);
-
-  useEffect(() => {
-    loadMedicine();
-    loadClocks();
-    // console.log("Console.log medication:", medication);
-  }, []);
 
   const homeRef = useRef();
   const clockRef = useRef();
@@ -115,17 +110,17 @@ function MainContainer() {
   const [showAddClock, setShowAddClock] = useState(false);
   const [city, setCity] = useState(initialCity || "");
   const [timezone, setTimezone] = useState(initialTimezone || "");
-  const [showNewClock, setShowNewClock] = useState(true);
 
   const [clocks, setClocks] = useState([]);
+  const [clockHelp, setClockHelp] = useState(false);
 
-  useEffect(() => {
-    if (!city) {
-      setShowNewClock(false);
-    }
-  })
+  // useEffect(() => {
+  //   if (!city) {
+  //     setShowNewClock(false);
+  //   }
+  // });
 
-  function loadClocks () {
+  function loadClocks() {
     API.getClocks()
       .then((res) => {
         console.log(res.data);
@@ -133,6 +128,7 @@ function MainContainer() {
           return {
             city: item.city,
             timezone: item.timezone,
+            id: item._id
           };
         });
         setClocks(clocksList);
@@ -140,42 +136,86 @@ function MainContainer() {
       .catch((err) => console.log(err));
   }
 
-function addClock (clock) {
-  axios.post("api/clock", clock)
-}
-  
+  function addClock(clock) {
+    API.saveClock(clock);
+  }
+
+  function removeClock(e) {
+    const clockToDeleteId = e.target.parentNode.getAttribute("id")
+    console.log("I am being clicked: ",e.target.parentNode);
+    console.log(clockToDeleteId)
+    API.deleteClock(clockToDeleteId)
+    loadClocks();
+  }
+
   const getCityTimezone = () => {
     if (city) {
       const allTimeZones = moment.tz.names();
-      console.log(allTimeZones);
       const chosenTimeZone = allTimeZones.filter((tz) => {
         if (tz.includes(city)) {
           return tz;
         }
         return null;
       });
+      if(chosenTimeZone[0]){
       console.log(chosenTimeZone);
       setTimezone(chosenTimeZone[0]);
-      setShowNewClock(true);
       localStorage.setItem("city", city);
       localStorage.setItem("timezone", chosenTimeZone[0]);
+      addClock({
+        city: city.replace("_", " "),
+        timezone: chosenTimeZone[0],
+      });
+      setClockHelp(false);
+      loadClocks();
     } else {
-      return "Choose a different City";
+      setClockHelp(true)
     }
-    console.log(showNewClock);
+    } else {
+      return setClockHelp(true)
+      ;
+    }
   };
 
-  const showClockChildren = () => {
-    if (!showNewClock) {
-      return null;
+  const showChildrenHelp = () => {
+    if(!clockHelp) {
+      return null
+    } else {
+      return (<p class="help">Choose another city</p>)
     }
-    return (
-      clocks.map(clock => { return (
-      <OneClock
-        city={clock.city}
-        children={<Moment format="hh:mm a" tz={clock.timezone} />}
-      />
-    )}));
+  }
+  const showClockChildren = () => {
+    if (!showAddClock) {
+      return clocks.map((clock) => {
+        return (
+          <OneClock
+          id={clock.id}
+            city={clock.city}
+            children={<Moment format="hh:mm a" tz={clock.timezone} />}
+          />
+        );
+      });
+    }
+    return clocks.map((clock) => {
+      return (
+        <OneClock
+        id={clock.id}
+          city={clock.city}
+          children={
+            <>
+              <Moment format="hh:mm a" tz={clock.timezone} />
+              <br></br> <button
+              style={{ borderStyle: "none", background: "white" }}
+              onClick={removeClock}
+            ><span>
+              <FontAwesomeIcon icon="minus" />
+              </span>
+              </button>
+            </>
+          }
+        />
+      );
+    });
   };
 
   const changeCity = (e) => {
@@ -194,6 +234,7 @@ function addClock (clock) {
           children={showClockChildren()}
           changeCity={changeCity}
           getCityTimezone={getCityTimezone}
+          childrenHelp={showChildrenHelp()}
         />
       ),
       id: "clock",
@@ -243,6 +284,11 @@ function addClock (clock) {
     { module: <Budget />, id: "budget", ref: budgetRef },
     { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
   ];
+
+  useEffect(() => {
+    loadMedicine();
+    loadClocks();
+  }, []);
 
   return (
     <div className="footerFriend">

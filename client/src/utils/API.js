@@ -24,7 +24,7 @@ export default {
   },
   // Saves a clock to the database
   saveClock: function (clockData) {
-    return axios.post("/api/clock", clockData);
+    return axios.post("/api/clock/post", clockData);
   },
 
 };
