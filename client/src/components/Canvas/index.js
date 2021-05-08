@@ -1,6 +1,6 @@
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
-import Sun from "../../images/26.png";
+import Sun from "../../images/sun.png";
 
 const socket = socketIOClient();
 
