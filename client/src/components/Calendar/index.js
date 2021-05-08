@@ -7,7 +7,7 @@ function Calendar({ children, showCalendar }) {
       <div className="calendar">
         <div
           className="columns is-12 is-container is-vcentered is-centered is-mobile is-multiline"
-          style={{ marginTop: "0px" }}
+          style={{ marginTop: "3px" }}
         >
           <img
             className="ml-3"
@@ -22,7 +22,7 @@ function Calendar({ children, showCalendar }) {
             }}
           />
           <div
-            className="column is-6 is-centered is-vcentered has-text-weight-bolds pl-0, pr-0 mt-2"
+            className="column is-6 is-centered is-vcentered has-text-weight-bolds"
             style={{ color: "black", textAlign: "center" }}
           >
             <div>
@@ -37,7 +37,7 @@ function Calendar({ children, showCalendar }) {
     <div className="calendar">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
-        style={{ marginTop: "0px" }}
+        style={{ marginTop: "3px" }}
       >
         <img
           className="ml-3"

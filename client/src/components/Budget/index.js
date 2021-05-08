@@ -4,10 +4,10 @@ import "./style.css";
 function Budget({ children, showBudget }) {
   if (!showBudget) {
     return (
-      <div className="budget">
+      <div className="budget closedBudget">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
-          style={{ marginTop: "0px" }}
+          style={{ marginTop: "3px" }}
         >
           <img
             className="ml-3"
@@ -21,7 +21,7 @@ function Budget({ children, showBudget }) {
               zIndex: 1000,
             }}/>
           <div
-            className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+            className="column is-6 is-centered has-text-weight-bolds"
             style={{ color: "black", textAlign: "center" }}
           >
             <div>
@@ -36,7 +36,7 @@ function Budget({ children, showBudget }) {
     <div className="budget">
     <div
       className="columns is-12 is-container is-centered is-mobile is-multiline"
-      style={{ marginTop: "0px" }}
+      style={{ marginTop: "3px" }}
     >
       <img
         className="ml-3"

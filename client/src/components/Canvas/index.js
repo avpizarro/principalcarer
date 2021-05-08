@@ -4,7 +4,7 @@ import Sun from "../../images/26.png";
 
 const socket = socketIOClient();
 
-function Canvas() {
+function Canvas({ showCanvas}) {
   socket.on("message", (message) => console.log(message));
   socket.emit("clientMessage", "I am here");
 
@@ -73,6 +73,36 @@ function Canvas() {
   socket.on("mouse", (message) => (mouseCoordinates = message));
   socket.on("square", (message) => (squareLocation = message));
 
+  if(!showCanvas) {
+    return (
+      <div className="canvas">
+      <div
+        className="columns is-12 is-container is-centered is-mobile is-multiline"
+        style={{ marginTop: "3px" }}
+      >
+        <img
+          className="ml-3"
+          src={Sun}
+          alt="Sun"
+          style={{
+            height: "50px",
+            position: "absolute",
+            left: "0px",
+            bottom: "2px",
+            zIndex: 1000,
+          }}/>
+        <div
+          className="column is-6 is-centered has-text-weight-bolds"
+          style={{ color: "black", textAlign: "center" }}
+        >
+          <div>
+            <div>Canvas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    )
+  }
   return (
     <Sketch
       setup={setup}

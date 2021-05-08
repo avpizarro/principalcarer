@@ -22,6 +22,8 @@ import SocialLife from "../components/SocialLife";
 import Tasks from "../components/Tasks";
 
 function MainContainer() {
+
+  // Set the states and functions to expand the components on click
   const [previousHeight, setPreviousHeight] = useState("");
   const [height, setHeight] = useState("");
 
@@ -47,6 +49,15 @@ function MainContainer() {
       setShowAddClock(true);
       setExpand(true);
     }
+    if (elementToOpenId === "budget") {
+      setShowBudget(true);
+      setExpand(true);
+    }
+    if (elementToOpenId === "parent") {
+      setShowCanvas(true);
+      setExpand(true);
+    }
+
   };
 
   const CloseComponent = (e) => {
@@ -54,12 +65,23 @@ function MainContainer() {
     const elementToCloseId = e.target.parentNode.getAttribute("id");
     setComponentId(elementToCloseId);
     console.log("This is the previous height: ", previousHeight);
-    setHeight(previousHeight);
+    // setHeight(previousHeight);
     setHeight("210px");
     setExpand(false);
     setShowMed(false);
     setShowAddClock(false);
+    setShowBudget(false);
+    setShowCanvas(false);
+
   };
+
+// Define Budget State
+const [budget, setBudget] = useState([]);
+const [showBudget, setShowBudget] = useState(false);
+
+
+// Define Canvas States
+const [showCanvas, setShowCanvas] = useState(false);
 
   // Define Medication State
   const [medication, setMedication] = useState([]);
@@ -271,7 +293,7 @@ function MainContainer() {
     },
     { module: <Shopping />, id: "shopping", ref: shoppingRef },
     { module: <Tasks />, id: "tasks", ref: tasksRef },
-    { module: <Budget />, id: "budget", ref: budgetRef },
+    { module: <Budget  showBudget={showBudget}/>, id: "budget", ref: budgetRef },
     { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
   ];
 
@@ -308,7 +330,7 @@ function MainContainer() {
           className="column is-12 componentContainer"
           id={"parent"}
         >
-          <Canvas />
+          <Canvas showCanvas={showCanvas}/>
           <ExpandButton
             btnId={"btnparent"}
             Expand={Expand}

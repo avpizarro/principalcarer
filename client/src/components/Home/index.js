@@ -1,16 +1,46 @@
-import home from "../../images/house.gif";
+import "./style.css";
 
-function Home() {
+
+function Home({ children, showHome }) {
+  if (!showHome) {
   return (
-    <div>
-      <img
-        className="ml-3"
-        src={home}
-        alt="home"
-        style={{ height: "50px", width: "50px" }}
-      />
+    <div className="home">
+    <div
+      className="columns is-12 is-container is-centered is-mobile is-multiline"
+      style={{ marginTop: "3px" }}
+    >
+      <div
+        className="column is-12 is-centered has-text-weight-bolds"
+        style={{ color: "black", textAlign: "center" }}
+      >
+        <div>
+          <div>Home</div>
+        </div>
+      </div>
     </div>
-  );
+  </div>
+);
+}
+
+// return (
+  <div className="home">
+    <div
+      className="columns is-12 is-container is-centered is-mobile is-multiline"
+      style={{ marginTop: "3px" }}
+    >
+      <div
+        className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+        style={{ color: "black", textAlign: "center" }}
+      >
+        <div>
+          <div>Home</div>
+          {children}
+        </div>
+      </div>
+    </div>
+  </div>
+
+// );
 }
 
 export default Home;

@@ -1,0 +1,10 @@
+@media screen and (min-width:1167px) and (max-width:1400px) {
+.closedMessage {
+  margin-left: 80px;
+}
+}
+@media screen and (min-width:768px) and (max-width:934px) {
+.closedMessage {
+  margin-left: 80px;
+}
+}

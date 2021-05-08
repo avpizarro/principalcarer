@@ -1,4 +1,3 @@
-// import Pill from "../../images/pill.gif";
 import "./style.css";
 
 function Medication({ children, showMed }) {
@@ -6,15 +5,15 @@ function Medication({ children, showMed }) {
     return (
       <div className="medication">
         <div
-          className="columns is-12 is-container is-centered is-mobile is-multiline"
-          style={{ marginTop: "0px" }}
+          className="columns is-12 is-container is-centered is-mobile is-multiline medicationTitle"
+          style={{ marginTop: "3px" }}
         >
           <div
-            className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+            className="column is-12 is-centered has-text-weight-bolds"
             style={{ color: "black", textAlign: "center" }}
           >
             <div>
-              <div>Medication List</div>
+              <div>Medication</div>
             </div>
           </div>
         </div>
@@ -23,22 +22,16 @@ function Medication({ children, showMed }) {
   }
   return (
     <div className="medication">
-      {/* <img
-        className="ml-3"
-        src={Pill}
-        alt="Pill"
-        style={{ height: "50px", width: "50px" }}
-      /> */}
       <div
-        className="columns is-12 is-container is-centered is-mobile is-multiline"
-        style={{ marginTop: "0px" }}
+        className="columns is-12 is-container is-centered is-mobile is-multiline medicationTitle"
+        style={{ marginTop: "3px" }}
       >
         <div
           className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-4"
           style={{ color: "black", textAlign: "center" }}
         >
           <div>
-            <div className="mb-4">Medication List</div>
+            <div className="mb-4">Medication</div>
             {children}
           </div>
         </div>

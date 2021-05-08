@@ -1,0 +1,19 @@
+.entertainemet {
+  background-image: url("../../images/compu.gif");
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position-x: 0.75rem;
+  min-height: "60px";
+}
+
+@media  (min-width:1167px) {
+  .entertainemetTitle {
+    margin-left: 30px;
+  }
+  }
+@media  screen and (min-width:768px) and (max-width:1166px) {
+  .entertainemetTitle {
+    margin-left: 20px;
+  }
+  }
+
