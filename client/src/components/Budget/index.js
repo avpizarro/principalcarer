@@ -1,7 +1,16 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Bank from "../../images/pigBank.png";
 import "./style.css";
 
-function Budget({ children, showBudget }) {
+function Budget({
+  children,
+  showBudget,
+  addFunds,
+  substractFunds,
+  childrenHelp,
+  changeName,
+  changeAmount,
+}) {
   if (!showBudget) {
     return (
       <div className="budget closedBudget">
@@ -19,7 +28,8 @@ function Budget({ children, showBudget }) {
               bottom: "-10px",
               left: "-5px",
               zIndex: 1000,
-            }}/>
+            }}
+          />
           <div
             className="column is-6 is-centered has-text-weight-bolds"
             style={{ color: "black", textAlign: "center" }}
@@ -34,32 +44,114 @@ function Budget({ children, showBudget }) {
   }
   return (
     <div className="budget">
-    <div
-      className="columns is-12 is-container is-centered is-mobile is-multiline"
-      style={{ marginTop: "3px" }}
-    >
-      <img
-        className="ml-3"
-        src={Bank}
-        alt="Bank"
-        style={{
-          height: "100px",
-          position: "absolute",
-          bottom: "-10px",
-          left: "-5px",
-          zIndex: 1000,
-        }}/>
       <div
-        className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
-        style={{ color: "black", textAlign: "center" }}
+        className="columns is-12 is-container is-centered is-mobile is-multiline"
+        style={{ marginTop: "3px" }}
       >
-        <div>
-          <div>Budget</div>
-          {children}
+        <img
+          className="ml-3"
+          src={Bank}
+          alt="Bank"
+          style={{
+            height: "100px",
+            position: "absolute",
+            bottom: "-10px",
+            left: "-5px",
+            zIndex: 1000,
+          }}
+        />
+        <div
+          className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+          style={{ color: "black", textAlign: "center" }}
+        >
+          <div>
+            <div>Budget</div>
+
+            {/* -------------Copy from homework ------------------------------ */}
+            <div className="wrapper">
+              <div className="total">
+                <div className="total">
+                  Your total is: $<span id="total">0</span>
+                </div>
+              </div>
+
+              <div style={{ width: "80%", margin: "auto", marginTop: "20px" }}>
+                <div
+                  className="field"
+                  style={{
+                    borderBottomColor: "black",
+                    borderBottom: "2px",
+                    borderBottomStyle: "solid",
+                  }}
+                >
+                  <p className="control" style={{ width: "100%" }}>
+                    <input
+                      className="input mb-0 pb-0 addMedInput"
+                      type="text"
+                      placeholder="Transaction name"
+                      onChange={changeName}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        boxShadow: "none",
+                        borderRadius: "0px",
+                        borderStyle: "none",
+                      }}
+                    />
+                  </p>
+                </div>
+                <p class="help">{childrenHelp}</p>
+
+                <div
+                  className="field has-addons addMedField"
+                  style={{
+                    borderBottomColor: "black",
+                    borderBottom: "2px",
+                    borderBottomStyle: "solid",
+                  }}
+                >
+                  <p className="control" style={{ width: "100%" }}>
+                    <input
+                      className="input mb-0 pb-0 addMedInput"
+                      type="text"
+                      placeholder="Transaction Amount"
+                      onChange={changeAmount}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        boxShadow: "none",
+                        borderRadius: "0px",
+                        borderStyle: "none",
+                      }}
+                    />
+                  </p>
+                </div>
+                <p class="help">{childrenHelp}</p>
+                <button
+                  style={{ borderStyle: "none", background: "white" }}
+                  onClick={addFunds}
+                >
+                  <span>
+                    <FontAwesomeIcon icon="plus" size="1x" />
+                  </span>
+                </button>
+                <button
+                  style={{ borderStyle: "none", background: "white" }}
+                  onClick={addFunds}
+                >
+                  <span>
+                    <FontAwesomeIcon icon="minus" size="1x" />
+                  </span>
+                </button>
+              </div>
+
+              <canvas id="myChart"></canvas>
+            </div>
+            {/* -----END------ */}
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
