@@ -93,19 +93,18 @@ function MainContainer() {
         console.log("Bugdet get route", res.data);
         const transactionList = res.data.map(({ name }) => name);
         const amountList = res.data.map(({ amount }) => parseInt(amount));
-        // let sum=0;
-        // const totalsArray = amountList.map((t) => {
-        //   sum += t.value;
-        //   console.log(sum);
-        //   return sum;
-        // });
-        // console.log("This is the totals Array: ", totalsArray());
+        let sum=0;
+        const totalsArray = amountList.map((t) => {
+          sum += t
+          return sum;
+        });
+        console.log("This is the totals Array: ", totalsArray);
         const transactionsChartData = {
           labels: transactionList,
           datasets: [
             {
               label: "Transactions",
-              data: amountList,
+              data: totalsArray,
               fill: false,
               backgroundColor: "rgb(250,67,195)",
               borderColor: "rgb(250,67,195)",
