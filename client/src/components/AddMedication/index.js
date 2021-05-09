@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./style.css";
 
 function AddMedication( {
   childrenHelp,

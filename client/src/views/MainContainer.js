@@ -60,6 +60,10 @@ function MainContainer() {
       setShowTasks(true);
       setExpand(true);
     }
+    if (elementToOpenId === "shopping") {
+      setShowShopping(true);
+      setExpand(true);
+    }
   };
 
   const CloseComponent = (e) => {
@@ -71,6 +75,7 @@ function MainContainer() {
     if (elementToCloseId === "shopping") {
       setHeight("120px");
       setExpand(false);
+      setShowShopping(false);
     } else if (elementToCloseId === "clock") {
       setHeight("230px");
       setExpand(false);
@@ -83,6 +88,57 @@ function MainContainer() {
       setShowCanvas(false);
       setShowTasks(false);
     }
+  };
+
+  // Set Shopping states
+  const [shopping, setShopping] = useState([]);
+  const [showShopping, setShowShopping] = useState(false);
+  const [shoppingName, setShoppingName] = useState("");
+  const [shoppingQuantity, setShoppingQuantity] = useState("");
+
+  // Get Shopping
+  function loadShopping() {
+    API.getShopping()
+      .then((res) => {
+        console.log(res.data);
+        const shoppingList = res.data.map((item) => {
+          return {
+            name: item.name,
+            quantity: item.quantity,
+            id: item._id,
+          };
+        });
+        setShopping(shoppingList);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const changeShoppingName = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setShoppingName(e.target.value);
+  };
+
+  const changeShoppingQuantity = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setShoppingQuantity(e.target.value);
+  };
+
+  const addShoppingData = async (e) => {
+    e.preventDefault();
+    const ShoppingToAdd = {
+      name: shoppingName,
+      quantity: shoppingQuantity,
+    };
+    API.saveShopping(ShoppingToAdd);
+    await loadShopping();
+  };
+
+  const removeShopping = async (e) => {
+    const shoppingToDeleteId = e.target.parentNode.getAttribute("id");
+    await API.deleteShopping(shoppingToDeleteId);
+    await loadShopping();
   };
 
   // Define Budget State
@@ -195,7 +251,6 @@ function MainContainer() {
         const tasksList = res.data.map((item) => {
           return {
             name: item.name,
-            dueDate: item.dueDate,
             id: item._id,
           };
         });
@@ -221,15 +276,8 @@ function MainContainer() {
 
   const removeTask = async (e) => {
     const taskToDeleteId = e.target.parentNode.getAttribute("id");
-    console.log("I am clocking this: ", e.target.parentNode);
-
-    console.log(
-      "Cliked and will remove: ",
-      e.target.parentNode.getAttribute("id")
-    );
     await API.deleteTask(taskToDeleteId);
     await loadTasks();
-    // setShowMedChildren("showMed");
   };
 
   // Get the Medication List
@@ -615,7 +663,52 @@ function MainContainer() {
       id: "entertainement",
       ref: entertainementRef,
     },
-    { module: <Shopping />, id: "shopping", ref: shoppingRef },
+    {
+      module: (
+        <Shopping
+          showShopping={showShopping}
+          changeName={changeShoppingName}
+          changeQuantity={changeShoppingQuantity}
+          submitData={addShoppingData}
+          children={
+            <div className="column is-12 mt-6">
+              <ul style={{ margin: "auto", maxWidth: "90%" }}>
+                {shopping.map((item) => {
+                  const text = `${item.name}: ${item.quantity}`;
+                  return (
+                    <div key={uuid()} className="mb-3">
+                      <li
+                        style={{
+                          fontFamily: "Akzidenz-Light",
+                          textAlign: "center",
+                        }}
+                        className="is-size-7"
+                        id={item.id}
+                      >
+                        {text}
+                      </li>
+                      <li id={item.id}>
+                        <button
+                          style={{ borderStyle: "none", background: "white" }}
+                          onClick={removeShopping}
+                        >
+                          <span id={item.id}>
+                            <FontAwesomeIcon icon="minus" />
+                          </span>
+                        </button>
+                      </li>
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          }
+        />
+      ),
+      id: "shopping",
+      ref: shoppingRef,
+    },
+
     {
       module: (
         <Tasks
@@ -636,15 +729,6 @@ function MainContainer() {
                         className="is-size-7"
                       >
                         {item.name}
-                      </li>
-                      <li
-                        style={{
-                          fontFamily: "Akzidenz-Light",
-                          textAlign: "center",
-                        }}
-                        className="is-size-7"
-                      >
-                        {item.dueDate}
                       </li>
                       <li id={item.id}>
                         <button
@@ -691,6 +775,7 @@ function MainContainer() {
     loadClocks();
     loadTransactions();
     loadTasks();
+    loadShopping();
   }, []);
 
   // Render
