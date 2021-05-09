@@ -1,7 +1,6 @@
 const express = require("express");
 // const jwt = require("jsonwebtoken");
 
-
 require("dotenv").config();
 const mongoose = require("mongoose");
 const app = express();
@@ -32,25 +31,20 @@ app.use("/api/budget", budget);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shopping);
 
-
 // DB config
 const db = require("./config/keys").mongoURI;
 
 // Connect to the Mongo DB
 mongoose
-  //   .connect(db)
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
+  .connect(db)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
+  // .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
 
 // Start the API Server
 const server = app.listen(PORT, () =>
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 );
-
-// app.listen(PORT, () =>
-//   console.log(`🌎 ==> API server now on port ${PORT}!`)
-// );
 
 const io = socketIo(server);
 
@@ -60,13 +54,15 @@ io.on("connection", (socket) => {
 
   socket.on("clientMessage", (message) => console.log(message));
 
-  socket.on("mouse", data => {
+  socket.on("mouse", (data) => {
     console.log(data);
-   socket.broadcast.emit("mouse", data)});
+    socket.broadcast.emit("mouse", data);
+  });
 
-   socket.on("square", data => {
+  socket.on("square", (data) => {
     console.log(data);
-   socket.broadcast.emit("square", data)});
+    socket.broadcast.emit("square", data);
+  });
 
-   socket.on("disconnect", () => console.log("Client disconnected"));
+  socket.on("disconnect", () => console.log("Client disconnected"));
 });
