@@ -82,7 +82,7 @@ const budgetSeed = [
     amount: -200,
   },
   {
-    name: "Health insurance",
+    name: "Health",
     amount: -100,
   },
   {

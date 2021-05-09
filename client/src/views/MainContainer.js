@@ -81,8 +81,80 @@ function MainContainer() {
   };
 
   // Define Budget State
-  const [budget, setBudget] = useState([]);
   const [showBudget, setShowBudget] = useState(false);
+  const [chartData, setChartData] = useState({});
+  const [total, setTotal] = useState(0);
+  const [transaction, setTransaction] = useState("");
+  const [amount, setAmount] = useState(0);
+
+  function loadTransactions() {
+    API.getTransactions()
+      .then((res) => {
+        console.log("Bugdet get route", res.data);
+        const transactionList = res.data.map(({ name }) => name);
+        const amountList = res.data.map(({ amount }) => parseInt(amount));
+        // let sum=0;
+        // const totalsArray = amountList.map((t) => {
+        //   sum += t.value;
+        //   console.log(sum);
+        //   return sum;
+        // });
+        // console.log("This is the totals Array: ", totalsArray());
+        const transactionsChartData = {
+          labels: transactionList,
+          datasets: [
+            {
+              label: "Transactions",
+              data: amountList,
+              fill: false,
+              backgroundColor: "rgb(250,67,195)",
+              borderColor: "rgb(250,67,195)",
+              tension: 0.1,
+            },
+          ],
+        };
+        const amountListSum = amountList.reduce((a, b) => a + b);
+        setTotal(amountListSum);
+        setChartData(transactionsChartData);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const handleTransactionChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setTransaction(e.target.value);
+  };
+
+  const handleAmountChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setAmount(e.target.value);
+  };
+
+  // Submit the User input to save the new transaction
+  const addFunds = async (e) => {
+    e.preventDefault();
+    const transactionData = {
+      name: transaction,
+      amount: parseInt(amount),
+    };
+    setTotal(total + parseInt(amount));
+    API.saveTransaction(transactionData);
+    loadTransactions();
+  };
+
+  // Submit the User input to save the new transaction
+  const substractFunds = async (e) => {
+    e.preventDefault();
+    const transactionData = {
+      name: transaction,
+      amount: -parseInt(amount),
+    };
+    setTotal(total - parseInt(amount));
+    API.saveTransaction(transactionData);
+    loadTransactions();
+  };
 
   // Define Canvas States
   const [showCanvas, setShowCanvas] = useState(false);
@@ -179,21 +251,15 @@ function MainContainer() {
   };
 
   // Function to delete a clock and update the clocks displayed
-  const removeMedication = (e) => {
+  const removeMedication = async (e) => {
     const medToDeleteId = e.target.parentNode.getAttribute("id");
     console.log(e.target.parentNode);
     console.log(
       "Cliked and will remove: ",
       e.target.parentNode.getAttribute("id")
     );
-    API.deleteMedication(medToDeleteId);
-    const medicationsToDisplay = medication.filter(
-      (med) => med.id !== medToDeleteId
-    );
-    console.log(medicationsToDisplay);
-    setMedication(medicationsToDisplay);
-    setReload(true);
-    loadMedicine();
+    await API.deleteMedication(medToDeleteId);
+    await loadMedicine();
     // setShowMedChildren("showMed");
   };
 
@@ -224,13 +290,11 @@ function MainContainer() {
     API.saveClock(clock);
   }
 
-  const [reload, setReload] = useState(false);
   // Function to delete a clock and update the clocks displayed
-  function removeClock(e) {
+  async function removeClock(e) {
     const clockToDeleteId = e.target.parentNode.getAttribute("id");
-    API.deleteClock(clockToDeleteId);
-    setReload(true);
-    loadClocks();
+    await API.deleteClock(clockToDeleteId);
+    await loadClocks();
   }
 
   // Get timeZones for new clock and save new clock
@@ -263,7 +327,7 @@ function MainContainer() {
     if (!clockHelp) {
       return null;
     } else {
-      return <p class="help">Choose another city</p>;
+      return <p className="help">Choose another city</p>;
     }
   };
 
@@ -325,7 +389,7 @@ function MainContainer() {
   const MedChildrenToShow = () => {
     if (showMedChildren === "showMed") {
       return (
-        <div className="table-container column is-12">
+        <div className="pl-0 column is-12">
           <ul style={{ margin: "auto", maxWidth: "75%" }}>
             {medication.map((item) => {
               const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
@@ -394,7 +458,7 @@ function MainContainer() {
       );
     } else if (showMedChildren === "showRemoveMedication") {
       return (
-        <div className="table-container column is-12">
+        <div className="column is-12 pl-0">
           <ul style={{ margin: "auto", maxWidth: "75%" }}>
             {medication.map((item) => {
               const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
@@ -499,7 +563,17 @@ function MainContainer() {
     { module: <Shopping />, id: "shopping", ref: shoppingRef },
     { module: <Tasks />, id: "tasks", ref: tasksRef },
     {
-      module: <Budget showBudget={showBudget} />,
+      module: (
+        <Budget
+          showBudget={showBudget}
+          chartData={chartData}
+          total={total}
+          addFunds={addFunds}
+          substractFunds={substractFunds}
+          changeName={handleTransactionChange}
+          changeAmount={handleAmountChange}
+        />
+      ),
       id: "budget",
       ref: budgetRef,
     },
@@ -510,7 +584,8 @@ function MainContainer() {
   useEffect(() => {
     loadMedicine();
     loadClocks();
-  }, [reload]);
+    loadTransactions();
+  }, []);
 
   // Render
   return (

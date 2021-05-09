@@ -11,6 +11,9 @@ const PORT = process.env.PORT || 3001;
 const medications = require("./routes/api/medication");
 const login = require("./routes/api/login");
 const clock = require("./routes/api/clock");
+const budget = require("./routes/api/budget");
+const tasks = require("./routes/api/tasks");
+const shopping = require("./routes/api/shopping");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +28,10 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/medication", medications);
 app.use("/api/login", login);
 app.use("/api/clock", clock);
+app.use("/api/budget", budget);
+app.use("/api/tasks", tasks);
+app.use("/api/shopping", shopping);
+
 
 // DB config
 const db = require("./config/keys").mongoURI;

@@ -5,13 +5,14 @@ import "./style.css";
 import Chart from "../Chart";
 
 function Budget({
-  children,
   showBudget,
   addFunds,
   substractFunds,
   childrenHelp,
   changeName,
   changeAmount,
+  chartData,
+  total
 }) {
   if (!showBudget) {
     return (
@@ -63,7 +64,7 @@ function Budget({
           }}
         />
         <div
-          className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+          className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
           style={{ color: "black", textAlign: "center" }}
         >
           <div>
@@ -73,7 +74,7 @@ function Budget({
             <div className="wrapper">
               <div className="total">
                 <div className="total">
-                  Your total is: $<span id="total">0</span>
+                  Your total is: $<span id="total">{total}</span>
                 </div>
               </div>
 
@@ -102,7 +103,7 @@ function Budget({
                     />
                   </p>
                 </div>
-                <p class="help">{childrenHelp}</p>
+                <p className="help">{childrenHelp}</p>
 
                 <div
                   className="field has-addons addMedField"
@@ -128,7 +129,7 @@ function Budget({
                     />
                   </p>
                 </div>
-                <p class="help">{childrenHelp}</p>
+                <p className="help">{childrenHelp}</p>
                 <button
                   style={{ borderStyle: "none", background: "white" }}
                   onClick={addFunds}
@@ -139,14 +140,14 @@ function Budget({
                 </button>
                 <button
                   style={{ borderStyle: "none", background: "white" }}
-                  onClick={addFunds}
+                  onClick={substractFunds}
                 >
                   <span>
                     <FontAwesomeIcon icon="minus" size="1x" />
                   </span>
                 </button>
               </div>
-              <Chart />
+              <Chart chartData={chartData}/>
               <canvas id="myChart"></canvas>
             </div>
             {/* -----END------ */}
