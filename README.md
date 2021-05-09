@@ -6,7 +6,7 @@
 
 An application to help the user care and interact with their loved ones, with features to help the long distance carer.
 
-Deployed app :link: 
+Deployed app :link: https://vast-caverns-75554.herokuapp.com/
 
 Github repository :link: https://github.com/avpizarro/principalcarer.git
 
@@ -24,15 +24,18 @@ Github repository :link: https://github.com/avpizarro/principalcarer.git
 
 ## Installation
 
-Visit this link to start using the app :link: 
+Visit this link to start using the app :link: https://vast-caverns-75554.herokuapp.com/
 
 ## Usage
 
-
+The app ten modules try to address the different aspects of looking after a person living with dementia from a person centric
+perspective. 
+A home module with the latest news and daily appointments. Practical tools like a calendar, world clock, shopping, tasks and medication lists, budget tracker but also tools for social like an interactive drawing canvas, a chat room and the entertaiment module, where photos and videos can be added by family and friends.
 
 ## Attributions
 
 ![logo](./client/public/logo32.png) icon by Bharat from the Noun Project
+
 ## License
 
 This Source Code Form is subject to the terms of the MIT License.
