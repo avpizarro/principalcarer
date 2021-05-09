@@ -56,6 +56,10 @@ function MainContainer() {
       setShowCanvas(true);
       setExpand(true);
     }
+    if (elementToOpenId === "tasks") {
+      setShowTasks(true);
+      setExpand(true);
+    }
   };
 
   const CloseComponent = (e) => {
@@ -77,6 +81,7 @@ function MainContainer() {
       setShowMed(false);
       setShowBudget(false);
       setShowCanvas(false);
+      setShowTasks(false);
     }
   };
 
@@ -90,15 +95,13 @@ function MainContainer() {
   function loadTransactions() {
     API.getTransactions()
       .then((res) => {
-        console.log("Bugdet get route", res.data);
         const transactionList = res.data.map(({ name }) => name);
         const amountList = res.data.map(({ amount }) => parseInt(amount));
-        let sum=0;
+        let sum = 0;
         const totalsArray = amountList.map((t) => {
-          sum += t
+          sum += t;
           return sum;
         });
-        console.log("This is the totals Array: ", totalsArray);
         const transactionsChartData = {
           labels: transactionList,
           datasets: [
@@ -179,6 +182,56 @@ function MainContainer() {
   const socialLifeRef = useRef();
   const parentRef = useRef();
 
+  // Set Tasks states
+  const [tasks, setTasks] = useState([]);
+  const [showTasks, setShowTasks] = useState(false);
+  const [taskName, setTaskName] = useState("");
+
+  // Get Tasks
+  function loadTasks() {
+    API.getTasks()
+      .then((res) => {
+        console.log(res.data);
+        const tasksList = res.data.map((item) => {
+          return {
+            name: item.name,
+            dueDate: item.dueDate,
+            id: item._id,
+          };
+        });
+        setTasks(tasksList);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const changeTaskName = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setTaskName(e.target.value);
+  };
+
+  const addTaskData = async (e) => {
+    e.preventDefault();
+    const taskToAdd = {
+      name: taskName,
+    };
+    API.saveTask(taskToAdd);
+    await loadTasks();
+  };
+
+  const removeTask = async (e) => {
+    const taskToDeleteId = e.target.parentNode.getAttribute("id");
+    console.log("I am clocking this: ", e.target.parentNode);
+
+    console.log(
+      "Cliked and will remove: ",
+      e.target.parentNode.getAttribute("id")
+    );
+    await API.deleteTask(taskToDeleteId);
+    await loadTasks();
+    // setShowMedChildren("showMed");
+  };
+
   // Get the Medication List
   function loadMedicine() {
     API.getMedication()
@@ -249,7 +302,7 @@ function MainContainer() {
     setShowMedChildren("showMed");
   };
 
-  // Function to delete a clock and update the clocks displayed
+  // Function to delete a medication and update the medication list displayed
   const removeMedication = async (e) => {
     const medToDeleteId = e.target.parentNode.getAttribute("id");
     console.log(e.target.parentNode);
@@ -453,6 +506,9 @@ function MainContainer() {
           changeQuantity={handleMedQuantityChange}
           changeUnit={handleMedUnit}
           submitMedData={submitMedData}
+          back={() => {
+            setShowMedChildren("showMed");
+          }}
         />
       );
     } else if (showMedChildren === "showRemoveMedication") {
@@ -560,7 +616,57 @@ function MainContainer() {
       ref: entertainementRef,
     },
     { module: <Shopping />, id: "shopping", ref: shoppingRef },
-    { module: <Tasks />, id: "tasks", ref: tasksRef },
+    {
+      module: (
+        <Tasks
+          changeName={changeTaskName}
+          addItemData={addTaskData}
+          showTask={showTasks}
+          children={
+            <div className="column is-12 mt-6">
+              <ul style={{ margin: "auto", maxWidth: "90%" }}>
+                {tasks.map((item) => {
+                  return (
+                    <div key={uuid()} id={item.id} className="mb-3">
+                      <li
+                        style={{
+                          fontFamily: "Akzidenz-Light",
+                          textAlign: "center",
+                        }}
+                        className="is-size-7"
+                      >
+                        {item.name}
+                      </li>
+                      <li
+                        style={{
+                          fontFamily: "Akzidenz-Light",
+                          textAlign: "center",
+                        }}
+                        className="is-size-7"
+                      >
+                        {item.dueDate}
+                      </li>
+                      <li id={item.id}>
+                        <button
+                          style={{ borderStyle: "none", background: "white" }}
+                          onClick={removeTask}
+                        >
+                          <span id={item.id}>
+                            <FontAwesomeIcon icon="check" />
+                          </span>
+                        </button>
+                      </li>
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          }
+        />
+      ),
+      id: "tasks",
+      ref: tasksRef,
+    },
     {
       module: (
         <Budget
@@ -584,6 +690,7 @@ function MainContainer() {
     loadMedicine();
     loadClocks();
     loadTransactions();
+    loadTasks();
   }, []);
 
   // Render

@@ -6,11 +6,7 @@ const taskSchema = new mongoose.Schema({
   name: {
     type: String,
     default: "",
-},
-dueDate: {
-    type: String,
-    default: "",
-  },
+}
 });
 
 const Task = mongoose.model("Task", taskSchema);

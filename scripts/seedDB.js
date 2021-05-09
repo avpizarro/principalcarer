@@ -94,9 +94,15 @@ const budgetSeed = [
 const taskSeed = [
   {
     name: "Book neurology appointment",
-    dueDate: "2021-06-20",
+  },
+  {
+    name: "Confirm eye exam date",
+  },
+  {
+    name: "Schedule Andres visit",
   },
 ];
+
 
 const shoppingSeed = [
   {

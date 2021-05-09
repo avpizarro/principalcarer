@@ -8,7 +8,8 @@ function AddMedication( {
   changeDosage,
   changeQuantity,
   changeUnit,
-  submitMedData
+  submitMedData,
+  back
 }) {
   return (
     <div
@@ -131,6 +132,25 @@ function AddMedication( {
       >
         <FontAwesomeIcon icon="plus" size="1x" />
       </button>
+      <div className="mt-4">
+      <button
+            style={{
+              borderStyle: "none",
+              background: "transparent",
+              width: "20px",
+              height: "20px",
+            }}
+            onClick={back}
+          >
+            <span>
+              <FontAwesomeIcon
+                icon="long-arrow-alt-left"
+                size="1x"
+                style={{ marginBottom: "10px" }}
+              />
+            </span>
+          </button>
+          </div>
     </div>
   );
 }

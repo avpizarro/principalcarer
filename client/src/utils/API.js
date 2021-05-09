@@ -35,7 +35,7 @@ export default {
     return axios.post("/api/budget/post", transactionData);
   },
   // Gets all tasks
-  getTaks: function () {
+  getTasks: function () {
     return axios.get("/api/tasks/");
   },
   // Deletes the task with the given id

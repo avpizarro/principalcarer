@@ -1,6 +1,8 @@
 import "./style.css";
+import "../StyledInput";
+import StyledInput from "../StyledInput";
 
-function Tasks({ children, showTask }) {
+function Tasks({ children, showTask, changeName, addItemData }) {
   if (!showTask) {
     return (
       <div className="task">
@@ -23,7 +25,7 @@ function Tasks({ children, showTask }) {
   return (
     <div className="task">
       <div
-        className="columns is-12 is-container is-centered is-mobile is-multiline medicationTitle"
+        className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
       >
         <div
@@ -33,6 +35,13 @@ function Tasks({ children, showTask }) {
           <div>
             <div>Tasks</div>
             {children}
+            <div style={{ position: "absolute", bottom: "20px", minWidth: "100%" }}>
+              <StyledInput
+                changeName={changeName}
+                addItemData={addItemData}
+                placeholder={"Add Task"}
+              />
+            </div>
           </div>
         </div>
       </div>
