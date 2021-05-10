@@ -1,0 +1,11 @@
+.datetimepicker-dummy .datetimepicker-dummy-wrapper::before, .datetimepicker-dummy .datetimepicker-dummy-wrapper:before {    background-color: blueviolet;
+    background-color: rgb(183,94,251) !important;
+}
+
+.datetimepicker-dummy.is-primary, .datetimepicker-clear-button {
+    color: rgb(183,94,251) !important;
+}
+
+.datetimepicker-dummy-wrapper, .datetimepicker-dummy {
+    border-radius: 4px !important;
+}

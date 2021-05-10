@@ -1,51 +1,53 @@
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
+import { useState, useEffect } from "react";
 import Sun from "../../images/sun.png";
+import Drawing from "../../images/drawing.png";
 
 const socket = socketIOClient();
 
-function Canvas({ showCanvas}) {
+function Canvas({ showCanvas }) {
   socket.on("message", (message) => console.log(message));
   socket.emit("clientMessage", "I am here");
 
   const setup = (p5) => {
     if (document.getElementById("parent")) {
       const canvasOuter = document.getElementById("parent");
-      // console.log(canvasOuter.clientWidth, canvasOuter.clientHeight);
-      const renderer = p5.createCanvas(
-        canvasOuter.clientWidth,
-        canvasOuter.clientHeight
-      );
+      const renderer = p5.createCanvas(500, 500);
       renderer.parent(canvasOuter);
-      renderer.mouseClicked((p5) => 
-        console.log("I am inside the canvas"));
-        
     }
   };
 
   const draw = (p5) => {
-    // p5.loadImage(Sun, (img) => {
-    //   p5.image(img, 0, 0, 50, 50);
-    // });
-    // p5.noStroke();
-    // p5.fill(255, 215, 0);
-    // p5.circle(0, 0, 100);
     p5.noStroke();
-    p5.fill(255, 165, 0);
+    p5.fill(253, 90, 0);
     p5.ellipse(mouseCoordinates.x, mouseCoordinates.y, 20, 20);
-    p5.stroke("#000");
-    p5.noFill();
-    p5.square(squareLocation.x, squareLocation.y, 50, 4);
+    p5.fill(255, 214, 2);
+    p5.ellipse(squareLocation.x, squareLocation.y, 30, 30);
+  };
+
+  const keyPressed = (p5) => {
+    if (p5.keyCode === p5.LEFT_ARROW) {
+      p5.loadImage(Drawing, (img) => {
+        p5.image(img, 20, 60);
+      });
+    }
+    if (p5.keyCode === p5.RIGHT_ARROW) {
+    }
   };
 
   const windowResized = (p5) => {
     const canvasOuter = document.getElementById("parent");
-    p5.resizeCanvas(canvasOuter.clientWidth, canvasOuter.clientHeight, true);
+    p5.resizeCanvas(
+      canvasOuter.clientWidth,
+      canvasOuter.clientHeight - 55,
+      true
+    );
   };
 
   const mouseDragged = (p5) => {
     p5.noStroke();
-    p5.fill(255, 69, 0);
+    p5.fill(255, 128, 0);
     p5.ellipse(p5.mouseX, p5.mouseY, 20, 20);
     console.log(p5.mouseX, p5.mouseY);
     const data = {
@@ -56,16 +58,16 @@ function Canvas({ showCanvas}) {
   };
 
   const mouseClicked = (p5) => {
-    p5.loadImage(Sun, (img) => {
-      p5.image(img, 5, 5, 50, 50);
-    });
-    p5.square(p5.mouseX, p5.mouseY, 50, 4);
-    const data = {
-      x: p5.mouseX,
-      y: p5.mouseY,
+      p5.noStroke();
+      p5.fill(252, 188, 9);
+      p5.ellipse(p5.mouseX, p5.mouseY, 30, 30);
+      const data = {
+        x: p5.mouseX,
+        y: p5.mouseY,
+      };
+      socket.emit("square", data);
     };
-    socket.emit("square", data);
-  };
+  
 
   let mouseCoordinates = {};
   let squareLocation = {};
@@ -73,9 +75,39 @@ function Canvas({ showCanvas}) {
   socket.on("mouse", (message) => (mouseCoordinates = message));
   socket.on("square", (message) => (squareLocation = message));
 
-  if(!showCanvas) {
+  if (!showCanvas) {
     return (
-      <div className="canvas">
+      <div>
+        <div
+          className="columns is-12 is-container is-centered is-mobile is-multiline"
+          style={{ marginTop: "3px" }}
+        >
+          <img
+            className="ml-3"
+            src={Sun}
+            alt="Sun"
+            style={{
+              height: "50px",
+              position: "absolute",
+              left: "0px",
+              bottom: "2px",
+              zIndex: 1000,
+            }}
+          />
+          <div
+            className="column is-6 is-centered has-text-weight-bolds"
+            style={{ color: "black", textAlign: "center" }}
+          >
+            <div>
+              <div>Canvas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -88,29 +120,29 @@ function Canvas({ showCanvas}) {
             height: "50px",
             position: "absolute",
             left: "0px",
-            bottom: "2px",
+            top: "2px",
             zIndex: 1000,
-          }}/>
+          }}
+        />
         <div
           className="column is-6 is-centered has-text-weight-bolds"
           style={{ color: "black", textAlign: "center" }}
         >
           <div>
-            <div>Canvas</div>
+            <div className="mb-4">Canvas</div>
           </div>
+
+          <Sketch
+            setup={setup}
+            mouseDragged={mouseDragged}
+            windowResized={windowResized}
+            draw={draw}
+            mouseClicked={mouseClicked}
+            keyPressed={keyPressed}
+          />
         </div>
       </div>
     </div>
-    )
-  }
-  return (
-    <Sketch
-      setup={setup}
-      mouseDragged={mouseDragged}
-      windowResized={windowResized}
-      draw={draw}
-      mouseClicked={mouseClicked}
-    />
   );
 }
 

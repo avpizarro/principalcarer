@@ -10,9 +10,7 @@ Deployed app :link: https://vast-caverns-75554.herokuapp.com/
 
 Github repository :link: https://github.com/avpizarro/principalcarer.git
 
-![home](./client/public/home.png)
-
-![saved](./client/public/saved.png)
+![principalcarer](./client/public/principalcarer.png)
 
 ## Table of Contents
 
@@ -28,9 +26,13 @@ Visit this link to start using the app :link: https://vast-caverns-75554.herokua
 
 ## Usage
 
-The app ten modules try to address the different aspects of looking after a person living with dementia from a person centric
-perspective. 
-A home module with the latest news and daily appointments. Practical tools like a calendar, world clock, shopping, tasks and medication lists, budget tracker but also tools for social like an interactive drawing canvas, a chat room and the entertaiment module, where photos and videos can be added by family and friends.
+The app has ten sections to make it easy to keep track of your loved one requirements.
+
+A home section with the latest news and daily appointments.
+
+Practical tools like a calendar, world clock, shopping, tasks and medication lists, budget tracker. 
+
+There also sections to for fun, like an interactive drawing canvas, a chat room and the entertaiment module, where photos and videos can be added by family and friends.
 
 ## Attributions
 

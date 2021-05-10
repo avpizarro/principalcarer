@@ -1,6 +1,8 @@
 import calendar from "../../images/calendar.png";
 import "./style.css";
 
+import Dob from "../Dob"
+
 function Calendar({ children, showCalendar }) {
   if (!showCalendar) {
     return (
@@ -57,6 +59,7 @@ function Calendar({ children, showCalendar }) {
         >
           <div>
             <div>Calendar</div>
+            <Dob />
             {children}
           </div>
         </div>

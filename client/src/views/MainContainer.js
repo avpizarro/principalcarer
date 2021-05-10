@@ -64,6 +64,10 @@ function MainContainer() {
       setShowShopping(true);
       setExpand(true);
     }
+    if (elementToOpenId === "calendar") {
+      setShowCalendar(true);
+      setExpand(true);
+    }
   };
 
   const CloseComponent = (e) => {
@@ -87,8 +91,12 @@ function MainContainer() {
       setShowBudget(false);
       setShowCanvas(false);
       setShowTasks(false);
+      setShowCalendar(false);
     }
   };
+
+  // Set Calendar states
+  const [showCalendar, setShowCalendar] = useState(false);
 
   // Set Shopping states
   const [shopping, setShopping] = useState([]);
@@ -652,7 +660,7 @@ function MainContainer() {
       id: "clock",
       ref: clockRef,
     },
-    { module: <Calendar />, id: "calendar", ref: calendarRef },
+    { module: <Calendar showCalendar={showCalendar} />, id: "calendar", ref: calendarRef },
     {
       module: <Medication showMed={showMed} children={MedChildrenToShow()} />,
       id: "medication",
