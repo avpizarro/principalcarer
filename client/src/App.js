@@ -218,7 +218,7 @@ function App() {
 
   // Render
   return (
-    <div>
+    <div className="is-container mt-3 ml-3 mr-3">
       <Navbar
         showSignUpForm={showSignUpForm}
         showLoginForm={showLoginForm}

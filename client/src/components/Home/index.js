@@ -1,5 +1,7 @@
 import "./style.css";
 
+import nina from "../../images/ninahome.png";
+
 
 function Home({ children, showHome }) {
   if (!showHome) {
@@ -34,6 +36,7 @@ function Home({ children, showHome }) {
       >
         <div>
           <div>Home</div>
+          <img src={nina} alt="Portrait" />
           {children}
         </div>
       </div>

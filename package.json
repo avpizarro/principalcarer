@@ -36,6 +36,7 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-validator": "^6.10.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
