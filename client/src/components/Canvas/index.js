@@ -1,6 +1,5 @@
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
-import { useState, useEffect } from "react";
 import Sun from "../../images/sun.png";
 import Drawing from "../../images/drawing.png";
 
@@ -13,7 +12,7 @@ function Canvas({ showCanvas }) {
   const setup = (p5) => {
     if (document.getElementById("parent")) {
       const canvasOuter = document.getElementById("parent");
-      const renderer = p5.createCanvas(500, 500);
+      const renderer = p5.createCanvas(320, 500);
       renderer.parent(canvasOuter);
     }
   };
