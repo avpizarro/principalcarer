@@ -679,7 +679,7 @@ function MainContainer() {
           changeQuantity={changeShoppingQuantity}
           submitData={addShoppingData}
           children={
-            <div className="column is-12 mt-6">
+            <div className="column is-12 mt-6" style={{ textAlign: "center"}}>
               <ul style={{ margin: "auto", maxWidth: "90%" }}>
                 {shopping.map((item) => {
                   const text = `${item.name}: ${item.quantity}`;

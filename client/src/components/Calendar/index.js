@@ -1,9 +1,16 @@
+import { useState } from "react"
 import calendar from "../../images/calendar.png";
+import ReactCalendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import "./style.css";
 
-import Dob from "../Dob"
+import StyledInputDouble from "../StyledInputDouble"
+
+// import Dob from "../Dob"
 
 function Calendar({ children, showCalendar }) {
+const [value, onChange] = useState(new Date());
+
   if (!showCalendar) {
     return (
       <div className="calendar">
@@ -17,7 +24,6 @@ function Calendar({ children, showCalendar }) {
             alt="Book"
             style={{
               height: "80px",
-              // transform: "rotate(20deg)",
               position: "absolute",
               top: "-20px",
               left: "-10px",
@@ -47,20 +53,32 @@ function Calendar({ children, showCalendar }) {
           alt="Book"
           style={{
             height: "80px",
-            // transform: "rotate(20deg)",
             position: "absolute",
             top: "-20px",
             left: "-10px",
           }}
         />
         <div
-          className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
-          style={{ color: "black", textAlign: "center" }}
+          className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
+          style={{ color: "black", textAlign: "center", maxWidth: "90%" }}
         >
           <div>
             <div>Calendar</div>
-            <Dob />
+            <div className="mt-6 mb-6">
+            <ReactCalendar 
+            onChange={onChange}
+            value={value}
+             />
+             <p>{console.log(value.toString())}</p>
+            </div>
             {children}
+            <StyledInputDouble namePlaceholder={"Add Event"}  quantityPlaceholder={"What time?"}/>
+            {/* childrenHelp,
+  changeName,
+  changeQuantity,
+  submitData,
+  namePlaceholder,
+  quantityPlaceholder, */}
           </div>
         </div>
       </div>

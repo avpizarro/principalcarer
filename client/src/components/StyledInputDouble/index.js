@@ -10,9 +10,9 @@ function StyledInputDouble({
 }) {
   return (
     <div
-      className="column is-12 has-text-weight-bolds pb-5 pt-0"
-      style={{ color: "black", width: "80%", marginLeft: "8%" }}
-    >
+      className="column is-12 has-text-weight-bolds pb-0 pt-0"
+      style={{ color: "black", margin: "auto"}}
+    ><div className="styledInputDouble" style={{width: "90%", margin: "auto"}}>
       <div
         className="field has-addons addMedField"
         style={{
@@ -62,12 +62,15 @@ function StyledInputDouble({
         </p>
       </div>
       {childrenHelp}
+      <div style={{margin: "auto", textAlign: "center"}}>
       <button
         style={{ borderStyle: "none", background: "transparent" }}
         onClick={submitData}
       >
         <FontAwesomeIcon icon="plus" size="1x" />
       </button>
+      </div>
+      </div>
     </div>
   );
 }

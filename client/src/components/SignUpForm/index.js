@@ -22,8 +22,8 @@ function SignUpForm({
       <div className="column is-8">
         <Form.Label size="medium">
           <span
-            className="ml-6"
-            style={{ color: "#FA47C5", textAlign: "justify" }}
+            
+            style={{ color: "#FA47C5", textAlign: "center" }}
           >
             Sign Up to accompany Nina:
           </span>
