@@ -1,6 +1,6 @@
 import "./style.css";
-
-import nina from "../../images/ninahome.png";
+import FileUpload from "../FileUpload";
+import profile from "../../images/homephoto.png";
 
 
 function Home({ children, showHome }) {
@@ -8,11 +8,11 @@ function Home({ children, showHome }) {
   return (
     <div className="home">
     <div
-      className="columns is-12 is-container is-centered is-mobile is-multiline"
-      style={{ marginTop: "3px" }}
+      className="columns is-container is-centered is-mobile is-multiline"
+      style={{ margin: "auto", marginTop: "3px", width: "90%" }}
     >
       <div
-        className="column is-12 is-centered has-text-weight-bolds"
+        className="column is-12 has-text-weight-bolds"
         style={{ color: "black", textAlign: "center" }}
       >
         <div>
@@ -24,26 +24,27 @@ function Home({ children, showHome }) {
 );
 }
 
-// return (
+return (
   <div className="home">
     <div
-      className="columns is-12 is-container is-centered is-mobile is-multiline"
-      style={{ marginTop: "3px" }}
+      className="columns is-container is-centered is-mobile is-multiline"
+      style={{margin: "auto", marginTop: "3px" }}
     >
       <div
-        className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+        className="column is-12 has-text-weight-bolds"
         style={{ color: "black", textAlign: "center" }}
       >
         <div>
           <div>Home</div>
-          <img src={nina} alt="Portrait" />
+          <img src={profile} alt="Portrait" className="mt-6"/>
+          <FileUpload />
           {children}
         </div>
       </div>
     </div>
   </div>
 
-// );
+);
 }
 
 export default Home;

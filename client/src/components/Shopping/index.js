@@ -57,14 +57,14 @@ function Shopping({
           />
 
           <div
-            className="column is-6 is-centered has-text-weight-bolds pl-0, pr-0 shoppingTitle"
+            className="column is-6 is-centered has-text-weight-bolds pl-0 pr-0 shoppingTitle"
             style={{ color: "black", textAlign: "center" }}
           >
             <div>Shopping</div>
           </div>
 
           <div
-            className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-5"
+            className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-5"
             style={{
               bottom: "10px",
               minWidth: "100%",

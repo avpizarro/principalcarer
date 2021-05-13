@@ -15,6 +15,7 @@ import {
   faClock,
   faMinus,
   faLongArrowAltLeft,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Import css framework
@@ -44,7 +45,8 @@ library.add(
   faUser,
   faClock,
   faMinus,
-  faLongArrowAltLeft
+  faLongArrowAltLeft,
+  faUpload
 );
 
 function App() {

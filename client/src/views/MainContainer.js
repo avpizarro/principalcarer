@@ -68,6 +68,10 @@ function MainContainer() {
       setShowCalendar(true);
       setExpand(true);
     }
+    if (elementToOpenId === "home") {
+      setShowHome(true);
+      setExpand(true);
+    }
   };
 
   const CloseComponent = (e) => {
@@ -92,8 +96,12 @@ function MainContainer() {
       setShowCanvas(false);
       setShowTasks(false);
       setShowCalendar(false);
+      setShowHome(false);
     }
   };
+
+  // Set Home states
+  const [showHome, setShowHome] = useState(false);
 
   // Set Calendar states
   const [showCalendar, setShowCalendar] = useState(false);
@@ -646,7 +654,7 @@ function MainContainer() {
 
   // Function to display the main components
   const modules = [
-    { module: <Home />, id: "home", ref: homeRef },
+    { module: <Home showHome={showHome} />, id: "home", ref: homeRef },
     {
       module: (
         <Clock

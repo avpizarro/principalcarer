@@ -31,7 +31,7 @@ function Medication({ children, showMed, addMedication, deleteMedication}) {
           style={{ width: "100%", zIndex: -1, position: "absolute", height: "100%" }}
         />
         <div
-          className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0"
+          className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0"
           style={{
             color: "black",
             textAlign: "center",

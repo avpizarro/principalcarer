@@ -28,7 +28,7 @@ function Entretainement({ shildren,  showEntertainement }) {
       style={{ marginTop: "0px" }}
     >
       <div
-        className="column is-12 is-centered has-text-weight-bolds pl-0, pr-0 mt-2"
+        className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
         style={{ color: "black", textAlign: "center" }}
       >
         <div>
