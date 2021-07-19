@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../models");
+const path = require("path");
 
 // This file empties the Medications collection and inserts the medications below
 mongoose.connect(
@@ -111,7 +112,12 @@ const shoppingSeed = [
   },
 ];
 
-
+const homeSeed = [
+  {
+    fileName: "portrait.png",
+    filePath: `${__dirname}/client/public/uploads/portrait`,
+  },
+];
 
 db.Medication.remove({})
   .then(() => db.Medication.collection.insertMany(medicationSeed))
@@ -170,6 +176,17 @@ db.Task.remove({})
 
 db.Shopping.remove({})
   .then(() => db.Shopping.collection.insertMany(shoppingSeed))
+  .then((data) => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+
+  db.Home.remove({})
+  .then(() => db.Home.collection.insertMany(homeSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

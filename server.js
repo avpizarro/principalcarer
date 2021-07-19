@@ -1,6 +1,8 @@
 const express = require("express");
-const  fileupload = require('express-fileupload')
+const fileupload = require("express-fileupload");
 // const jwt = require("jsonwebtoken");
+const path = require("path");
+var fs = require("fs");
 
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -14,23 +16,32 @@ const clock = require("./routes/api/clock");
 const budget = require("./routes/api/budget");
 const tasks = require("./routes/api/tasks");
 const shopping = require("./routes/api/shopping");
+const homeimage = require("./routes/api/homeimage");
 
 app.use(fileupload());
 
 // Upload Endpoint
-app.post('/upload', (req, res) => {
-  if(req.files === null) {
-    return res.status(400).json({ msg: "No file uploaded"});
+app.post("/upload", (req, res) => {
+  console.log("I am trying to upload");
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
   }
   const file = req.files.file;
 
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
-    if(err) {
-      console.log(err);
-      return res.status(500).send(err);
+  fs.stat(`${__dirname}/client/public/uploads/${file.name}`, function (err, stats) {
+    console.log("File already uploaded: ", stats);//here we got all information of file in stats variable
+ 
+    if (err) {
+      file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+            if (err) {
+              console.log(err);
+              return res.status(500).send(err);
+            }
+            res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+          });
+        return console.error(err);
     }
-    res.json({fileName: file.name, filePath: `/uploads/${file.name}`});
-  });
+});
 });
 
 // Define middleware here
@@ -49,16 +60,19 @@ app.use("/api/clock", clock);
 app.use("/api/budget", budget);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shopping);
+app.use("/api/homeimage", homeimage);
 
 // DB config
 const db = require("./config/keys").mongoURI;
+const { check } = require("express-validator");
+const { default: axios } = require("axios");
 
 // Connect to the Mongo DB
 mongoose
   .connect(db)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
-  // .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
+// .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
 
 // Start the API Server
 const server = app.listen(PORT, () =>

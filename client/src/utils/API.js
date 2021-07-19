@@ -58,5 +58,21 @@ export default {
   saveShopping: function (itemData) {
     return axios.post("/api/shopping/post", itemData);
   },
+  // Gets all home images
+  getHomeImages: function () {
+    return axios.get("/api/homeimage/");
+  },
+  // Gets all home images
+  getNewestHomeImg: function () {
+    return axios.get("/api/homeimage/newest/");
+  },
+  // Deletes the home images with the given id
+  deleteHomeImg: function (id) {
+    return axios.delete("/api/homeimage/" + id);
+  },
+  // Saves a shopping item to the database
+  saveHomeImg: function (itemData) {
+    return axios.post("/api/homeimage/post", itemData);
+  },
   
 };

@@ -1,11 +1,37 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import profile from "../../images/homephoto.png";
+import API from "../../utils/API";
 
 const FileUpload = () => {
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("No file chosen");
-  const [uploadedFile, setUploadedFile] = useState({});
+  const [uploadedFile, setUploadedFile] = useState({
+    // fileName: "portrait.png",
+    // filePath: profile,
+  });
+  const [childrenHelp, setChildrenHelp] = useState("");
+
+  function loadImage() {
+    API.getHomeImages()
+      .then((res) => {
+        console.log(res);
+        const image = res.data.map((item) => {
+          return {
+            fileName: item.fileName,
+            filePath: item.filePath,
+            id: item._id,
+          };
+        });
+        setUploadedFile(image[image.length - 1]);
+      })
+      .catch((err) => console.log(err));
+  }
+  
+  useEffect(() => {
+    loadImage();
+  }, []);
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
@@ -16,26 +42,41 @@ const FileUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-
+    console.log("The client upload has been clicked");
     try {
-      const res = await axios.post("upload", formData, {
+      const res = await axios.post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       const { fileName, filePath } = res.data;
       setUploadedFile({ fileName, filePath });
+      API.saveHomeImg({
+        fileName: fileName,
+        filePath: filePath,
+      })
     } catch (err) {
       if (err.response.status === 500) {
+        setChildrenHelp("No file chosen");
         console.log("There was a problem with the server");
       } else {
         console.log(err.response.data.res);
+        setChildrenHelp("No file chosen");
       }
     }
   };
 
   return (
     <Fragment>
+      { uploadedFile ? (
+      <img
+        src={uploadedFile.filePath}
+        alt={uploadedFile.fileName}
+        id={uploadedFile.id}
+        className="mt-6"
+        height="100px"
+        width="100px"
+      />) : null}
       <form className="mt-4" style={{ margin: "auto" }}>
         <div
           className="file is-normal is-boxed has-name"
@@ -55,7 +96,7 @@ const FileUpload = () => {
               <span className="file-icon">
                 <FontAwesomeIcon icon="upload" />
               </span>
-            <span class="file-label">Choose a file</span>
+              <span className="file-label">Choose a file</span>
             </span>
             <span className="file-name">{fileName}</span>
           </label>
@@ -64,8 +105,9 @@ const FileUpload = () => {
           type="submit"
           value="Upload"
           className="btn btn-primary btn-block mt-4 button"
-          onSubmit={onSubmit}
+          onClick={onSubmit}
         />
+        <p className="help mt-4">{childrenHelp}</p>
       </form>
     </Fragment>
   );

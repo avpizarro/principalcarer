@@ -4,5 +4,6 @@ module.exports = {
   Clock: require("./Clock"),
   Budget: require("./Budget"),
   Task: require("./Task"),
-  Shopping: require("./Shopping")
+  Shopping: require("./Shopping"),
+  Home: require("./Home"),
 };

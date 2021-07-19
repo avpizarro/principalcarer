@@ -116,7 +116,7 @@ function MainContainer() {
   function loadShopping() {
     API.getShopping()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const shoppingList = res.data.map((item) => {
           return {
             name: item.name,
@@ -263,7 +263,7 @@ function MainContainer() {
   function loadTasks() {
     API.getTasks()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const tasksList = res.data.map((item) => {
           return {
             name: item.name,
