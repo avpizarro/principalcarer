@@ -106,8 +106,8 @@ const { default: axios } = require("axios");
 
 // Connect to the Mongo DB
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
-  // .connect(db)
+  // .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
+  .connect(db)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
