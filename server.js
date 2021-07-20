@@ -22,26 +22,63 @@ app.use(fileupload());
 
 // Upload Endpoint
 app.post("/upload", (req, res) => {
-  console.log("I am trying to upload");
-  if (req.files === null) {
+  if (!req.files) {
     return res.status(400).json({ msg: "No file uploaded" });
-  }
-  const file = req.files.file;
-
-  fs.stat(`${__dirname}/client/public/uploads/${file.name}`, function (err, stats) {
-    console.log("File already uploaded: ", stats);//here we got all information of file in stats variable
- 
-    if (err) {
-      file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+  } else if (req.files) {
+    const file = req.files.file;
+    console.log("file to upload:" + file);
+    fs.stat(
+      `${__dirname}/client/public/uploads/${file.name}`,
+      function (err, stats) {
+        console.log("File already uploaded: ", stats);
+        if (err) {
+          file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
             if (err) {
               console.log(err);
               return res.status(500).send(err);
             }
-            res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+            res.json({
+              fileName: file.name,
+              filePath: `/uploads/${file.name}`,
+            });
           });
-        return console.error(err);
-    }
-});
+          return console.error("File uploaded succesfully", err);
+        } else {
+          res.json({
+            fileName: file.name,
+            filePath: `/uploads/${file.name}`,
+          });
+          return console.error("File already uploaded");
+        }
+      }
+    );
+  } else {
+    const fileToReUpload = req.files.file;
+
+    // delete file
+    fs.unlink(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      }
+    });
+
+    // if no error, file has been deleted successfully
+    fileToReUpload.mv(
+      `${__dirname}/client/public/uploads/${file.name}`,
+      (err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send(err);
+        }
+        res.json({
+          fileName: file.name,
+          filePath: `/uploads/${file.name}`,
+        });
+        return res.status(404).json({ msg: "File deleted and uploaded" });
+      }
+    );
+  }
 });
 
 // Define middleware here
@@ -69,10 +106,10 @@ const { default: axios } = require("axios");
 
 // Connect to the Mongo DB
 mongoose
-  .connect(db)
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
+  // .connect(db)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
-// .connect(process.env.MONGODB_URI || "mongodb://localhost/principalcarer")
 
 // Start the API Server
 const server = app.listen(PORT, () =>

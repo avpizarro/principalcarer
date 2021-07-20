@@ -34,15 +34,16 @@ const FileUpload = () => {
   }, []);
 
   const onChange = (e) => {
+    setChildrenHelp("");
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
   const onSubmit = async (e) => {
+    setFileName("No file chosen");
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    console.log("The client upload has been clicked");
     try {
       const res = await axios.post("/upload", formData, {
         headers: {
@@ -50,18 +51,20 @@ const FileUpload = () => {
         },
       });
       const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
+
+      console.log("Response data", res.data);
+      setUploadedFile({ fileName , filePath });
       API.saveHomeImg({
         fileName: fileName,
         filePath: filePath,
       })
     } catch (err) {
-      if (err.response.status === 500) {
+      if (err.response.status === 400) {
         setChildrenHelp("No file chosen");
         console.log("There was a problem with the server");
-      } else {
+      } else if (err.response.status === 404){
         console.log(err.response.data.res);
-        setChildrenHelp("No file chosen");
+        setChildrenHelp("File already uploaded");
       }
     }
   };
