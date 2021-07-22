@@ -54,6 +54,7 @@ const FileUpload = () => {
 
       console.log("Response data", res.data);
       setUploadedFile({ fileName , filePath });
+      console.log(filePath);
       API.saveHomeImg({
         fileName: fileName,
         filePath: filePath,
@@ -69,11 +70,12 @@ const FileUpload = () => {
     }
   };
 
+
   return (
     <Fragment>
       { uploadedFile ? (
       <img
-        src={uploadedFile.filePath}
+        src={process.env.PUBLIC_URL + uploadedFile.filePath}
         alt={uploadedFile.fileName}
         id={uploadedFile.id}
         className="mt-6"
