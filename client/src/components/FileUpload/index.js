@@ -41,6 +41,7 @@ const FileUpload = () => {
 
   const onSubmit = async (e) => {
     setFileName("No file chosen");
+    setFile("");
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);

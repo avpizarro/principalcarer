@@ -21,7 +21,6 @@ const homeimage = require("./routes/api/homeimage");
 app.use(fileupload());
 
 // Upload Endpoint
-if (process.env.NODE_ENV === "production") {
 app.post("/upload", (req, res) => {
   if (!req.files) {
     return res.status(400).json({ msg: "No file uploaded" });
@@ -29,13 +28,12 @@ app.post("/upload", (req, res) => {
     const file = req.files.file;
     console.log("file to upload:" + file);
     fs.stat(
-      process.env.PUBLIC_URL + `/uploads/${file.name}`,
-      // `${__dirname}/client/public/uploads/${file.name}`,
+      `${__dirname}/client/public/uploads/${file.name}`,
       function (err, stats) {
         console.log("File already uploaded: ", stats);
         if (err) {
-          file.mv(process.env.PUBLIC_URL + `/uploads/${file.name}`, (err) => {
-            // file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+          file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+            console.log(`${__dirname}/client/public/uploads/${file.name}`);
             if (err) {
               console.log(err);
               return res.status(500).send(err);
@@ -59,21 +57,16 @@ app.post("/upload", (req, res) => {
     const fileToReUpload = req.files.file;
 
     // delete file
-    fs.unlink(
-      process.env.PUBLIC_URL + `/client/public/uploads/${file.name}`,
-      (err) => {
-        // `${__dirname}/client/public/uploads/${file.name}`, (err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send(err);
-        }
+    fs.unlink(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send(err);
       }
-    );
+    });
 
     // if no error, file has been deleted successfully
     fileToReUpload.mv(
-      process.env.PUBLIC_URL + `/client/public/uploads/${file.name}`,
-      // `${__dirname}/client/public/uploads/${file.name}`,
+      `${__dirname}/client/public/uploads/${file.name}`,
       (err) => {
         if (err) {
           console.log(err);
@@ -88,69 +81,7 @@ app.post("/upload", (req, res) => {
     );
   }
 });
-} else {
-  app.post("/upload", (req, res) => {
-    if (!req.files) {
-      return res.status(400).json({ msg: "No file uploaded" });
-    } else if (req.files) {
-      const file = req.files.file;
-      console.log("file to upload:" + file);
-      fs.stat(
-        `${__dirname}/client/public/uploads/${file.name}`,
-        function (err, stats) {
-          console.log("File already uploaded: ", stats);
-          if (err) {
-              file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-              if (err) {
-                console.log(err);
-                return res.status(500).send(err);
-              }
-              res.json({
-                fileName: file.name,
-                filePath: `/uploads/${file.name}`,
-              });
-            });
-            return console.error("File uploaded succesfully", err);
-          } else {
-            res.json({
-              fileName: file.name,
-              filePath: `/uploads/${file.name}`,
-            });
-            return console.error("File already uploaded");
-          }
-        }
-      );
-    } else {
-      const fileToReUpload = req.files.file;
-  
-      // delete file
-      fs.unlink(
-          `${__dirname}/client/public/uploads/${file.name}`, (err) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).send(err);
-          }
-        }
-      );
-  
-      // if no error, file has been deleted successfully
-      fileToReUpload.mv(
-        `${__dirname}/client/public/uploads/${file.name}`,
-        (err) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).send(err);
-          }
-          res.json({
-            fileName: file.name,
-            filePath: `/uploads/${file.name}`,
-          });
-          return res.status(404).json({ msg: "File deleted and uploaded" });
-        }
-      );
-    }
-  }); 
-}
+
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
