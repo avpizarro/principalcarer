@@ -33,7 +33,6 @@ app.post("/upload", (req, res) => {
         console.log("File already uploaded: ", stats);
         if (err) {
           file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-            console.log(`${__dirname}/client/public/uploads/${file.name}`);
             if (err) {
               console.log(err);
               return res.status(500).send(err);
