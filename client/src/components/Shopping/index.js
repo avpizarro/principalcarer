@@ -1,4 +1,5 @@
 import shopping from "../../images/shopping.png";
+import ExpandButton from "../ExpandButton";
 import "./style.css";
 
 import StyledInputDouble from "../StyledInputDouble";
@@ -10,10 +11,14 @@ function Shopping({
   changeName,
   changeQuantity,
   submitData,
-}) {
-  if (!showShopping) {
+  ExpandComponent,
+  CloseComponent
+})
+{
+  if (!showShopping)
+  {
     return (
-      <div className="shopping" style={{ minHeight: "115px" }}>
+      <div className="shopping" id="shopping" style={{ minHeight: "115px" }}>
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -39,11 +44,12 @@ function Shopping({
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div className="shopping">
+    <div className="shopping" id="shopping">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline "
         style={{ marginTop: "3px" }}
@@ -82,6 +88,7 @@ function Shopping({
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showShopping} />
     </div>
   );
 }

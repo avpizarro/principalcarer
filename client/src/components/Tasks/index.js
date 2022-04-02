@@ -1,11 +1,14 @@
+import ExpandButton from "../ExpandButton";
 import "./style.css";
 import "../StyledInput";
 import StyledInput from "../StyledInput";
 
-function Tasks({ children, showTask, changeName, addItemData }) {
-  if (!showTask) {
+function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, CloseComponent })
+{
+  if (!showTasks)
+  {
     return (
-      <div className="task">
+      <div className="task" id="tasks">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline medicationTitle"
           style={{ marginTop: "3px" }}
@@ -19,11 +22,12 @@ function Tasks({ children, showTask, changeName, addItemData }) {
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div className="task">
+    <div className="task" id="tasks">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -45,6 +49,7 @@ function Tasks({ children, showTask, changeName, addItemData }) {
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showTasks} />
     </div>
   );
 }

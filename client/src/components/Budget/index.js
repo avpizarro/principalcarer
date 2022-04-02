@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Bank from "../../images/pigBank.png";
+import ExpandButton from "../ExpandButton";
 import "./style.css";
 
 import Chart from "../Chart";
@@ -12,11 +13,13 @@ function Budget({
   changeName,
   changeAmount,
   chartData,
-  total
+  total,
+  ExpandComponent,
+  CloseComponent
 }) {
   if (!showBudget) {
     return (
-      <div className="budget closedBudget">
+      <div className="budget closedBudget" id="budget">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -42,11 +45,12 @@ function Budget({
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div className="budget">
+    <div className="budget" id="budget">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -154,6 +158,7 @@ function Budget({
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showBudget} />
     </div>
   );
 }

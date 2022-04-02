@@ -1,10 +1,13 @@
 import "./style.css";
 import FileUpload from "../FileUpload";
+import ExpandButton from "../ExpandButton";
 
-function Home({ children, showHome }) {
-  if (!showHome) {
+function Home({ children, showHome, ExpandComponent, CloseComponent })
+{
+  if (!showHome)
+  {
     return (
-      <div className="home">
+      <div className="home" id="home">
         <div
           className="columns is-container is-centered is-mobile is-multiline"
           style={{ margin: "auto", marginTop: "3px", width: "90%" }}
@@ -18,12 +21,13 @@ function Home({ children, showHome }) {
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
 
   return (
-    <div className="home">
+    <div className="home" id="home">
       <div
         className="columns is-container is-centered is-mobile is-multiline"
         style={{ margin: "auto", marginTop: "3px" }}
@@ -39,6 +43,7 @@ function Home({ children, showHome }) {
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showHome} />
     </div>
   );
 }

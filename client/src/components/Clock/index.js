@@ -1,22 +1,24 @@
 import "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
+import ExpandButton from "../ExpandButton";
 
-function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp }) {
+function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp, ExpandComponent, CloseComponent }) {
   if (!showAddClock) {
     return (
-      <div>
+      <div id="clock">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline clock"
           style={{ marginTop: "3px" }}
         >
           {children}
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div>
+    <div id="clock">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline clock"
         style={{ marginTop: "3px" }}
@@ -58,6 +60,7 @@ function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHe
           {childrenHelp}
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showAddClock}/>
     </div>
   );
 }

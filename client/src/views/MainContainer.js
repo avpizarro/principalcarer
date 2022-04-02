@@ -21,7 +21,8 @@ import SocialLife from "../components/SocialLife";
 import Tasks from "../components/Tasks";
 import AddMedication from "../components/AddMedication";
 
-function MainContainer() {
+function MainContainer()
+{
   // Set the states and functions to expand the components on click
   const [previousHeight, setPreviousHeight] = useState("");
   const [height, setHeight] = useState("");
@@ -29,9 +30,16 @@ function MainContainer() {
   const [Expand, setExpand] = useState(false);
   const [componentId, setComponentId] = useState("");
 
-  const ExpandComponent = (e) => {
+  const [showEntertainement, setShowEntertainment] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
+
+  const ExpandComponent = (e) =>
+  {
     console.log("I am trying to expand");
     const elementToOpenId = e.target.parentNode.getAttribute("id");
+    console.log("elementToOpenId: ", elementToOpenId);
+    const btnId = e.target.getAttribute("id");
+    console.log("btnId: ", btnId);
     setComponentId(elementToOpenId);
     setPreviousHeight(e.target.parentNode.clientHeight);
     // const component = e.target.parentNode;
@@ -40,55 +48,76 @@ function MainContainer() {
     setHeight(`${600}px`);
     setExpand(true);
     // }
-    if (elementToOpenId === "medication") {
+    if (elementToOpenId === "message")
+    {
+      setShowMessage(true);
+    }
+    if (elementToOpenId === "entertainement")
+    {
+      setShowEntertainment(true);
+      setExpand(true);
+    }
+    if (elementToOpenId === "medication")
+    {
       setShowMed(true);
       setExpand(true);
     }
-    if (elementToOpenId === "clock") {
+    if (elementToOpenId === "clock")
+    {
       setShowAddClock(true);
       setExpand(true);
     }
-    if (elementToOpenId === "budget") {
+    if (elementToOpenId === "budget")
+    {
       setShowBudget(true);
       setExpand(true);
     }
-    if (elementToOpenId === "parent") {
+    if (elementToOpenId === "parent")
+    {
       setShowCanvas(true);
       setExpand(true);
     }
-    if (elementToOpenId === "tasks") {
+    if (elementToOpenId === "tasks")
+    {
       setShowTasks(true);
       setExpand(true);
     }
-    if (elementToOpenId === "shopping") {
+    if (elementToOpenId === "shopping")
+    {
       setShowShopping(true);
       setExpand(true);
     }
-    if (elementToOpenId === "calendar") {
+    if (elementToOpenId === "calendar")
+    {
       setShowCalendar(true);
       setExpand(true);
     }
-    if (elementToOpenId === "home") {
+    if (elementToOpenId === "home")
+    {
       setShowHome(true);
       setExpand(true);
     }
   };
 
-  const CloseComponent = (e) => {
+  const CloseComponent = (e) =>
+  {
     console.log("I am trying to close");
     const elementToCloseId = e.target.parentNode.getAttribute("id");
     setComponentId(elementToCloseId);
     console.log("This is the previous height: ", previousHeight);
     // setHeight(previousHeight);
-    if (elementToCloseId === "shopping") {
+    if (elementToCloseId === "shopping")
+    {
       setHeight("120px");
       setExpand(false);
       setShowShopping(false);
-    } else if (elementToCloseId === "clock") {
+    } else if (elementToCloseId === "clock")
+    {
       setHeight("230px");
       setExpand(false);
       setShowAddClock(false);
-    } else {
+    } else
+    {
       setHeight("60px");
       setExpand(false);
       setShowMed(false);
@@ -97,6 +126,8 @@ function MainContainer() {
       setShowTasks(false);
       setShowCalendar(false);
       setShowHome(false);
+      setShowEntertainment(false);
+      setShowMessage(false);
     }
   };
 
@@ -113,11 +144,14 @@ function MainContainer() {
   const [shoppingQuantity, setShoppingQuantity] = useState("");
 
   // Get Shopping
-  function loadShopping() {
+  function loadShopping()
+  {
     API.getShopping()
-      .then((res) => {
+      .then((res) =>
+      {
         // console.log(res.data);
-        const shoppingList = res.data.map((item) => {
+        const shoppingList = res.data.map((item) =>
+        {
           return {
             name: item.name,
             quantity: item.quantity,
@@ -129,19 +163,22 @@ function MainContainer() {
       .catch((err) => console.log(err));
   }
 
-  const changeShoppingName = (e) => {
+  const changeShoppingName = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setShoppingName(e.target.value);
   };
 
-  const changeShoppingQuantity = (e) => {
+  const changeShoppingQuantity = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setShoppingQuantity(e.target.value);
   };
 
-  const addShoppingData = async (e) => {
+  const addShoppingData = async (e) =>
+  {
     e.preventDefault();
     const ShoppingToAdd = {
       name: shoppingName,
@@ -151,7 +188,8 @@ function MainContainer() {
     await loadShopping();
   };
 
-  const removeShopping = async (e) => {
+  const removeShopping = async (e) =>
+  {
     const shoppingToDeleteId = e.target.parentNode.getAttribute("id");
     await API.deleteShopping(shoppingToDeleteId);
     await loadShopping();
@@ -164,13 +202,16 @@ function MainContainer() {
   const [transaction, setTransaction] = useState("");
   const [amount, setAmount] = useState(0);
 
-  function loadTransactions() {
+  function loadTransactions()
+  {
     API.getTransactions()
-      .then((res) => {
+      .then((res) =>
+      {
         const transactionList = res.data.map(({ name }) => name);
         const amountList = res.data.map(({ amount }) => parseInt(amount));
         let sum = 0;
-        const totalsArray = amountList.map((t) => {
+        const totalsArray = amountList.map((t) =>
+        {
           sum += t;
           return sum;
         });
@@ -194,20 +235,23 @@ function MainContainer() {
       .catch((err) => console.log(err));
   }
 
-  const handleTransactionChange = (e) => {
+  const handleTransactionChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setTransaction(e.target.value);
   };
 
-  const handleAmountChange = (e) => {
+  const handleAmountChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setAmount(e.target.value);
   };
 
   // Submit the User input to save the new transaction
-  const addFunds = async (e) => {
+  const addFunds = async (e) =>
+  {
     e.preventDefault();
     const transactionData = {
       name: transaction,
@@ -219,7 +263,8 @@ function MainContainer() {
   };
 
   // Submit the User input to save the new transaction
-  const substractFunds = async (e) => {
+  const substractFunds = async (e) =>
+  {
     e.preventDefault();
     const transactionData = {
       name: transaction,
@@ -237,8 +282,10 @@ function MainContainer() {
   const [medication, setMedication] = useState([]);
   const [showMed, setShowMed] = useState(false);
 
-  useEffect(() => {
-    if (componentId) {
+  useEffect(() =>
+  {
+    if (componentId)
+    {
       document.getElementById(componentId).style.height = height;
     }
   }, [height]);
@@ -260,11 +307,14 @@ function MainContainer() {
   const [taskName, setTaskName] = useState("");
 
   // Get Tasks
-  function loadTasks() {
+  function loadTasks()
+  {
     API.getTasks()
-      .then((res) => {
+      .then((res) =>
+      {
         // console.log(res.data);
-        const tasksList = res.data.map((item) => {
+        const tasksList = res.data.map((item) =>
+        {
           return {
             name: item.name,
             id: item._id,
@@ -275,13 +325,15 @@ function MainContainer() {
       .catch((err) => console.log(err));
   }
 
-  const changeTaskName = (e) => {
+  const changeTaskName = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setTaskName(e.target.value);
   };
 
-  const addTaskData = async (e) => {
+  const addTaskData = async (e) =>
+  {
     e.preventDefault();
     const taskToAdd = {
       name: taskName,
@@ -290,18 +342,22 @@ function MainContainer() {
     await loadTasks();
   };
 
-  const removeTask = async (e) => {
+  const removeTask = async (e) =>
+  {
     const taskToDeleteId = e.target.parentNode.getAttribute("id");
     await API.deleteTask(taskToDeleteId);
     await loadTasks();
   };
 
   // Get the Medication List
-  function loadMedicine() {
+  function loadMedicine()
+  {
     API.getMedication()
-      .then((res) => {
+      .then((res) =>
+      {
         // console.log(res.data);
-        const medicationList = res.data.map((item) => {
+        const medicationList = res.data.map((item) =>
+        {
           return {
             name: item.name,
             dose: item.dose,
@@ -324,35 +380,41 @@ function MainContainer() {
   const [medUnit, setMedUnit] = useState("");
 
   // Set functions to get the User inputs
-  const handleMedNameChange = (e) => {
+  const handleMedNameChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setMedName(e.target.value);
   };
 
-  const handleMedDoseChange = (e) => {
+  const handleMedDoseChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setMedDose(e.target.value);
   };
-  const handleMedDosageChange = (e) => {
+  const handleMedDosageChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setMedDosage(e.target.value);
   };
-  const handleMedQuantityChange = (e) => {
+  const handleMedQuantityChange = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setMedQuantity(e.target.value);
   };
-  const handleMedUnit = (e) => {
+  const handleMedUnit = (e) =>
+  {
     e.preventDefault();
     console.log(e.target.value);
     setMedUnit(e.target.value);
   };
 
   // Submit the User input to save the new medication
-  const submitMedData = async (e) => {
+  const submitMedData = async (e) =>
+  {
     e.preventDefault();
     const medToAdd = {
       name: medName,
@@ -367,7 +429,8 @@ function MainContainer() {
   };
 
   // Function to delete a medication and update the medication list displayed
-  const removeMedication = async (e) => {
+  const removeMedication = async (e) =>
+  {
     const medToDeleteId = e.target.parentNode.getAttribute("id");
     console.log(e.target.parentNode);
     console.log(
@@ -386,10 +449,13 @@ function MainContainer() {
   const [clockHelp, setClockHelp] = useState(false);
 
   // Get the clocks from DB and create function to display them
-  function loadClocks() {
+  async function loadClocks()
+  {
     API.getClocks()
-      .then((res) => {
-        const clocksList = res.data.map((item) => {
+      .then((res) =>
+      {
+        const clocksList = res.data.map((item) =>
+        {
           return {
             city: item.city,
             timezone: item.timezone,
@@ -402,55 +468,70 @@ function MainContainer() {
   }
 
   // Function to save a new clock
-  function addClock(clock) {
+  function addClock(clock)
+  {
     API.saveClock(clock);
   }
 
   // Function to delete a clock and update the clocks displayed
-  async function removeClock(e) {
+  async function removeClock(e)
+  {
     const clockToDeleteId = e.target.parentNode.getAttribute("id");
     await API.deleteClock(clockToDeleteId);
     await loadClocks();
   }
 
   // Get timeZones for new clock and save new clock
-  const getCityTimezone = () => {
-    if (city) {
+  const getCityTimezone = () =>
+  {
+    if (city)
+    {
       const allTimeZones = moment.tz.names();
-      const chosenTimeZone = allTimeZones.filter((tz) => {
-        if (tz.includes(city)) {
+      const chosenTimeZone = allTimeZones.filter((tz) =>
+      {
+        if (tz.includes(city))
+        {
           return tz;
         }
         return null;
       });
-      if (chosenTimeZone[0]) {
+      if (chosenTimeZone[0])
+      {
         addClock({
           city: city.replace("_", " "),
           timezone: chosenTimeZone[0],
         });
         setClockHelp(false);
         loadClocks();
-      } else {
+      } else
+      {
         setClockHelp(true);
       }
-    } else {
+    } else
+    {
       return setClockHelp(true);
     }
   };
 
   // Function to display message if no timezone or city found
-  const showChildrenHelp = () => {
-    if (!clockHelp) {
+  const showChildrenHelp = () =>
+  {
+    if (!clockHelp)
+    {
       return null;
-    } else {
+    } else
+    {
       return <p className="help">Choose another city</p>;
     }
   };
 
   // Function to display the delete clock option or not
-  const showClockChildren = () => {
-    if (!showAddClock) {
-      return clocks.map((clock) => {
+  const showClockChildren = () =>
+  {
+    if (!showAddClock)
+    {
+      return clocks.map((clock) =>
+      {
         return (
           <OneClock
             id={clock.id}
@@ -460,7 +541,8 @@ function MainContainer() {
         );
       });
     }
-    return clocks.map((clock) => {
+    return clocks.map((clock) =>
+    {
       return (
         <OneClock
           id={clock.id}
@@ -485,7 +567,8 @@ function MainContainer() {
   };
 
   // Function to get the user chosen city and make it usable to find a timezone
-  const changeCity = (e) => {
+  const changeCity = (e) =>
+  {
     e.preventDefault();
     const chosenCity = e.target.value;
     setCity(chosenCity.replace(" ", "_"));
@@ -493,21 +576,26 @@ function MainContainer() {
 
   const [showMedChildren, setShowMedChildren] = useState("showMed");
 
-  const clickToShowAddMed = () => {
+  const clickToShowAddMed = () =>
+  {
     console.log("Clicked");
     setShowMedChildren("showAddMedication");
   };
 
-  const clickToShowRemoveMed = () => {
+  const clickToShowRemoveMed = () =>
+  {
     setShowMedChildren("showRemoveMedication");
   };
 
-  const MedChildrenToShow = () => {
-    if (showMedChildren === "showMed") {
+  const MedChildrenToShow = () =>
+  {
+    if (showMedChildren === "showMed")
+    {
       return (
         <div className="pl-0 column is-12">
           <ul style={{ margin: "auto", maxWidth: "75%" }}>
-            {medication.map((item) => {
+            {medication.map((item) =>
+            {
               const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
               const dosage = `${item.dosage}`;
               return (
@@ -561,7 +649,8 @@ function MainContainer() {
         </div>
       );
     }
-    if (showMedChildren === "showAddMedication") {
+    if (showMedChildren === "showAddMedication")
+    {
       return (
         <AddMedication
           changeName={handleMedNameChange}
@@ -570,16 +659,19 @@ function MainContainer() {
           changeQuantity={handleMedQuantityChange}
           changeUnit={handleMedUnit}
           submitMedData={submitMedData}
-          back={() => {
+          back={() =>
+          {
             setShowMedChildren("showMed");
           }}
         />
       );
-    } else if (showMedChildren === "showRemoveMedication") {
+    } else if (showMedChildren === "showRemoveMedication")
+    {
       return (
         <div className="column is-12 pl-0">
           <ul style={{ margin: "auto", maxWidth: "75%" }}>
-            {medication.map((item) => {
+            {medication.map((item) =>
+            {
               const text = `${item.name} ${item.dose}: ${item.quantity} ${item.unit} left`;
               const dosage = `${item.dosage}`;
               return (
@@ -635,7 +727,8 @@ function MainContainer() {
               width: "20px",
               height: "20px",
             }}
-            onClick={() => {
+            onClick={() =>
+            {
               setShowMedChildren("showMed");
             }}
           >
@@ -654,7 +747,15 @@ function MainContainer() {
 
   // Function to display the main components
   const modules = [
-    { module: <Home showHome={showHome} />, id: "home", ref: homeRef },
+    {
+      module: <Home
+        showHome={showHome}
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+      />,
+      id: "home",
+      ref: homeRef
+    },
     {
       module: (
         <Clock
@@ -663,19 +764,38 @@ function MainContainer() {
           changeCity={changeCity}
           getCityTimezone={getCityTimezone}
           childrenHelp={showChildrenHelp()}
+          ExpandComponent={ExpandComponent}
+          CloseComponent={CloseComponent}
         />
       ),
       id: "clock",
       ref: clockRef,
     },
-    { module: <Calendar showCalendar={showCalendar} />, id: "calendar", ref: calendarRef },
     {
-      module: <Medication showMed={showMed} children={MedChildrenToShow()} />,
+      module: <Calendar
+        showCalendar={showCalendar}
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+      />,
+      id: "calendar",
+      ref: calendarRef
+    },
+    {
+      module: <Medication
+        showMed={showMed}
+        children={MedChildrenToShow()}
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+      />,
       id: "medication",
       ref: medicationRef,
     },
     {
-      module: <Entertainement />,
+      module: <Entertainement
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+        showEntertainement={showEntertainement}
+      />,
       id: "entertainement",
       ref: entertainementRef,
     },
@@ -686,10 +806,13 @@ function MainContainer() {
           changeName={changeShoppingName}
           changeQuantity={changeShoppingQuantity}
           submitData={addShoppingData}
+          ExpandComponent={ExpandComponent}
+          CloseComponent={CloseComponent}
           children={
-            <div className="column is-12 mt-6" style={{ textAlign: "center"}}>
+            <div className="column is-12 mt-6" style={{ textAlign: "center" }}>
               <ul style={{ margin: "auto", maxWidth: "90%" }}>
-                {shopping.map((item) => {
+                {shopping.map((item) =>
+                {
                   const text = `${item.name}: ${item.quantity}`;
                   return (
                     <div key={uuid()} className="mb-3">
@@ -730,11 +853,14 @@ function MainContainer() {
         <Tasks
           changeName={changeTaskName}
           addItemData={addTaskData}
-          showTask={showTasks}
+          showTasks={showTasks}
+          ExpandComponent={ExpandComponent}
+          CloseComponent={CloseComponent}
           children={
             <div className="column is-12 mt-6">
               <ul style={{ margin: "auto", maxWidth: "90%" }}>
-                {tasks.map((item) => {
+                {tasks.map((item) =>
+                {
                   return (
                     <div key={uuid()} id={item.id} className="mb-3">
                       <li
@@ -777,16 +903,27 @@ function MainContainer() {
           substractFunds={substractFunds}
           changeName={handleTransactionChange}
           changeAmount={handleAmountChange}
+          ExpandComponent={ExpandComponent}
+          CloseComponent={CloseComponent}
         />
       ),
       id: "budget",
       ref: budgetRef,
     },
-    { module: <SocialLife />, id: "socialLife", ref: socialLifeRef },
+    {
+      module: <SocialLife
+        ExpandComponent={ExpandComponent}
+        CloseComponent={CloseComponent}
+        showMessage={showMessage}
+      />, 
+      id: "socialLife", 
+      ref: socialLifeRef
+    },
   ];
 
   // Call useEffect to display the user updates
-  useEffect(() => {
+  useEffect(() =>
+  {
     loadMedicine();
     loadClocks();
     loadTransactions();
@@ -798,21 +935,22 @@ function MainContainer() {
   return (
     <div className="footerFriend">
       <div className="is-container columns is-multiline mainContainer">
-        {modules.map((module) => {
+        {modules.map((module) =>
+        {
           const btn = `btn${module.id}`;
           return (
             <div
               ref={module.ref}
               className="column componentContainer"
-              id={module.id}
+            // id={module.id}
             >
               {module.module}
-              <ExpandButton
+              {/* <ExpandButton
                 btnId={btn}
                 Expand={Expand}
                 ExpandComponent={ExpandComponent}
                 CloseComponent={CloseComponent}
-              />
+              /> */}
             </div>
           );
         })}

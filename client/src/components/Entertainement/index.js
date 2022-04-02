@@ -1,10 +1,11 @@
+import ExpandButton from "../ExpandButton";
 import "./style.css";
 
-function Entretainement({ shildren,  showEntertainement }) {
+function Entretainement({ children,  showEntertainement, ExpandComponent, CloseComponent }) {
   if (!showEntertainement) {
 
   return (
-    <div className="entertainemet">
+    <div className="entertainemet" id="entertainement">
     <div
       className="columns is-12 is-container is-centered is-mobile is-multiline entertainemetTitle"
       style={{ marginTop: "0px" }}
@@ -18,11 +19,12 @@ function Entretainement({ shildren,  showEntertainement }) {
         </div>
       </div>
     </div>
+    <ExpandButton ExpandComponent={ExpandComponent} />
   </div>
 );
   }
   return(
-    <div className="entertainemet">
+    <div className="entertainemet" id="entertainement">
     <div
       className="columns is-12 is-container is-centered is-mobile is-multiline"
       style={{ marginTop: "0px" }}
@@ -36,6 +38,7 @@ function Entretainement({ shildren,  showEntertainement }) {
         </div>
       </div>
     </div>
+    <ExpandButton CloseComponent={CloseComponent} Expand={showEntertainement} />
   </div>
   );
 }

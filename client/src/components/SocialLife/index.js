@@ -1,10 +1,13 @@
 import Social from "../../images/social.png";
+
+import ExpandButton
+ from "../ExpandButton";
 import "./style.css";
 
-function SocialLife({ children, showMessage }) {
+function SocialLife({ children, showMessage, ExpandComponent, CloseComponent }) {
   if (!showMessage) {
     return (
-      <div className="budget closedMessage">
+      <div className="budget closedMessage" id="message">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -31,11 +34,12 @@ function SocialLife({ children, showMessage }) {
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div className="budget closedMessage">
+    <div className="budget closedMessage" id="message">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -63,6 +67,7 @@ function SocialLife({ children, showMessage }) {
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showMessage}/>
     </div>
   );
 }

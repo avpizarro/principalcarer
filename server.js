@@ -28,10 +28,12 @@ app.post("/upload", (req, res) => {
     const file = req.files.file;
     console.log("file to upload:" + file);
     fs.stat(
+      // `./uploads/${file.name}`,
       `${__dirname}/client/public/uploads/${file.name}`,
       function (err, stats) {
         console.log("File already uploaded: ", stats);
         if (err) {
+          // file.mv(`./uploads/${file.name}`, (err) => {
           file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
             if (err) {
               console.log(err);
@@ -56,6 +58,7 @@ app.post("/upload", (req, res) => {
     const fileToReUpload = req.files.file;
 
     // delete file
+    // fs.unlink(`./uploads/${file.name}`, (err) => {
     fs.unlink(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
       if (err) {
         console.log(err);
@@ -65,6 +68,7 @@ app.post("/upload", (req, res) => {
 
     // if no error, file has been deleted successfully
     fileToReUpload.mv(
+      // `./uploads/${file.name}`,
       `${__dirname}/client/public/uploads/${file.name}`,
       (err) => {
         if (err) {

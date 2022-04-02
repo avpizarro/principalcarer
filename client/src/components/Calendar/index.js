@@ -3,17 +3,18 @@ import calendar from "../../images/calendar.png";
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./style.css";
+import ExpandButton from "../ExpandButton";
 
 import StyledInputDouble from "../StyledInputDouble"
 
 // import Dob from "../Dob"
 
-function Calendar({ children, showCalendar }) {
+function Calendar({ children, showCalendar, ExpandComponent, CloseComponent }) {
 const [value, onChange] = useState(new Date());
 
   if (!showCalendar) {
     return (
-      <div className="calendar">
+      <div className="calendar" id="calendar">
         <div
           className="columns is-12 is-container is-vcentered is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -38,11 +39,12 @@ const [value, onChange] = useState(new Date());
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div className="calendar">
+    <div className="calendar" id="calendar">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -82,6 +84,7 @@ const [value, onChange] = useState(new Date());
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showCalendar} />
     </div>
   );
 }

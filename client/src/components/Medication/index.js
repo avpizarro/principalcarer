@@ -1,10 +1,13 @@
 import page from "../../images/portrait.png";
 import "./style.css";
+import ExpandButton from "../ExpandButton";
 
-function Medication({ children, showMed, addMedication, deleteMedication}) {
-  if (!showMed) {
+function Medication({ children, showMed, addMedication, deleteMedication, ExpandComponent, CloseComponent })
+{
+  if (!showMed)
+  {
     return (
-      <div className="medication">
+      <div className="medication" id="medication">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline medicationTitle"
           style={{ marginTop: "3px" }}
@@ -18,11 +21,12 @@ function Medication({ children, showMed, addMedication, deleteMedication}) {
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
-  } 
+  }
   return (
-    <div className="medication medicationExpanded">
+    <div className="medication medicationExpanded" id="medication">
       <div className="columns is-12 is-container is-centered is-mobile is-multiline">
         <img
           className="mt-4 ml-2"
@@ -45,6 +49,7 @@ function Medication({ children, showMed, addMedication, deleteMedication}) {
           </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showMed} />
     </div>
   );
 }
