@@ -2,22 +2,27 @@ import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
 import Sun from "../../images/sun.png";
 import Drawing from "../../images/drawing.png";
+import ExpandButton from "../ExpandButton";
 
 const socket = socketIOClient();
 
-function Canvas({ showCanvas }) {
+function Canvas({ showCanvas, ExpandComponent, CloseComponent })
+{
   socket.on("message", (message) => console.log(message));
   socket.emit("clientMessage", "I am here");
 
-  const setup = (p5) => {
-    if (document.getElementById("parent")) {
-      const canvasOuter = document.getElementById("parent");
+  const setup = (p5) =>
+  {
+    if (document.getElementById("canvas"))
+    {
+      const canvasOuter = document.getElementById("canvas");
       const renderer = p5.createCanvas(320, 500);
       renderer.parent(canvasOuter);
     }
   };
 
-  const draw = (p5) => {
+  const draw = (p5) =>
+  {
     p5.noStroke();
     p5.fill(253, 90, 0);
     p5.ellipse(mouseCoordinates.x, mouseCoordinates.y, 20, 20);
@@ -25,26 +30,32 @@ function Canvas({ showCanvas }) {
     p5.ellipse(squareLocation.x, squareLocation.y, 30, 30);
   };
 
-  const keyPressed = (p5) => {
-    if (p5.keyCode === p5.LEFT_ARROW) {
-      p5.loadImage(Drawing, (img) => {
+  const keyPressed = (p5) =>
+  {
+    if (p5.keyCode === p5.LEFT_ARROW)
+    {
+      p5.loadImage(Drawing, (img) =>
+      {
         p5.image(img, 20, 60);
       });
     }
-    if (p5.keyCode === p5.RIGHT_ARROW) {
+    if (p5.keyCode === p5.RIGHT_ARROW)
+    {
     }
   };
 
-  const windowResized = (p5) => {
-    const canvasOuter = document.getElementById("parent");
+  const windowResized = (p5) =>
+  {
+    const canvasOuter = document.getElementById("canvas");
     p5.resizeCanvas(
       canvasOuter.clientWidth,
-      canvasOuter.clientHeight - 55,
+      canvasOuter.clientHeight - 80,
       true
     );
   };
 
-  const mouseDragged = (p5) => {
+  const mouseDragged = (p5) =>
+  {
     p5.noStroke();
     p5.fill(255, 128, 0);
     p5.ellipse(p5.mouseX, p5.mouseY, 20, 20);
@@ -56,17 +67,18 @@ function Canvas({ showCanvas }) {
     socket.emit("mouse", data);
   };
 
-  const mouseClicked = (p5) => {
-      p5.noStroke();
-      p5.fill(252, 188, 9);
-      p5.ellipse(p5.mouseX, p5.mouseY, 30, 30);
-      const data = {
-        x: p5.mouseX,
-        y: p5.mouseY,
-      };
-      socket.emit("square", data);
+  const mouseClicked = (p5) =>
+  {
+    p5.noStroke();
+    p5.fill(252, 188, 9);
+    p5.ellipse(p5.mouseX, p5.mouseY, 30, 30);
+    const data = {
+      x: p5.mouseX,
+      y: p5.mouseY,
     };
-  
+    socket.emit("square", data);
+  };
+
 
   let mouseCoordinates = {};
   let squareLocation = {};
@@ -74,9 +86,10 @@ function Canvas({ showCanvas }) {
   socket.on("mouse", (message) => (mouseCoordinates = message));
   socket.on("square", (message) => (squareLocation = message));
 
-  if (!showCanvas) {
+  if (!showCanvas)
+  {
     return (
-      <div>
+      <div id="canvas">
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -102,11 +115,12 @@ function Canvas({ showCanvas }) {
             </div>
           </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
     );
   }
   return (
-    <div>
+    <div id="canvas">
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
@@ -130,17 +144,17 @@ function Canvas({ showCanvas }) {
           <div>
             <div className="mb-4">Canvas</div>
           </div>
-
-          <Sketch
-            setup={setup}
-            mouseDragged={mouseDragged}
-            windowResized={windowResized}
-            draw={draw}
-            mouseClicked={mouseClicked}
-            keyPressed={keyPressed}
-          />
         </div>
+        <Sketch
+          setup={setup}
+          mouseDragged={mouseDragged}
+          windowResized={windowResized}
+          draw={draw}
+          mouseClicked={mouseClicked}
+          keyPressed={keyPressed}
+        />
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showCanvas} />
     </div>
   );
 }

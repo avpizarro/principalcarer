@@ -27,7 +27,6 @@ function MainContainer()
   const [previousHeight, setPreviousHeight] = useState("");
   const [height, setHeight] = useState("");
 
-  const [Expand, setExpand] = useState(false);
   const [componentId, setComponentId] = useState("");
 
   const [showEntertainement, setShowEntertainment] = useState(false)
@@ -35,99 +34,108 @@ function MainContainer()
 
   const ExpandComponent = (e) =>
   {
-    console.log("I am trying to expand");
     const elementToOpenId = e.target.parentNode.getAttribute("id");
     console.log("elementToOpenId: ", elementToOpenId);
-    const btnId = e.target.getAttribute("id");
-    console.log("btnId: ", btnId);
     setComponentId(elementToOpenId);
     setPreviousHeight(e.target.parentNode.clientHeight);
-    // const component = e.target.parentNode;
-    // if (component.clientWidth > component.clientHeight) {
-    // setHeight(`${component.clientWidth}px`);
     setHeight(`${600}px`);
-    setExpand(true);
-    // }
-    if (elementToOpenId === "message")
+    if (elementToOpenId === "home")
     {
-      setShowMessage(true);
-    }
-    if (elementToOpenId === "entertainement")
-    {
-      setShowEntertainment(true);
-      setExpand(true);
-    }
-    if (elementToOpenId === "medication")
-    {
-      setShowMed(true);
-      setExpand(true);
+      setShowHome(true);
     }
     if (elementToOpenId === "clock")
     {
       setShowAddClock(true);
-      setExpand(true);
-    }
-    if (elementToOpenId === "budget")
-    {
-      setShowBudget(true);
-      setExpand(true);
-    }
-    if (elementToOpenId === "parent")
-    {
-      setShowCanvas(true);
-      setExpand(true);
-    }
-    if (elementToOpenId === "tasks")
-    {
-      setShowTasks(true);
-      setExpand(true);
-    }
-    if (elementToOpenId === "shopping")
-    {
-      setShowShopping(true);
-      setExpand(true);
     }
     if (elementToOpenId === "calendar")
     {
       setShowCalendar(true);
-      setExpand(true);
     }
-    if (elementToOpenId === "home")
+    if (elementToOpenId === "medication")
     {
-      setShowHome(true);
-      setExpand(true);
+      setShowMed(true);
+    }
+    if (elementToOpenId === "entertainement")
+    {
+      setShowEntertainment(true);
+    }
+    if (elementToOpenId === "shopping")
+    {
+      setShowShopping(true);
+    }
+    if (elementToOpenId === "tasks")
+    {
+      setShowTasks(true);
+    }
+    if (elementToOpenId === "budget")
+    {
+      setShowBudget(true);
+    }
+    if (elementToOpenId === "message")
+    {
+      setShowMessage(true);
+    }
+    if (elementToOpenId === "canvas")
+    {
+      setShowCanvas(true);
     }
   };
 
   const CloseComponent = (e) =>
   {
-    console.log("I am trying to close");
     const elementToCloseId = e.target.parentNode.getAttribute("id");
     setComponentId(elementToCloseId);
-    console.log("This is the previous height: ", previousHeight);
-    // setHeight(previousHeight);
+    console.log("elementToCloseId:",elementToCloseId);
+    console.log("height:", height);
+    if (elementToCloseId === "home")
+    {
+      setHeight("60px");
+      setShowHome(false);
+    }
+    if (elementToCloseId === "clock")
+    {
+      setHeight("230px");
+      setShowAddClock(false);
+    }
+    if (elementToCloseId === "calendar")
+    {
+      setHeight("60px");
+      setShowCalendar(false);
+    }
+    if (elementToCloseId === "medication")
+    {
+      setHeight("60px");
+      setShowMed(false);
+    }
+    if (elementToCloseId === "entertainement")
+    {
+      setHeight("60px");
+      setShowEntertainment(false);
+    }
     if (elementToCloseId === "shopping")
     {
       setHeight("120px");
-      setExpand(false);
       setShowShopping(false);
-    } else if (elementToCloseId === "clock")
-    {
-      setHeight("230px");
-      setExpand(false);
-      setShowAddClock(false);
-    } else
+    }
+    if (elementToCloseId === "tasks")
     {
       setHeight("60px");
-      setExpand(false);
-      setShowMed(false);
-      setShowBudget(false);
-      setShowCanvas(false);
       setShowTasks(false);
-      setShowCalendar(false);
-      setShowHome(false);
-      setShowEntertainment(false);
+    }
+    if (elementToCloseId === "budget")
+    {
+      setHeight("60px");
+      setShowBudget(false);
+    }
+    if (elementToCloseId === "message")
+    {
+      setHeight("60px");
       setShowMessage(false);
+    }
+    if (elementToCloseId === "canvas")
+    {
+      setHeight("60px");
+      setShowCanvas(false);
     }
   };
 
@@ -144,7 +152,7 @@ function MainContainer()
   const [shoppingQuantity, setShoppingQuantity] = useState("");
 
   // Get Shopping
-  function loadShopping()
+  async function loadShopping()
   {
     API.getShopping()
       .then((res) =>
@@ -285,7 +293,7 @@ function MainContainer()
   useEffect(() =>
   {
     if (componentId)
-    {
+    {console.log("componentId to resize:", componentId)
       document.getElementById(componentId).style.height = height;
     }
   }, [height]);
@@ -307,7 +315,7 @@ function MainContainer()
   const [taskName, setTaskName] = useState("");
 
   // Get Tasks
-  function loadTasks()
+  async function loadTasks()
   {
     API.getTasks()
       .then((res) =>
@@ -350,7 +358,7 @@ function MainContainer()
   };
 
   // Get the Medication List
-  function loadMedicine()
+  async function loadMedicine()
   {
     API.getMedication()
       .then((res) =>
@@ -915,8 +923,8 @@ function MainContainer()
         ExpandComponent={ExpandComponent}
         CloseComponent={CloseComponent}
         showMessage={showMessage}
-      />, 
-      id: "socialLife", 
+      />,
+      id: "socialLife",
       ref: socialLifeRef
     },
   ];
@@ -959,10 +967,8 @@ function MainContainer()
           className="column is-12 componentContainer"
           id={"parent"}
         >
-          <Canvas showCanvas={showCanvas} />
-          <ExpandButton
-            btnId={"btnparent"}
-            Expand={Expand}
+          <Canvas
+            showCanvas={showCanvas}
             ExpandComponent={ExpandComponent}
             CloseComponent={CloseComponent}
           />
