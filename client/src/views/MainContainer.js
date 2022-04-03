@@ -942,7 +942,7 @@ function MainContainer()
   // Render
   return (
     <div className="footerFriend">
-      <div className="is-container columns is-multiline mainContainer">
+      <div className="is-container columns is-multiline is-centered mainContainer">
         {modules.map((module) =>
         {
           const btn = `btn${module.id}`;
@@ -950,15 +950,8 @@ function MainContainer()
             <div
               ref={module.ref}
               className="column componentContainer"
-            // id={module.id}
             >
               {module.module}
-              {/* <ExpandButton
-                btnId={btn}
-                Expand={Expand}
-                ExpandComponent={ExpandComponent}
-                CloseComponent={CloseComponent}
-              /> */}
             </div>
           );
         })}
