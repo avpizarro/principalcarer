@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Brand from "../../images/brand.png";
 
-function Navbar(props) {
-  if (props.mobileNavigation) {
+function Navbar(props)
+{
+  if (props.mobileNavigation)
+  {
     return (
       <nav
         class="navbar is-transparent"
@@ -10,34 +12,43 @@ function Navbar(props) {
         aria-label="dropdown navigation"
       >
         <a class="navbar-item">
-            <img src={Brand} alt="Logo" />
+          <img src={Brand} alt="Logo" />
         </a>
 
-        <div class="navbar-item has-dropdown is-active">
-          <a class="navbar-link" onClick={props.closeMobileNavigation}>Menu</a>
+        <div class="navbar-item has-dropdown is-active" style={{ color: "black" }}
+        >
+          <a class="navbar-link" onClick={props.closeMobileNavigation}         style={{ color: "black" }}
+>Menu</a>
 
           <div class="navbar-dropdown is-boxed">
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button" onClick={props.showSignUpForm}>
+                <a className="button" onClick={props.showSignUpForm} style={{ color: "black" }}
+                >
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light" onClick={props.showLoginForm}>
+                <a className="button is-light" onClick={props.showLoginForm} style={{ color: "black" }}>
                   Log in
                 </a>
               </div>
             </div>
-            <a class="navbar-item">Documents</a>
-            <a class="navbar-item">About</a>
-            <a className="navbar-item">Jobs</a>
-            <a className="navbar-item">Contact</a>
+            <a class="navbar-item" style={{ color: "black" }}
+            >Documents</a>
+            <a class="navbar-item" style={{ color: "black" }}
+            >About</a>
+            <a className="navbar-item" style={{ color: "black" }}
+            >Jobs</a>
+            <a className="navbar-item" style={{ color: "black" }}
+            >Contact</a>
             <hr className="navbar-divider"></hr>
-            <a className="navbar-item">Report an issue</a>
+            <a className="navbar-item" style={{ color: "black" }}
+            >Report an issue</a>
           </div>
         </div>
       </nav>
     );
-  } else {
+  } else
+  {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">

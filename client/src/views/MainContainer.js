@@ -38,10 +38,10 @@ function MainContainer()
     console.log("elementToOpenId: ", elementToOpenId);
     setComponentId(elementToOpenId);
     setPreviousHeight(e.target.parentNode.clientHeight);
-    setHeight(`${600}px`);
     if (elementToOpenId === "home")
     {
       setShowHome(true);
+      // setHeight(`${600}px`);
     }
     if (elementToOpenId === "clock")
     {
@@ -89,52 +89,42 @@ function MainContainer()
     console.log("height:", height);
     if (elementToCloseId === "home")
     {
-      setHeight("60px");
       setShowHome(false);
     }
     if (elementToCloseId === "clock")
     {
-      setHeight("230px");
       setShowAddClock(false);
     }
     if (elementToCloseId === "calendar")
     {
-      setHeight("60px");
       setShowCalendar(false);
     }
     if (elementToCloseId === "medication")
     {
-      setHeight("60px");
       setShowMed(false);
     }
     if (elementToCloseId === "entertainement")
     {
-      setHeight("60px");
       setShowEntertainment(false);
     }
     if (elementToCloseId === "shopping")
     {
-      setHeight("120px");
       setShowShopping(false);
     }
     if (elementToCloseId === "tasks")
     {
-      setHeight("60px");
       setShowTasks(false);
     }
     if (elementToCloseId === "budget")
     {
-      setHeight("60px");
       setShowBudget(false);
     }
     if (elementToCloseId === "message")
     {
-      setHeight("60px");
       setShowMessage(false);
     }
     if (elementToCloseId === "canvas")
     {
-      setHeight("60px");
       setShowCanvas(false);
     }
   };
