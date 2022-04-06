@@ -70,7 +70,7 @@ export default {
   deleteHomeImg: function (id) {
     return axios.delete("/api/homeimage/" + id);
   },
-  // Saves a shopping item to the database
+  // Saves a home image to the database
   saveHomeImg: function (itemData) {
     return axios.post("/api/homeimage/post", itemData);
   },

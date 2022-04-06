@@ -4,10 +4,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import "./style.css";
 import API from "../utils/API";
-import ExpandButton from "../components/ExpandButton";
 import Canvas from "../components/Canvas";
 import Budget from "../components/Budget";
 import Calendar from "../components/Calendar";
@@ -20,24 +17,14 @@ import Shopping from "../components/Shopping";
 import SocialLife from "../components/SocialLife";
 import Tasks from "../components/Tasks";
 import AddMedication from "../components/AddMedication";
+import "./style.css";
 
 function MainContainer()
 {
-  // Set the states and functions to expand the components on click
-  const [previousHeight, setPreviousHeight] = useState("");
-  const [height, setHeight] = useState("");
-
-  const [componentId, setComponentId] = useState("");
-
-  const [showEntertainement, setShowEntertainment] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
-
   const ExpandComponent = (e) =>
   {
     const elementToOpenId = e.target.parentNode.getAttribute("id");
-    console.log("elementToOpenId: ", elementToOpenId);
-    setComponentId(elementToOpenId);
-    setPreviousHeight(e.target.parentNode.clientHeight);
+
     if (elementToOpenId === "home")
     {
       setShowHome(true);
@@ -84,9 +71,7 @@ function MainContainer()
   const CloseComponent = (e) =>
   {
     const elementToCloseId = e.target.parentNode.getAttribute("id");
-    setComponentId(elementToCloseId);
-    console.log("elementToCloseId:",elementToCloseId);
-    console.log("height:", height);
+
     if (elementToCloseId === "home")
     {
       setShowHome(false);
@@ -128,6 +113,10 @@ function MainContainer()
       setShowCanvas(false);
     }
   };
+
+  // States to show or hide components: Entertainement & Message
+  const [showEntertainement, setShowEntertainment] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
 
   // Set Home states
   const [showHome, setShowHome] = useState(false);
@@ -279,14 +268,6 @@ function MainContainer()
   // Define Medication State
   const [medication, setMedication] = useState([]);
   const [showMed, setShowMed] = useState(false);
-
-  useEffect(() =>
-  {
-    if (componentId)
-    {console.log("componentId to resize:", componentId)
-      document.getElementById(componentId).style.height = height;
-    }
-  }, [height]);
 
   const homeRef = useRef();
   const clockRef = useRef();
@@ -599,6 +580,7 @@ function MainContainer()
               return (
                 <div key={uuid()} id={item.id}>
                   <li
+                    key={uuid()}
                     style={{
                       fontFamily: "Akzidenz-Light",
                       textAlign: "center",
@@ -608,6 +590,7 @@ function MainContainer()
                     {text}
                   </li>
                   <li
+                    key={uuid()}
                     style={{
                       fontFamily: "Akzidenz-Light",
                       textAlign: "center",
@@ -676,6 +659,7 @@ function MainContainer()
                 <>
                   <div key={uuid()} id={item.id}>
                     <li
+                      key={uuid()}
                       style={{
                         fontFamily: "Akzidenz-Light",
                         textAlign: "center",
@@ -685,6 +669,7 @@ function MainContainer()
                       {text}
                     </li>
                     <li
+                      key={uuid()}
                       style={{
                         fontFamily: "Akzidenz-Light",
                         textAlign: "center",
@@ -815,6 +800,7 @@ function MainContainer()
                   return (
                     <div key={uuid()} className="mb-3">
                       <li
+                        key={uuid()}
                         style={{
                           fontFamily: "Akzidenz-Light",
                           textAlign: "center",
@@ -824,7 +810,7 @@ function MainContainer()
                       >
                         {text}
                       </li>
-                      <li id={item.id}>
+                      <li id={item.id} key={uuid()}>
                         <button
                           style={{ borderStyle: "none", background: "white" }}
                           onClick={removeShopping}
@@ -862,6 +848,7 @@ function MainContainer()
                   return (
                     <div key={uuid()} id={item.id} className="mb-3">
                       <li
+                        key={uuid()}
                         style={{
                           fontFamily: "Akzidenz-Light",
                           textAlign: "center",
@@ -870,7 +857,7 @@ function MainContainer()
                       >
                         {item.name}
                       </li>
-                      <li id={item.id}>
+                      <li id={item.id} key={uuid()}>
                         <button
                           style={{ borderStyle: "none", background: "white" }}
                           onClick={removeTask}
@@ -935,7 +922,6 @@ function MainContainer()
       <div className="is-container columns is-multiline is-centered mainContainer">
         {modules.map((module) =>
         {
-          const btn = `btn${module.id}`;
           return (
             <div
               ref={module.ref}

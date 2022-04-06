@@ -1,88 +1,78 @@
 import { Fragment, useState, useEffect } from "react";
-import axios from "axios";
+import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import profile from "../../images/homephoto.png";
+import { Image } from 'cloudinary-react';
 import API from "../../utils/API";
 
-const FileUpload = () => {
+const FileUpload = () =>
+{
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("No file chosen");
-  const [uploadedFile, setUploadedFile] = useState({
-    // fileName: "portrait.png",
-    // filePath: profile,
-  });
+  const [uploadedFile, setUploadedFile] = useState("");
   const [childrenHelp, setChildrenHelp] = useState("");
 
-  function loadImage() {
+  function loadImage()
+  {
     API.getHomeImages()
-      .then((res) => {
+      .then((res) =>
+      {
         console.log(res);
-        const image = res.data.map((item) => {
+        const image = res.data.map((item) =>
+        {
           return {
             fileName: item.fileName,
             filePath: item.filePath,
             id: item._id,
           };
         });
-        setUploadedFile(image[image.length - 1]);
+        setUploadedFile(image[image.length - 1].filePath);
       })
       .catch((err) => console.log(err));
   }
-  
-  useEffect(() => {
+
+  useEffect(() =>
+  {
     loadImage();
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e) =>
+  {
     setChildrenHelp("");
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e) =>
+  {
     setFileName("No file chosen");
     setFile("");
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    try {
-      const res = await axios.post(process.env.PUBLIC_URL + "/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const { fileName, filePath } = res.data;
-
-      console.log("Response data", res.data);
-      setUploadedFile({ fileName , filePath });
-      console.log(filePath);
-      API.saveHomeImg({
-        fileName: fileName,
-        filePath: filePath,
-      })
-    } catch (err) {
-      if (err.response.status === 400) {
-        setChildrenHelp("No file chosen");
-        console.log("There was a problem with the server");
-      } else if (err.response.status === 404){
-        console.log(err.response.data.res);
-        setChildrenHelp("File already uploaded");
-      }
-    }
-  };
-
+    formData.append("upload_preset", "e0q1bp0i");
+    Axios.post("https://api.cloudinary.com/v1_1/dmrpspydu/image/upload",
+      formData
+    ).then(response =>
+    {
+      console.log("response: ", response.data.public_id);
+      setUploadedFile(`https://res.cloudinary.com/dmrpspydu/image/upload/v1649157923/${response.data.public_id}`);
+      const ImageToAdd = {
+        fileName: file.name,
+        filePath: `https://res.cloudinary.com/dmrpspydu/image/upload/v1649157923/${response.data.public_id}`,
+      };
+      API.saveHomeImg(ImageToAdd);
+    });
+  }
 
   return (
     <Fragment>
-      { uploadedFile ? (
-      <img
-        src={process.env.PUBLIC_URL + uploadedFile.filePath}
-        alt={uploadedFile.fileName}
-        id={uploadedFile.id}
-        className="mt-6"
-        height="100px"
-        width="100px"
-      />) : null}
+      {uploadedFile ? (
+        <Image
+          className="mt-6"
+          width="80%"
+          cloudName="dmrpspydu"
+          publicId={uploadedFile} />
+      ) : null}
       <form className="mt-4" style={{ margin: "auto" }}>
         <div
           className="file is-normal is-boxed has-name"
