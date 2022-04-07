@@ -3,15 +3,18 @@ import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Image } from 'cloudinary-react';
 import API from "../../utils/API";
+import DeletePhoto from "../DeletePhoto";
+import SearchImage from "../SearchImage";
 
 const FileUpload = () =>
 {
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("No file chosen");
   const [uploadedFile, setUploadedFile] = useState("");
+  const [uploadedFileId, setUploadedFileId] = useState("");
   const [childrenHelp, setChildrenHelp] = useState("");
 
-  function loadImage()
+  async function loadImage()
   {
     API.getHomeImages()
       .then((res) =>
@@ -26,6 +29,7 @@ const FileUpload = () =>
           };
         });
         setUploadedFile(image[image.length - 1].filePath);
+        setUploadedFileId(image[image.length - 1].id);
       })
       .catch((err) => console.log(err));
   }
@@ -64,6 +68,13 @@ const FileUpload = () =>
     });
   }
 
+const removeImage = async (e) => {
+  console.log("Remove image has been clicked");
+  const imageToRemovePublicId = e.target.getAttribute("id");
+  await API.deleteHomeImg(imageToRemovePublicId);
+  await loadImage();
+}
+
   return (
     <Fragment>
       {uploadedFile ? (
@@ -71,8 +82,12 @@ const FileUpload = () =>
           className="mt-6"
           width="80%"
           cloudName="dmrpspydu"
+          style={{ borderRadius: "20px" }}
           publicId={uploadedFile} />
       ) : null}
+      <button onClick={removeImage} id={uploadedFileId}></button>
+      <DeletePhoto />
+      <SearchImage />
       <form className="mt-4" style={{ margin: "auto" }}>
         <div
           className="file is-normal is-boxed has-name"
