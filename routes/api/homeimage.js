@@ -29,8 +29,8 @@ router.post("/post", (req, res) => {
     .catch((err) => res.status(404).json({ success: false }));
 });
 
-// @route DELETE api/tasks
-// @desc Delete a Tasks
+// @route DELETE api/home
+// @desc Delete a home image
 // @access Public
 router.delete("/:id", (req, res) => {
   Home.findById(req.params.id)

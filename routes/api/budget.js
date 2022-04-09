@@ -1,10 +1,10 @@
 const router = require("express").Router();
 
-// Clock Model
+// Budget Model
 const Budget = require("../../models/Budget");
 
 // @route GET api/budget
-// @desc Get All clocks
+// @desc Get All transactions
 // @access Public
 router.get("/", (req, res) => {
   Budget.find()
@@ -13,11 +13,11 @@ router.get("/", (req, res) => {
 });
 
 // @route POST api/budget/post
-// @desc Add clock
+// @desc Add transaction
 // @access Public
 router.post("/post", (req, res) => {
   Budget.create(req.body)
-    .then((clock) => res.json(clock))
+    .then((transaction) => res.json(transaction))
     .catch((err) => res.status(404).json({ success: false }));
 });
 

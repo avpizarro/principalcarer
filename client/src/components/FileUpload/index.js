@@ -1,10 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import Axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Image } from 'cloudinary-react';
 import API from "../../utils/API";
-import DeletePhoto from "../DeletePhoto";
-import SearchImage from "../SearchImage";
+import DeletePhoto from "../IconDeletePhoto";
+import SearchImage from "../IconSearchImage";
+import IconImageUpload from "../IconImageUpload";
+import "./style.css";
 
 const FileUpload = () =>
 {
@@ -13,6 +14,7 @@ const FileUpload = () =>
   const [uploadedFile, setUploadedFile] = useState("");
   const [uploadedFileId, setUploadedFileId] = useState("");
   const [childrenHelp, setChildrenHelp] = useState("");
+  const [showUploadForm, setShowUploadForm] = useState(false);
 
   async function loadImage()
   {
@@ -48,8 +50,10 @@ const FileUpload = () =>
 
   const onSubmit = async (e) =>
   {
+    if (fileName !== "No file chosen") {
     setFileName("No file chosen");
     setFile("");
+    setShowUploadForm(false);
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
@@ -66,28 +70,28 @@ const FileUpload = () =>
       };
       API.saveHomeImg(ImageToAdd);
     });
+  } else {
+    setChildrenHelp("Choose a file");
+  }
   }
 
-const removeImage = async (e) => {
-  console.log("Remove image has been clicked");
-  const imageToRemovePublicId = e.target.getAttribute("id");
-  await API.deleteHomeImg(imageToRemovePublicId);
-  await loadImage();
-}
+  const removeImage = async (e) =>
+  {
+    console.log("Remove image has been clicked");
+    console.log("file Mongo Id: ", uploadedFileId);
+    await API.deleteHomeImg(uploadedFileId);
+    await loadImage();
+  }
 
-  return (
-    <Fragment>
-      {uploadedFile ? (
-        <Image
-          className="mt-6"
-          width="80%"
-          cloudName="dmrpspydu"
-          style={{ borderRadius: "20px" }}
-          publicId={uploadedFile} />
-      ) : null}
-      <button onClick={removeImage} id={uploadedFileId}></button>
-      <DeletePhoto />
-      <SearchImage />
+  const uploadImage = (e) =>
+  {
+    setShowUploadForm(prevShowUploadForm => !prevShowUploadForm);
+  }
+
+  // Function to show the upload image form
+  const ShowUploadImage = () =>
+  {
+    return (
       <form className="mt-4" style={{ margin: "auto" }}>
         <div
           className="file is-normal is-boxed has-name"
@@ -104,9 +108,6 @@ const removeImage = async (e) => {
               onChange={onChange}
             />
             <span className="file-cta">
-              <span className="file-icon">
-                <FontAwesomeIcon icon="upload" />
-              </span>
               <span className="file-label">Choose a file</span>
             </span>
             <span className="file-name">{fileName}</span>
@@ -114,14 +115,46 @@ const removeImage = async (e) => {
         </div>
         <input
           type="submit"
-          value="Upload"
-          className="btn btn-primary btn-block mt-4 button"
+          value="upload"
+          className={fileName !== "No file chosen" ? "btn btn-primary btn-block mt-4 button uploadBtn" : "btn btn-primary btn-block mt-4 button"}
           onClick={onSubmit}
         />
         <p className="help mt-4">{childrenHelp}</p>
       </form>
+    )
+  }
+
+
+  console.log("showUploadForm", showUploadForm);
+
+  return (
+    <Fragment>
+      {uploadedFile ? (
+        <Image
+          className="mt-6"
+          width="80%"
+          cloudName="dmrpspydu"
+          style={{ borderRadius: "20px" }}
+          publicId={uploadedFile} />
+      ) : null}
+      <div>
+        <button
+          onClick={uploadImage}
+          style={{ backgroundColor: "white", border: "none" }}>
+          <IconImageUpload />
+        </button>
+        <button
+          onClick={removeImage}
+          style={{ backgroundColor: "white", border: "none" }}>
+          <DeletePhoto id={uploadedFileId} />
+        </button>
+        <SearchImage />
+      </div>
+      {showUploadForm === true ? (
+        <ShowUploadImage />
+      ) : null}
     </Fragment>
-  );
+  )
 };
 
 export default FileUpload;
