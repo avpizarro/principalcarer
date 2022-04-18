@@ -28,7 +28,6 @@ const FileUpload = () =>
     await API.getUploadedImages()
       .then((res) =>
       {
-        console.log(res.data);
         const images = res.data.map((item) =>
         {
           return {
@@ -38,7 +37,7 @@ const FileUpload = () =>
             public_id: item
           };
         })
-        console.log(images)
+        console.log(images);
         setUploadedFile(images[images.length - 1].public_id);
         // setUploadedFile(image[image.length - 1].filePath);
         // setUploadedFileId(image[image.length - 1].id);
@@ -79,7 +78,6 @@ const FileUpload = () =>
         API.uploadImage({ file: reader.result })
           .then(response =>
           {
-            console.log("response ", response);
             setUploadedFile(response.data.public_id);
             // const ImageToAdd = {
             //   fileName: file.name,
@@ -159,7 +157,7 @@ const FileUpload = () =>
   // FIND A WAY TO DISPLAY THE IMAGE
   const changeImage = (e) => {
     e.preventDefault();
-    setUploadedFile(e.target.id);
+    setUploadedFile(e.target.src.split("/")[e.target.src.split("/").length-1]);
   }
 
   // Function to show the upload image form
@@ -240,8 +238,6 @@ const FileUpload = () =>
           children={publicIds.map((item, index) =>
           {
             return (
-              <div key={index}>
-                <button id={item} onClick={changeImage} className="modalImageBtn">
                   <Image
                     className="modalImage"
                     key={index}
@@ -249,9 +245,8 @@ const FileUpload = () =>
                     publicId={item}
                     width="100px"
                     style={{ margin: "10px" }}
+                    onClick={changeImage}
                   />
-                </button>
-              </div>
             )
           })}
         // children=
