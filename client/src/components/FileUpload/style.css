@@ -7,6 +7,19 @@
   border: none;
 }
 
+.imagesBtn:hover {
+  background-color: #eee;
+  border-radius: 20px;
+}
+
+.imagesBtn:focus {  
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 20px;
+}
+
 .uploadBtn {
   background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
   background-size: 400%;
@@ -21,4 +34,12 @@
   100% {
     background-position: 400%;
   }
+}
+
+.modalImageBtn {
+  background-color: transparent;
+  border: none;
+}
+.modalImage:hover {
+  width: 105px;
 }

@@ -3,76 +3,106 @@ import axios from "axios";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   // Gets all medication
-  getMedication: function () {
+  getMedication: function ()
+  {
     return axios.get("/api/medication/");
   },
   // Deletes the medication with the given id
-  deleteMedication: function (id) {
+  deleteMedication: function (id)
+  {
     return axios.delete("/api/medication/" + id);
   },
   // Saves a medication to the database
-  saveMedication: function (clockData) {
+  saveMedication: function (clockData)
+  {
     return axios.post("/api/medication/post", clockData);
   },
   // Gets all clocks
-  getClocks: function () {
+  getClocks: function ()
+  {
     return axios.get("/api/clock/");
   },
   // Deletes the clock with the given id
-  deleteClock: function (id) {
+  deleteClock: function (id)
+  {
     return axios.delete("/api/clock/" + id);
   },
   // Saves a clock to the database
-  saveClock: function (clockData) {
+  saveClock: function (clockData)
+  {
     return axios.post("/api/clock/post", clockData);
   },
   // Gets all transactions
-  getTransactions: function () {
+  getTransactions: function ()
+  {
     return axios.get("/api/budget/");
   },
   // Saves a transaction to the database
-  saveTransaction: function (transactionData) {
+  saveTransaction: function (transactionData)
+  {
     return axios.post("/api/budget/post", transactionData);
   },
   // Gets all tasks
-  getTasks: function () {
+  getTasks: function ()
+  {
     return axios.get("/api/tasks/");
   },
   // Deletes the task with the given id
-  deleteTask: function (id) {
+  deleteTask: function (id)
+  {
     return axios.delete("/api/tasks/" + id);
   },
   // Saves a task to the database
-  saveTask: function (taskData) {
+  saveTask: function (taskData)
+  {
     return axios.post("/api/tasks/post", taskData);
   },
   // Gets all shopping items
-  getShopping: function () {
+  getShopping: function ()
+  {
     return axios.get("/api/shopping/");
   },
   // Deletes the shopping item with the given id
-  deleteShopping: function (id) {
+  deleteShopping: function (id)
+  {
     return axios.delete("/api/shopping/" + id);
   },
   // Saves a shopping item to the database
-  saveShopping: function (itemData) {
+  saveShopping: function (itemData)
+  {
     return axios.post("/api/shopping/post", itemData);
   },
   // Gets all home images
-  getHomeImages: function () {
+  getHomeImages: function ()
+  {
     return axios.get("/api/homeimage/");
   },
   // Gets all home images
-  getNewestHomeImg: function () {
+  getNewestHomeImg: function ()
+  {
     return axios.get("/api/homeimage/newest/");
   },
   // Deletes the home images with the given id
-  deleteHomeImg: function (id) {
+  deleteHomeImg: function (id)
+  {
     return axios.delete("/api/homeimage/" + id);
   },
   // Saves a home image to the database
-  saveHomeImg: function (itemData) {
+  saveHomeImg: function (itemData)
+  {
     return axios.post("/api/homeimage/post", itemData);
   },
-  
+  uploadImage: function (itemData)
+  {
+    console.log("itemData", itemData);
+    return axios.post("/api/upload", itemData);
+  },
+  getUploadedImages: function ()
+  {
+    return axios.get("/api/upload");
+  },
+  deleteUploadedImage: function (id)
+  {
+    return axios.delete("/api/upload/" + id)
+  }
 };

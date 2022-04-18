@@ -513,6 +513,7 @@ function MainContainer()
       {
         return (
           <OneClock
+            key={clock.city}
             id={clock.id}
             city={clock.city}
             children={<Moment format="hh:mm a" tz={clock.timezone} />}
@@ -524,6 +525,7 @@ function MainContainer()
     {
       return (
         <OneClock
+          key={clock.city}
           id={clock.id}
           city={clock.city}
           children={
@@ -920,10 +922,11 @@ function MainContainer()
   return (
     <div className="footerFriend">
       <div className="is-container columns is-multiline is-centered mainContainer">
-        {modules.map((module) =>
+        {modules.map((module, index) =>
         {
           return (
             <div
+              key={index + index}
               ref={module.ref}
               className="column componentContainer"
             >

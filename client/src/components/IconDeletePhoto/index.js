@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeletePhoto = (id) =>
+const DeletePhoto = ({id}) =>
 {
     return (
         <svg id={id} width="20pt" height="20pt" version="1.1" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">

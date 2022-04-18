@@ -1,10 +1,10 @@
 const express = require("express");
-const fileupload = require("express-fileupload");
+
 // const jwt = require("jsonwebtoken");
-const path = require("path");
-var fs = require("fs");
+var bodyParser = require('body-parser');
 
 require("dotenv").config();
+
 const mongoose = require("mongoose");
 const app = express();
 const socketIo = require("socket.io");
@@ -17,80 +17,16 @@ const budget = require("./routes/api/budget");
 const tasks = require("./routes/api/tasks");
 const shopping = require("./routes/api/shopping");
 const homeimage = require("./routes/api/homeimage");
-
-app.use(fileupload());
-
-// Upload Endpoint
-app.post("/upload", (req, res) => {
-  if (!req.files) {
-    return res.status(400).json({ msg: "No file uploaded" });
-  } else if (req.files) {
-    const file = req.files.file;
-    console.log("file to upload:" + file);
-    fs.stat(
-      // `./uploads/${file.name}`,
-      `${__dirname}/client/public/uploads/${file.name}`,
-      function (err, stats) {
-        console.log("File already uploaded: ", stats);
-        if (err) {
-          // file.mv(`./uploads/${file.name}`, (err) => {
-          file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-            if (err) {
-              console.log(err);
-              return res.status(500).send(err);
-            }
-            res.json({
-              fileName: file.name,
-              filePath: `/uploads/${file.name}`,
-            });
-          });
-          return console.error("File uploaded succesfully", err);
-        } else {
-          res.json({
-            fileName: file.name,
-            filePath: `/uploads/${file.name}`,
-          });
-          return console.error("File already uploaded");
-        }
-      }
-    );
-  } else {
-    const fileToReUpload = req.files.file;
-
-    // delete file
-    // fs.unlink(`./uploads/${file.name}`, (err) => {
-    fs.unlink(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send(err);
-      }
-    });
-
-    // if no error, file has been deleted successfully
-    fileToReUpload.mv(
-      // `./uploads/${file.name}`,
-      `${__dirname}/client/public/uploads/${file.name}`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send(err);
-        }
-        res.json({
-          fileName: file.name,
-          filePath: `/uploads/${file.name}`,
-        });
-        return res.status(404).json({ msg: "File deleted and uploaded" });
-      }
-    );
-  }
-});
+const upload = require("./routes/api/upload");
 
 // Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(express.urlencoded({ extended: false, limit: "50mb", parameterLimit:50000 }));
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production")
+{
   app.use(express.static("client/build"));
 }
 
@@ -102,6 +38,7 @@ app.use("/api/budget", budget);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shopping);
 app.use("/api/homeimage", homeimage);
+app.use("/api/upload", upload);
 
 // DB config
 const db = require("./config/keys").mongoURI;
@@ -122,18 +59,21 @@ const server = app.listen(PORT, () =>
 
 const io = socketIo(server);
 
-io.on("connection", (socket) => {
+io.on("connection", (socket) =>
+{
   console.log("New client connected " + socket.id);
   socket.emit("message", "This is a message from the server");
 
   socket.on("clientMessage", (message) => console.log(message));
 
-  socket.on("mouse", (data) => {
+  socket.on("mouse", (data) =>
+  {
     console.log(data);
     socket.broadcast.emit("mouse", data);
   });
 
-  socket.on("square", (data) => {
+  socket.on("square", (data) =>
+  {
     console.log(data);
     socket.broadcast.emit("square", data);
   });
