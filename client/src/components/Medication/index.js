@@ -1,8 +1,9 @@
+import React from "react";
 import page from "../../images/portrait.png";
-import "./style.css";
 import ExpandButton from "../ExpandButton";
+import "./style.css";
 
-function Medication({ children, showMed, addMedication, deleteMedication, ExpandComponent, CloseComponent })
+function Medication({ children, showMed, ExpandComponent, CloseComponent })
 {
   if (!showMed)
   {
