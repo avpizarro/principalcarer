@@ -7,6 +7,30 @@
   font-size: 5px;
 }
 
+
+.closeExpandButton:focus {
+  border-color: black;
+  border-style: inset;
+  box-shadow: 0 0 0 0;
+}
+
+.closeExpandButton:focus:not(:active) { 
+  box-shadow: 0 0 0 0;
+}
+
+.closeExpandButton:focus-visible {
+  outline: 4px solid darkorange;
+  outline-offset: 2px;
+  border-color: #dbdbdb;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 0;
+}
+
+.closeExpandButton:active {
+  border-color: transparent;
+  box-shadow: 0 0 0 0;
+}
+
 button > span {
   pointer-events: none;
-} 
+}

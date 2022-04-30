@@ -74,7 +74,7 @@ const [value, onChange] = useState(new Date());
              <p>{console.log(value.toString())}</p>
             </div>
             {children}
-            <StyledInputDouble namePlaceholder={"Add Event"}  quantityPlaceholder={"What time?"}/>
+            <StyledInputDouble namePlaceholder={"Description"}  quantityPlaceholder={"What time?"}/>
             {/* childrenHelp,
   changeName,
   changeQuantity,

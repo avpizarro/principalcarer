@@ -16,8 +16,10 @@ function Budget({
   total,
   ExpandComponent,
   CloseComponent
-}) {
-  if (!showBudget) {
+})
+{
+  if (!showBudget)
+  {
     return (
       <div className="budget closedBudget" id="budget">
         <div
@@ -75,14 +77,14 @@ function Budget({
             <div>Budget</div>
 
             {/* -------------Copy from homework ------------------------------ */}
-            <div className="wrapper">
+            <div className="wrapper" style={{ gridTemplateColumns: "'1fr '300px'" }}>
               <div className="total">
                 <div className="total">
                   Your total is: $<span id="total">{total}</span>
                 </div>
               </div>
 
-              <div style={{ width: "80%", margin: "auto", marginTop: "20px" }}>
+              <div style={{ maxWidth: "80%", margin: "auto", marginTop: "20px" }}>
                 <div
                   className="field"
                   style={{
@@ -101,7 +103,6 @@ function Budget({
                         background: "transparent",
                         border: "none",
                         boxShadow: "none",
-                        borderRadius: "0px",
                         borderStyle: "none",
                       }}
                     />
@@ -127,7 +128,6 @@ function Budget({
                         background: "transparent",
                         border: "none",
                         boxShadow: "none",
-                        borderRadius: "0px",
                         borderStyle: "none",
                       }}
                     />
@@ -135,7 +135,8 @@ function Budget({
                 </div>
                 <p className="help">{childrenHelp}</p>
                 <button
-                  style={{ borderStyle: "none", background: "white" }}
+                  className="plus-button"
+                  style={{ borderStyle: "none", padding: "5px" }}
                   onClick={addFunds}
                 >
                   <span>
@@ -143,7 +144,8 @@ function Budget({
                   </span>
                 </button>
                 <button
-                  style={{ borderStyle: "none", background: "white" }}
+                  className="minus-button"
+                  style={{ borderStyle: "none" }}
                   onClick={substractFunds}
                 >
                   <span>
@@ -151,7 +153,7 @@ function Budget({
                   </span>
                 </button>
               </div>
-              <Chart chartData={chartData}/>
+              <Chart chartData={chartData} />
               <canvas id="myChart"></canvas>
             </div>
             {/* -----END------ */}

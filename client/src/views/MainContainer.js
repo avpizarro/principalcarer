@@ -310,7 +310,7 @@ function MainContainer()
     console.log(e.target.value);
     setTaskName(e.target.value);
   };
-
+  
   const addTaskData = async (e) =>
   {
     e.preventDefault();
@@ -533,8 +533,10 @@ function MainContainer()
               <Moment format="hh:mm a" tz={clock.timezone} />
               <br></br>{" "}
               <button
-                style={{ borderStyle: "none", background: "white" }}
+                className="minus-button"
+                style={{ borderStyle: "none" }}
                 onClick={removeClock}
+                title="Delete clock"
               >
                 <span>
                   <FontAwesomeIcon icon="minus" />
@@ -606,9 +608,9 @@ function MainContainer()
             })}
           </ul>
           <button
+            className="button-medication"
             style={{
               borderStyle: "none",
-              background: "#F9F9F9",
               margin: "5px",
             }}
             onClick={clickToShowAddMed}
@@ -618,9 +620,9 @@ function MainContainer()
             </span>
           </button>
           <button
+            className="button-medication"
             style={{
               borderStyle: "none",
-              background: "#F9F9F9",
               margin: "5px",
             }}
             onClick={clickToShowRemoveMed}
@@ -681,12 +683,11 @@ function MainContainer()
                       {dosage}
                     </li>
                     <button
+                      className="button-medication"
                       style={{
                         borderStyle: "none",
-                        background: "#F9F9F9",
                         margin: "5px",
-                        width: "20px",
-                        height: "20px",
+                        height: "20px"
                       }}
                       id={item.id}
                       onClick={removeMedication}
@@ -695,7 +696,7 @@ function MainContainer()
                         <FontAwesomeIcon
                           icon="minus"
                           size="1x"
-                          style={{ marginBottom: "10px" }}
+                          style={{ marginBottom: "10px", marginTop: "2px" }}
                         />
                       </span>
                     </button>
@@ -705,12 +706,10 @@ function MainContainer()
             })}
           </ul>
           <button
+            className="arrow-back-button"
             style={{
               borderStyle: "none",
-              background: "transparent",
               margin: "0px",
-              width: "20px",
-              height: "20px",
             }}
             onClick={() =>
             {
@@ -814,7 +813,8 @@ function MainContainer()
                       </li>
                       <li id={item.id} key={uuid()}>
                         <button
-                          style={{ borderStyle: "none", background: "white" }}
+                          className="minus-button"
+                          style={{ borderStyle: "none" }}
                           onClick={removeShopping}
                         >
                           <span id={item.id}>
@@ -861,7 +861,8 @@ function MainContainer()
                       </li>
                       <li id={item.id} key={uuid()}>
                         <button
-                          style={{ borderStyle: "none", background: "white" }}
+                          className="minus-button"
+                          style={{ borderStyle: "none" }}
                           onClick={removeTask}
                         >
                           <span id={item.id}>
@@ -917,6 +918,12 @@ function MainContainer()
     loadTasks();
     loadShopping();
   }, []);
+
+// Call useEffect to display Tasks
+useEffect(() =>
+{
+  loadTasks();
+}, [taskName]);
 
   // Render
   return (

@@ -23,14 +23,14 @@ function StyledInput( {inputHelp, changeName, addItemData, placeholder} ) {
               style={{
                 border: "none",
                 boxShadow: "none",
-                borderRadius: "0px",
                 borderStyle: "none",
               }}
             />
           </p>
           <button
-            style={{ borderStyle: "none", background: "white" }}
+            style={{ borderStyle: "none", padding: "5px" }}
             onClick={addItemData}
+            className="plus-button"
           >
             <FontAwesomeIcon icon="plus" size="1x" />
           </button>

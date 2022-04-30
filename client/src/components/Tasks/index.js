@@ -3,7 +3,7 @@ import "./style.css";
 import "../StyledInput";
 import StyledInput from "../StyledInput";
 
-function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, CloseComponent })
+function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, CloseComponent, inputHelp })
 {
   if (!showTasks)
   {
@@ -39,11 +39,12 @@ function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, 
           <div>
             <div>Tasks</div>
             {children}
-            <div style={{ position: "absolute", bottom: "20px", minWidth: "100%" }}>
+            <div style={{ minWidth: "100%" }}>
               <StyledInput
                 changeName={changeName}
                 addItemData={addItemData}
                 placeholder={"Add Task"}
+                inputHelp={inputHelp}
               />
             </div>
           </div>

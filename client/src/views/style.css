@@ -1,3 +1,65 @@
+.minus-button {
+  background: white;
+}
+
+.button-medication {
+  background: #f9f9f9;
+}
+
+.arrow-back-button {
+  background: transparent;
+  width: 30px;
+  height: 20px;
+}
+
+.minus-button:focus-visible {
+  outline: 4px solid darkorange;
+  outline-offset: -4px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0;
+  z-index: 99;
+}
+
+.minus-button:hover {
+  background: #eee;
+  border-radius: 4px;
+}
+
+.input {
+  border-radius: '4px' !important;
+  border-bottom-right-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+
+.plus-button {
+  background: white;
+}
+
+.input:focus-visible {
+  outline: 4px solid darkorange;
+  outline-offset: -4px;
+  border-color: transparent;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0;
+}
+
+.plus-button:hover,
+.plus-button-addMedication:hover,
+.arrow-back-button:hover,
+.button-medication:hover {
+  background: #eee;
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.plus-button:focus-visible {
+  outline: 4px solid darkorange;
+  outline-offset: -4px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0;
+  z-index: 99;
+}
+
 button > span {
   pointer-events: none;
-} 
+}

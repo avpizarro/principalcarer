@@ -5,7 +5,6 @@ import DeletePhoto from "../IconDeletePhoto";
 import SearchImage from "../IconSearchImage";
 import IconImageUpload from "../IconImageUpload";
 import Modal from "../Modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
 
 const FileUpload = () =>
@@ -37,19 +36,24 @@ const FileUpload = () =>
             public_id: item
           };
         })
-        console.log(images);
         setUploadedFile(images[images.length - 1].public_id);
-        // setUploadedFile(image[image.length - 1].filePath);
-        // setUploadedFileId(image[image.length - 1].id);
       })
       .catch((err) => console.log(err));
   }
 
-  // Render the component again when last image has been retrieved
+  // Render the component again when last image has been deleted
   useEffect(() =>
   {
     loadImage();
+    reloadImages();
   }, [imageToDeleteId]);
+
+  // Render the component again when an image is uploaded so
+  // the modal shows the new image too
+  useEffect(() =>
+  {
+    reloadImages();
+  }, [uploadedFile]);
 
   // Function to display the selected file name
   const onChange = (e) =>
@@ -57,7 +61,6 @@ const FileUpload = () =>
     setChildrenHelp("");
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
-    console.log("e.target.files: ", e.target.files)
   };
 
   // Function to submit and display the file that was selected
@@ -79,27 +82,8 @@ const FileUpload = () =>
           .then(response =>
           {
             setUploadedFile(response.data.public_id);
-            // const ImageToAdd = {
-            //   fileName: file.name,
-            //   filePath: response.data.secure_url
-            // }
-            // API.saveHomeImg(ImageToAdd);
           });
       }
-
-      // UNSIGNED CLOUDINARY UPLOAD
-      // const formData = new FormData();
-      // formData.append("file", file);
-      // formData.append("upload_preset", "e0q1bp0i");
-      // Axios.post("https://api.cloudinary.com/v1_1/dmrpspydu/image/upload",
-      //   formData
-      // )
-      // setUploadedFile(`https://res.cloudinary.com/dmrpspydu/image/upload/v1649157923/${response.data.public_id}`);
-      // const ImageToAdd = {
-      //   fileName: file.name,
-      //   filePath: `https://res.cloudinary.com/dmrpspydu/image/upload/v1649157923/${response.data.public_id}`,
-      // };
-
     }
     else
     {
@@ -129,7 +113,7 @@ const FileUpload = () =>
     setShowModal(prevShowModal => !prevShowModal);
   }
 
-  //  Function to retrieve all the images
+  //  Function to retrieve all the images and open the modal
   const loadImages = async (e) =>
   {
     setShowModal(prevShowModal => !prevShowModal);
@@ -138,26 +122,28 @@ const FileUpload = () =>
       .then((res) =>
       {
         const images = res.data;
-        // const images = res.data.map((item) =>
-        // {
-        //   return {
-        //     fileName: item.fileName,
-        //     filePath: item.filePath,
-        //     id: item._id,
-        //   };
-        // });
-        // setFilesPaths(images);
-        // console.log(filePaths);
+        setPublicIds(images);
+      })
+      .catch((err) => console.log(err));
+  }
 
+  //  Function to retrieve all the images without opening the modal
+  const reloadImages = async (e) =>
+  {
+    await API.getUploadedImages()
+      .then((res) =>
+      {
+        const images = res.data;
         setPublicIds(images);
       })
       .catch((err) => console.log(err));
   }
 
   // FIND A WAY TO DISPLAY THE IMAGE
-  const changeImage = (e) => {
+  const changeImage = (e) =>
+  {
     e.preventDefault();
-    setUploadedFile(e.target.src.split("/")[e.target.src.split("/").length-1]);
+    setUploadedFile(e.target.src.split("/")[e.target.src.split("/").length - 1]);
   }
 
   // Function to show the upload image form
@@ -208,18 +194,21 @@ const FileUpload = () =>
       ) : null}
       <div>
         <button
+          style={{ paddingTop: "8px", margin: "2px" }}
           className="imagesBtn"
           onClick={uploadImage}
         >
           <IconImageUpload />
         </button>
         <button
+          style={{ paddingTop: "8px", margin: "2px" }}
           className="imagesBtn"
           onClick={removeImage}
         >
           <DeletePhoto id={uploadedFile} />
         </button>
         <button
+          style={{ paddingTop: "8px", margin: "2px" }}
           className="imagesBtn"
           onClick={loadImages}
         >
@@ -229,7 +218,6 @@ const FileUpload = () =>
       {showUploadForm === true ? (
         <ShowUploadImage />
       ) : null}
-      {/* {filePaths ? */}
       {publicIds ?
         <Modal
           style={{ zIndex: "1200" }}
@@ -238,26 +226,17 @@ const FileUpload = () =>
           children={publicIds.map((item, index) =>
           {
             return (
-                  <Image
-                    className="modalImage"
-                    key={index}
-                    cloudName="dmrpspydu"
-                    publicId={item}
-                    width="100px"
-                    style={{ margin: "10px" }}
-                    onClick={changeImage}
-                  />
+              <Image
+                className="modalImage"
+                key={index}
+                cloudName="dmrpspydu"
+                publicId={item}
+                width="100px"
+                style={{ margin: "10px" }}
+                onClick={changeImage}
+              />
             )
           })}
-        // children=
-        // {filePaths.map(item =>
-        // {
-        //   return <img src={item.filePath} alt={item.fileName} key={item.id} style={{
-        //     margin: "10px", height: "80px"
-        //   }}
-        // />
-        // })
-        // }
         />
         : null
       }

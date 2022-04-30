@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
 import ExpandButton from "../ExpandButton";
 
-function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp, ExpandComponent, CloseComponent }) {
-  if (!showAddClock) {
+function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp, ExpandComponent, CloseComponent })
+{
+  if (!showAddClock)
+  {
     return (
       <div id="clock">
         <div
@@ -45,14 +47,16 @@ function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHe
                 style={{
                   border: "none",
                   boxShadow: "none",
-                  borderRadius: "0px",
+                  borderRadius: "4px",
                   borderStyle: "none",
                 }}
               />
             </p>
             <button
-              style={{ borderStyle: "none", background: "white" }}
+              className="plus-button"
+              style={{ borderStyle: "none"}}
               onClick={getCityTimezone}
+              title="Add clock"
             >
               <FontAwesomeIcon icon="plus" size="1x" />
             </button>
@@ -60,7 +64,7 @@ function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHe
           {childrenHelp}
         </div>
       </div>
-      <ExpandButton CloseComponent={CloseComponent} Expand={showAddClock}/>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showAddClock} />
     </div>
   );
 }
