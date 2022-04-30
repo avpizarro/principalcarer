@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fragment, useState, useEffect } from "react";
 import { Image } from 'cloudinary-react';
 import API from "../../utils/API";

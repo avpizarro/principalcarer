@@ -1,6 +1,7 @@
-import "./style.css";
+import React from 'react';
 import FileUpload from "../FileUpload";
 import ExpandButton from "../ExpandButton";
+import "./style.css";
 
 function Home({ children, showHome, ExpandComponent, CloseComponent })
 {

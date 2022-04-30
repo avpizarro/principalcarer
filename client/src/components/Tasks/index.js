@@ -1,3 +1,4 @@
+import React from 'react';
 import ExpandButton from "../ExpandButton";
 import "./style.css";
 import "../StyledInput";

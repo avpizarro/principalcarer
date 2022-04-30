@@ -1,3 +1,4 @@
+import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Bank from "../../images/pigBank.png";
 import ExpandButton from "../ExpandButton";

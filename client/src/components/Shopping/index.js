@@ -1,3 +1,4 @@
+import React from 'react';
 import shopping from "../../images/shopping.png";
 import ExpandButton from "../ExpandButton";
 import "./style.css";

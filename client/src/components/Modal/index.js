@@ -1,3 +1,4 @@
+import React from 'react';
 
 function Modal({ children, show, close, fullName, setFullName, relationship, setRelationship, username, setUsername, password, setPassword }) {
   if (!show) {

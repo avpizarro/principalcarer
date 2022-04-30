@@ -1,5 +1,5 @@
 // Import hooks from react
-import { useState } from "react";
+import React, { useState } from "react";
 // Import fontawesome and individual icons
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

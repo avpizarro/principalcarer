@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
 import Moment from "react-moment";
 import "moment-timezone";
@@ -862,7 +862,7 @@ function MainContainer()
                       <li id={item.id} key={uuid()}>
                         <button
                           className="minus-button"
-                          style={{ borderStyle: "none" }}
+                          style={{ borderStyle: "none", padding: "5px 10px" }}
                           onClick={removeTask}
                         >
                           <span id={item.id}>

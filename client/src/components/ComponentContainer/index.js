@@ -1,3 +1,4 @@
+import React from 'react';
 import ExpandButton from "../ExpandButton";
 
 function ComponentContainer({

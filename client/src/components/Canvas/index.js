@@ -1,3 +1,4 @@
+import React from 'react';
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
 import Sun from "../../images/sun.png";

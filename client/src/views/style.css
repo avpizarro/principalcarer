@@ -10,6 +10,7 @@
   background: transparent;
   width: 30px;
   height: 20px;
+  padding-top: 3px;
 }
 
 .minus-button:focus-visible {
@@ -52,7 +53,10 @@
   z-index: 99;
 }
 
-.plus-button:focus-visible {
+.plus-button:focus-visible,
+.button-medication:focus-visible,
+.arrow-back-button:focus-visible,
+.plus-button-addMedication:focus-visible {
   outline: 4px solid darkorange;
   outline-offset: -4px;
   border-radius: 4px;

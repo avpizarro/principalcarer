@@ -1,3 +1,4 @@
+import React from 'react';
 import "moment-timezone";
 import clock from "../../images/clock.png";
 

@@ -1,7 +1,8 @@
+import React from 'react';
 import "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./style.css";
 import ExpandButton from "../ExpandButton";
+import "./style.css";
 
 function Clock({ showAddClock, children, changeCity, getCityTimezone, childrenHelp, ExpandComponent, CloseComponent })
 {

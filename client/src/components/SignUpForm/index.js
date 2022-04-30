@@ -1,3 +1,4 @@
+import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 
