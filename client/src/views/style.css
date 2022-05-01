@@ -56,13 +56,20 @@
 .plus-button:focus-visible,
 .button-medication:focus-visible,
 .arrow-back-button:focus-visible,
-.plus-button-addMedication:focus-visible {
+.plus-button-addMedication:focus-visible,
+.join-chat-button:focus-visible {
   outline: 4px solid darkorange;
   outline-offset: -4px;
   border-radius: 4px;
   box-shadow: 0 0 0 0;
   z-index: 99;
 }
+
+.join-chat-button:focus-visible {
+  outline-offset: 4px;
+  border-radius: 1.5rem;
+}
+
 
 button > span {
   pointer-events: none;

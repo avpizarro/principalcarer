@@ -1,17 +1,41 @@
+@media screen and (min-width: 2100px) {
+  .message-title {
+    margin-left: 52%;
+  }
+  .message-title-open {
+    margin-left: 65px;
+  }
+}
+@media screen and (min-width: 1400px) and (max-width: 2099px) {
+  .message-title {
+    margin-left: 33%;
+  }
+}
 
-
-@media  (min-width:2100px){
-.closedMessage {
-  margin-left: 80px;
+@media screen and (min-width: 1167px) and (max-width: 1399px) {
+  .message-title {
+    margin-left: 100px;
+  }
+  .message-title-open {
+    margin-left: 80px;
+  }
 }
+@media screen and (min-width: 930px) and (max-width: 1166px) {
+  .message-title {
+    margin-left: 33%;
+  }
 }
-@media screen and (min-width:1167px) and (max-width:1400px) {
-.closedMessage {
-  margin-left: 80px;
+@media screen and (min-width: 769px) and (max-width: 933px) {
+  .message-title {
+    margin-left: 100px;
+  }
+  .message-title-open {
+    margin-left: 80px;
+  }
 }
-}
-@media screen and (min-width:768px) and (max-width:958px) {
-.closedMessage {
-  margin-left: 80px;
-}
+@media screen and (max-width: 340px) {
+  .message-title,
+  .message-title-open {
+    margin-left: 100px;
+  }
 }

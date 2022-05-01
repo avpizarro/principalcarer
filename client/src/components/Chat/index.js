@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./style.css";
 
 function Chat({ socket, username, room })
 {
@@ -32,10 +34,10 @@ function Chat({ socket, username, room })
         };
         socket.on("receive_message", messageHandler);
         return () => socket.off("receive_message", messageHandler);
-    }, []);
+    }, [socket]);
 
     return (
-        <div className="chat-window">
+        <div className="chat-window colum m-6">
             <div className="chat-header">
                 <p>Live Chat</p>
             </div>
@@ -62,10 +64,15 @@ function Chat({ socket, username, room })
                 <input
                     type="text"
                     value={currentMessage}
-                    placeholder="Hey..."
+                    placeholder="Type message..."
                     onChange={(e) => setCurrentMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && sendMessage()} />
-                < button onClick={sendMessage}>&#9658;</button>
+                    onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                />
+                < button
+                    onClick={sendMessage}
+                >
+                    <FontAwesomeIcon icon="paper-plane" size="1x" />
+                </button>
             </div>
         </div>
     );
