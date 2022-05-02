@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 import "./style.css";
 
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("http://localhost:3000" || "https://vast-caverns-75554.herokuapp.com");
 
 function SocialLife({ showMessage, ExpandComponent, CloseComponent })
 {
