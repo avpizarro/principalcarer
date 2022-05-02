@@ -57,7 +57,12 @@ const server = app.listen(PORT, () =>
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 );
 
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: "https://vast-caverns-75554.herokuapp.com",
+    methods: ["GET", "POST"],
+  }
+});
 
 io.on("connection", (socket) =>
 {
