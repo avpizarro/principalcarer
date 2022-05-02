@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Social from "../../images/social.png";
 import ExpandButton from "../ExpandButton";
 import Chat from "../Chat";
-import io from 'socket.io-client';
+import socketIOClient from "socket.io-client"
 
 import "./style.css";
 
-const socket = io.connect("http://localhost:3000" || "https://vast-caverns-75554.herokuapp.com");
+const socket = socketIOClient();
 
 function SocialLife({ showMessage, ExpandComponent, CloseComponent })
 {
