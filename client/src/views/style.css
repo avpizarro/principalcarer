@@ -38,7 +38,7 @@
 
 .input:focus-visible {
   outline: 4px solid darkorange;
-  outline-offset: -4px;
+  outline-offset: 10px;
   border-color: transparent;
   border-radius: 4px;
   box-shadow: 0 0 0 0;
@@ -51,6 +51,9 @@
   background: #eee;
   border-radius: 4px;
   z-index: 99;
+}
+.close-chat-button:hover {
+  background: #FEBD40;
 }
 
 .plus-button:focus-visible,

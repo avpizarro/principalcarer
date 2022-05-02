@@ -3,7 +3,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
 
-function Chat({ socket, username, room })
+function Chat({ socket, username, room, closeChat })
 {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
@@ -71,9 +71,12 @@ function Chat({ socket, username, room })
                 < button
                     onClick={sendMessage}
                 >
-                    <FontAwesomeIcon icon="paper-plane" size="1x" />
+                    <FontAwesomeIcon icon="paper-plane" size="xs" />
                 </button>
             </div>
+            <button className="close-chat-button" onClick={closeChat}>
+                <FontAwesomeIcon icon="times" size="1x" />
+            </button>
         </div>
     );
 }

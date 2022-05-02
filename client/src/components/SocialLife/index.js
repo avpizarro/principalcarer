@@ -23,6 +23,11 @@ function SocialLife({ showMessage, ExpandComponent, CloseComponent })
     }
   }
 
+  const closeChat = () =>
+  {
+    setShowChat(false);
+  }
+
   if (!showMessage)
   {
     return (
@@ -116,27 +121,37 @@ function SocialLife({ showMessage, ExpandComponent, CloseComponent })
                     borderBottom: "2px",
                     borderBottomStyle: "solid",
                   }}>
-                <input
-                  className="input mb-0 pb-0"
-                  type="text"
-                  placeholder="Room Id..."
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    boxShadow: "none",
-                    borderStyle: "none"
-                  }}
-                  onChange={(e) => { setRoom(e.target.value) }}
-                  onKeyPress={(e) => { e.key === "Enter" && userName && room && joinRoom() }}
-                />
+                  <input
+                    className="input mb-0 pb-0"
+                    type="text"
+                    placeholder="Room Id..."
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      boxShadow: "none",
+                      borderStyle: "none"
+                    }}
+                    onChange={(e) => { setRoom(e.target.value) }}
+                    onKeyPress={(e) => { e.key === "Enter" && userName && room && joinRoom() }}
+                  />
                 </div>
-                <button className="join-chat-button" onClick={joinRoom}>Join a room</button>
+                <button
+                  className="join-chat-button"
+                  onClick={joinRoom}
+                >
+                  Join a room
+                </button>
               </div>
             </div>
           )
             :
             (
-              <Chat socket={socket} username={userName} room={room} />
+              <Chat
+                socket={socket}
+                username={userName}
+                room={room}
+                closeChat={closeChat}
+              />
             )}
         </div>
       </div>
