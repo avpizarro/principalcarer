@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Shopping Model
-const Shopping = require("../../models/Shopping");
+const Shopping = require("../../models/ShoppingModel");
 
 // @route GET api/Shoppings
 // @desc Get All Shoppings

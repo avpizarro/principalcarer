@@ -1,9 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from '../../features/auth/authSlice';
+import { FaSignOutAlt } from 'react-icons/fa';
 import Brand from "../../images/brand.png";
 
-function Navbar(props)
+
+const Navbar = (props) =>
 {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector(
+    (state) => state.auth
+  )
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+  }
+
   if (props.mobileNavigation)
   {
     return (
@@ -22,6 +37,7 @@ function Navbar(props)
 >Menu</a>
 
           <div class="navbar-dropdown is-boxed">
+            {!user ? 
             <div className="navbar-item">
               <div className="buttons">
                 <a className="button" onClick={props.showSignUpForm} style={{ color: "black" }}
@@ -32,7 +48,16 @@ function Navbar(props)
                   Log in
                 </a>
               </div>
+            </div> : 
+            <div className="navbar-item">
+            <div className="buttons">
+              <a className="button btn-logout" onClick={onLogout}
+              >
+                <FaSignOutAlt style={{margin:"8px"}}/> Logout
+              </a>
             </div>
+          </div>
+            }
             <a class="navbar-item" style={{ color: "black" }}
             >Documents</a>
             <a class="navbar-item" style={{ color: "black" }}
@@ -91,16 +116,27 @@ function Navbar(props)
           </div>
 
           <div className="navbar-end">
+          {!user ? 
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button" onClick={props.showSignUpForm}>
+                <a className="button" onClick={props.showSignUpForm} style={{ color: "black" }}
+                >
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light" onClick={props.showLoginForm}>
+                <a className="button is-light" onClick={props.showLoginForm} style={{ color: "black" }}>
                   Log in
                 </a>
               </div>
+            </div> : 
+            <div className="navbar-item">
+            <div className="buttons">
+              <a className="button btn-logout" onClick={onLogout}
+              >
+                <FaSignOutAlt style={{margin:"8px"}}/> Logout
+              </a>
             </div>
+          </div>
+            }
           </div>
         </div>
       </nav>

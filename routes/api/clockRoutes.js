@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Clock Model
-const Clock = require("../../models/Clock");
+const Clock = require("../../models/ClockModel");
 
 // @route GET api/clock
 // @desc Get All clocks

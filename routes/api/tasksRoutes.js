@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Shopping Model
-const Task = require("../../models/Task");
+const Task = require("../../models/TaskModel");
 
 // @route GET api/tasks
 // @desc Get All tasks

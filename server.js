@@ -1,4 +1,5 @@
 const express = require("express");
+const { errorHandler } = require('./middleware/errorMiddleware');
 
 // const jwt = require("jsonwebtoken");
 var bodyParser = require('body-parser');
@@ -10,19 +11,22 @@ const app = express();
 const socketIo = require("socket.io");
 const PORT = process.env.PORT || 3001;
 
-const medications = require("./routes/api/medication");
-const login = require("./routes/api/login");
-const clock = require("./routes/api/clock");
-const budget = require("./routes/api/budget");
-const tasks = require("./routes/api/tasks");
-const shopping = require("./routes/api/shopping");
-const homeimage = require("./routes/api/homeimage");
-const upload = require("./routes/api/upload");
+const medications = require("./routes/api/medicationRoutes");
+const clock = require("./routes/api/clockRoutes");
+const budget = require("./routes/api/budgetRoutes");
+const tasks = require("./routes/api/tasksRoutes");
+const shopping = require("./routes/api/shoppingRoutes");
+const homeimage = require("./routes/api/homeimageRoutes");
+const upload = require("./routes/api/uploadRoutes");
+const user = require("./routes/api/userRoutes");
+
 
 // Define middleware here
 // app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb", parameterLimit: 50000 }));
+app.use(errorHandler);
+
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production")
@@ -32,13 +36,13 @@ if (process.env.NODE_ENV === "production")
 
 // Use routes
 app.use("/api/medication", medications);
-app.use("/api/login", login);
 app.use("/api/clock", clock);
 app.use("/api/budget", budget);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shopping);
 app.use("/api/homeimage", homeimage);
 app.use("/api/upload", upload);
+app.use("/api/users", user);
 
 // DB config
 const db = require("./config/keys").mongoURI;
@@ -51,6 +55,8 @@ mongoose
   .connect(db)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
+
+// Use errorHandler from file
 
 // Start the API Server
 const server = app.listen(PORT, () =>

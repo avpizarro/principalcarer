@@ -1,21 +1,30 @@
 @font-face {
-  font-family: "Akzidenz";
-  src: local("Akzidenz"),
-    url(./fonts/Akzidenz-grotesk-bold.ttf) format("truetype");
+  font-family: 'Akzidenz';
+  src: local('Akzidenz'),
+    url(./fonts/Akzidenz-grotesk-bold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Akzidenz-Light";
-  src: local("Akzidenz-Light"),
-    url(./fonts/Akzidenz-grotesk-light.ttf) format("truetype");
+  font-family: 'Akzidenz-Light';
+  src: local('Akzidenz-Light'),
+    url(./fonts/Akzidenz-grotesk-light.ttf) format('truetype');
 }
 
 body {
-  font-family: "Akzidenz", sans-serif;
+  font-family: 'Akzidenz', sans-serif;
   position: relative;
   overflow: auto;
-  /* background-color: #f8f8ff; */
-  /* z-index: -2; */
+}
+
+.btn-logout:hover {
+  background-color: #eee !important;
+}
+
+.btn-logout:focus-visible {
+  outline: 4px solid darkorange;
+  outline-offset: -4px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0;
 }
 
 .footerFriend {
@@ -51,12 +60,12 @@ body {
 }
 
 .clockImage {
-  max-height: "20px";
-  max-width: "20px";
-  position: "relative";
-  top: "5px";
+  max-height: '20px';
+  max-width: '20px';
+  position: 'relative';
+  top: '5px';
 }
 
 button > span {
   pointer-events: none;
-} 
+}

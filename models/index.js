@@ -1,9 +1,10 @@
 module.exports = {
-  Medication: require("./Medication"),
-  Appointment: require("./Appointment"),
-  Clock: require("./Clock"),
-  Budget: require("./Budget"),
-  Task: require("./Task"),
-  Shopping: require("./Shopping"),
-  Home: require("./Home"),
+  Medication: require("./MedicationModel"),
+  Appointment: require("./AppointmentModel"),
+  Clock: require("./ClockModel"),
+  Budget: require("./BudgetModel"),
+  Task: require("./TaskModel"),
+  Shopping: require("./ShoppingModel"),
+  Home: require("./HomeModel"),
+  User: require("./UserModel"),
 };

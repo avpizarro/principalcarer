@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Home Model
-const Home = require("../../models/Home");
+const Home = require("../../models/HomeModel");
 
 // @route GET api/home
 // @desc Get All home images

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Budget Model
-const Budget = require("../../models/Budget");
+const Budget = require("../../models/BudgetModel");
 
 // @route GET api/budget
 // @desc Get All transactions

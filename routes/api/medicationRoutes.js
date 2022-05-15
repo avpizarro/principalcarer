@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Medication Model
-const Medication = require("../../models/Medication");
+const Medication = require("../../models/MedicationModel");
 
 // @route GET api/medication
 // @desc Get All medication
