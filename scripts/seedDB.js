@@ -37,27 +37,6 @@ const medicationSeed = [
   },
 ];
 
-const appointmentSeed = [
-  {
-    especialty: "neurology",
-    practicioner: "TBC",
-    location: "TBC",
-    date: "",
-    reminder: true,
-    reminderTime: "",
-    time: new Date("2021-05-25T09-30-00Z"),
-  },
-  {
-    especialty: "odontology",
-    practicioner: "TBC",
-    location: "TBC",
-    date: "",
-    reminder: true,
-    reminderTime: "",
-    time: new Date("2021-05-25T09-30-00Z"),
-  },
-];
-
 const clockSeed = [
   {
     city: "Melbourne",

@@ -19,6 +19,7 @@ const shopping = require("./routes/api/shoppingRoutes");
 const homeimage = require("./routes/api/homeimageRoutes");
 const upload = require("./routes/api/uploadRoutes");
 const user = require("./routes/api/userRoutes");
+const calendar = require("./routes/api/calendarRoutes");
 
 
 // Define middleware here
@@ -43,6 +44,8 @@ app.use("/api/shopping", shopping);
 app.use("/api/homeimage", homeimage);
 app.use("/api/upload", upload);
 app.use("/api/users", user);
+app.use("/api/calendar", calendar);
+
 
 // DB config
 const db = require("./config/keys").mongoURI;

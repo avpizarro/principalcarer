@@ -1,6 +1,6 @@
 module.exports = {
   Medication: require("./MedicationModel"),
-  Appointment: require("./AppointmentModel"),
+  Calendar: require("./CalendarModel"),
   Clock: require("./ClockModel"),
   Budget: require("./BudgetModel"),
   Task: require("./TaskModel"),
