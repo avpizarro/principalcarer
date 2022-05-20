@@ -14,6 +14,8 @@ function Calendar({ children, showCalendar, ExpandComponent, CloseComponent })
   // const [value, onChange] = useState(new Date());
   const [chosenDate, setChosenDate] = useState(new Date());
   const [showAddEvent, setShowAddEvent] = useState(false);
+  const [eventDesc, setEventDesc] = useState("");
+  const [eventTime, setEventTime] = useState("");
   const [newEvent, setNewEvent] = useState({
     date: "",
     description: "",
@@ -29,31 +31,30 @@ function Calendar({ children, showCalendar, ExpandComponent, CloseComponent })
     setShowAddEvent(prevState => !prevState);
   }
 
-  const onInputChange = (e) =>
+  const onDescChange = (e) =>
   {
-    {
-      setNewEvent(() => ({
-        date: chosenDate,
-        [e.target.name]: e.target.value,
-      }));
-    }
-  };
+    setEventDesc(e.target.value);
+  }
+
+  const onTimeChange = (e) =>
+  {
+    setEventTime(e.target.value);
+  }
 
   const onSubmit = (e) =>
   {
     e.preventDefault();
-    Events.push(newEvent);
     console.log(newEvent);
-    console.log(Events);
   };
 
   useEffect(() =>
   {
-    setNewEvent((prevState) => ({
-      ...prevState,
+    setNewEvent(() => ({
       date: chosenDate,
+      description: eventDesc,
+      time: eventTime
     }));
-  }, [chosenDate])
+  }, [chosenDate, eventDesc, eventTime])
 
   if (!showCalendar)
   {
@@ -116,15 +117,6 @@ function Calendar({ children, showCalendar, ExpandComponent, CloseComponent })
                 value={chosenDate}
               />
             </div>
-            {Events.map(event =>
-            {
-              console.log("event", event);
-              <ul>
-                <li>{event.date}</li>
-                <li>{event.description}</li>
-                <li>{event.time}</li>
-              </ul>
-            })}
             {children}
             {!showAddEvent ?
               <div style={{ margin: "auto", textAlign: "center" }}>
@@ -137,7 +129,8 @@ function Calendar({ children, showCalendar, ExpandComponent, CloseComponent })
                 </button>
               </div> :
               <EventInput
-                onChange={onInputChange}
+                onTimeChange={onTimeChange}
+                onDescChange={onDescChange}
                 submitData={onSubmit}
               />}
           </div>

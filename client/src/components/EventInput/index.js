@@ -5,7 +5,8 @@ import './style.css';
 function EventInput({
   childrenHelp,
   submitData,
-  onChange
+  onDescChange,
+  onTimeChange
 })
 {
   return (
@@ -27,7 +28,7 @@ function EventInput({
               className="input mb-0 pb-0 addMedInput"
               type="text"
               placeholder="Description"
-              onChange={onChange}
+              onChange={onDescChange}
               style={{
                 background: "transparent",
                 border: "none",
@@ -51,7 +52,7 @@ function EventInput({
               className="input mb-0 pb-0 addMedInput"
               type="time"
               placeholder="What time?"
-              onChange={onChange}
+              onChange={onTimeChange}
               style={{
                 background: "transparent",
                 border: "none",
