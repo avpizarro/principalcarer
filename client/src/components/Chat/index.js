@@ -37,7 +37,7 @@ function Chat({ socket, username, room, closeChat })
     }, [socket]);
 
     return (
-        <div className="chat-window colum m-6">
+        <div className="chat-window colum m-6" style={{display: "block"}}>
             <div className="chat-header">
                 <p>Live Chat</p>
             </div>
@@ -67,8 +67,9 @@ function Chat({ socket, username, room, closeChat })
                     placeholder="Type message..."
                     onChange={(e) => setCurrentMessage(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                    style={{ display:'inline'}}
                 />
-                < button
+                < button style={{ display: "inline"}}
                     onClick={sendMessage}
                 >
                     <FontAwesomeIcon icon="paper-plane" size="xs" />

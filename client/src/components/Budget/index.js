@@ -78,7 +78,7 @@ function Budget({
             <div>Budget</div>
 
             {/* -------------Copy from homework ------------------------------ */}
-            <div className="wrapper" style={{ gridTemplateColumns: "'1fr '300px'" }}>
+            <div className="wrapper-budget" style={{ gridTemplateColumns: "'1fr '300px'" }}>
               <div className="total">
                 <div className="total">
                   Your total is: $<span id="total">{total}</span>
