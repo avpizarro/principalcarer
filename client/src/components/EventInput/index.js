@@ -1,21 +1,17 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './style.css';
 
-function StyledInputDouble({
+function EventInput({
   childrenHelp,
-  changeName,
-  changeQuantity,
   submitData,
-  namePlaceholder,
-  quantityPlaceholder,
-  input1Name,
-  input2Name
+  onChange
 })
 {
   return (
     <div
       className="column is-12 has-text-weight-bolds pb-0 pt-0"
-      style={{ color: "black", margin: "auto" }}
+      style={{ color: "black", margin: "auto", marginTop: "20px" }}
     ><div className="styledInputDouble" style={{ width: "90%", margin: "auto" }}>
         <div
           className="field has-addons addMedField"
@@ -27,11 +23,11 @@ function StyledInputDouble({
         >
           <p className="control" style={{ width: "100%" }}>
             <input
-              name={input1Name}
+              name="description"
               className="input mb-0 pb-0 addMedInput"
               type="text"
-              placeholder={namePlaceholder}
-              onChange={changeName}
+              placeholder="Description"
+              onChange={onChange}
               style={{
                 background: "transparent",
                 border: "none",
@@ -51,11 +47,11 @@ function StyledInputDouble({
         >
           <p className="control" style={{ width: "100%" }}>
             <input
-              name={input2Name}
+              name="time"
               className="input mb-0 pb-0 addMedInput"
-              type="text"
-              placeholder={quantityPlaceholder}
-              onChange={changeQuantity}
+              type="time"
+              placeholder="What time?"
+              onChange={onChange}
               style={{
                 background: "transparent",
                 border: "none",
@@ -80,4 +76,4 @@ function StyledInputDouble({
   );
 }
 
-export default StyledInputDouble;
+export default EventInput;

@@ -29,6 +29,10 @@
   border-radius: 20px !important;
 }
 
+.react-calendar__tile--active:hover {
+  background: rgb(248, 153, 219) !important;
+}
+
 .react-calendar__month-view__days__day:focus-visible,
 .react-calendar__navigation__arrow:focus-visible,
 .react-calendar__navigation__label:focus-visible

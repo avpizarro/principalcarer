@@ -1,18 +1,62 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import calendar from "../../images/calendar.png";
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./style.css";
 import ExpandButton from "../ExpandButton";
-
-import StyledInputDouble from "../StyledInputDouble"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EventInput from "../EventInput";
 
 // import Dob from "../Dob"
 
-function Calendar({ children, showCalendar, ExpandComponent, CloseComponent }) {
-const [value, onChange] = useState(new Date());
+function Calendar({ children, showCalendar, ExpandComponent, CloseComponent })
+{
+  // const [value, onChange] = useState(new Date());
+  const [chosenDate, setChosenDate] = useState(new Date());
+  const [showAddEvent, setShowAddEvent] = useState(false);
+  const [newEvent, setNewEvent] = useState({
+    date: "",
+    description: "",
+    time: "",
+  })
 
-  if (!showCalendar) {
+  const Events = [];
+
+  const { date, description, time } = newEvent;
+
+  const onClick = () =>
+  {
+    setShowAddEvent(prevState => !prevState);
+  }
+
+  const onInputChange = (e) =>
+  {
+    {
+      setNewEvent(() => ({
+        date: chosenDate,
+        [e.target.name]: e.target.value,
+      }));
+    }
+  };
+
+  const onSubmit = (e) =>
+  {
+    e.preventDefault();
+    Events.push(newEvent);
+    console.log(newEvent);
+    console.log(Events);
+  };
+
+  useEffect(() =>
+  {
+    setNewEvent((prevState) => ({
+      ...prevState,
+      date: chosenDate,
+    }));
+  }, [chosenDate])
+
+  if (!showCalendar)
+  {
     return (
       <div className="calendar" id="calendar">
         <div
@@ -66,21 +110,36 @@ const [value, onChange] = useState(new Date());
         >
           <div>
             <div>Calendar</div>
-            <div className="mt-6 mb-6">
-            <ReactCalendar 
-            onChange={onChange}
-            value={value}
-             />
-             <p>{console.log(value.toString())}</p>
+            <div className="mt-6 mb-3">
+              <ReactCalendar
+                onChange={setChosenDate}
+                value={chosenDate}
+              />
             </div>
+            {Events.map(event =>
+            {
+              console.log("event", event);
+              <ul>
+                <li>{event.date}</li>
+                <li>{event.description}</li>
+                <li>{event.time}</li>
+              </ul>
+            })}
             {children}
-            <StyledInputDouble namePlaceholder={"Description"}  quantityPlaceholder={"What time?"}/>
-            {/* childrenHelp,
-  changeName,
-  changeQuantity,
-  submitData,
-  namePlaceholder,
-  quantityPlaceholder, */}
+            {!showAddEvent ?
+              <div style={{ margin: "auto", textAlign: "center" }}>
+                <button
+                  className="plus-button"
+                  style={{ borderStyle: "none", padding: "5px" }}
+                  onClick={onClick}
+                >
+                  <FontAwesomeIcon icon="plus" size="1x" />
+                </button>
+              </div> :
+              <EventInput
+                onChange={onInputChange}
+                submitData={onSubmit}
+              />}
           </div>
         </div>
       </div>
