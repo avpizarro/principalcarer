@@ -47,7 +47,8 @@
 .plus-button:hover,
 .plus-button-addMedication:hover,
 .arrow-back-button:hover,
-.button-medication:hover {
+.button-medication:hover,
+.event-button:hover {
   background: #eee;
   border-radius: 4px;
   z-index: 99;
@@ -60,7 +61,9 @@
 .button-medication:focus-visible,
 .arrow-back-button:focus-visible,
 .plus-button-addMedication:focus-visible,
-.join-chat-button:focus-visible {
+.join-chat-button:focus-visible, 
+.arrow-back-button,
+.event-button:focus-visible {
   outline: 4px solid darkorange;
   outline-offset: -4px;
   border-radius: 4px;

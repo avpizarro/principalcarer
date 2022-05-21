@@ -6,7 +6,9 @@ function EventInput({
   childrenHelp,
   submitData,
   onDescChange,
-  onTimeChange
+  onTimeChange,
+  descriptionValue,
+  timeValue
 })
 {
   return (
@@ -24,6 +26,7 @@ function EventInput({
         >
           <p className="control" style={{ width: "100%" }}>
             <input
+              value={descriptionValue}
               name="description"
               className="input mb-0 pb-0 addMedInput"
               type="text"
@@ -48,6 +51,7 @@ function EventInput({
         >
           <p className="control" style={{ width: "100%" }}>
             <input
+              value={timeValue}
               name="time"
               className="input mb-0 pb-0 addMedInput"
               type="time"

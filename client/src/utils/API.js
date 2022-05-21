@@ -104,5 +104,29 @@ export default {
   deleteUploadedImage: function (id)
   {
     return axios.delete("/api/upload/" + id)
+  },
+  getEvents: function ()
+  {
+    return axios.get("/api/calendar")
+  },
+  getEventById: function (id)
+  {
+    return axios.get("/api/calendar/event/" + id)
+  },
+  getEventsByDate: function (date)
+  {
+    return axios.get("/api/calendar/" + date)
+  },
+  addEvent: function (eventInfo)
+  {
+    return axios.post("/api/calendar/post", eventInfo)
+  },
+  updateEvent: function (id, eventInfo)
+  {
+    return axios.put("api/calendar/" + id, eventInfo)
+  },
+  removeEvent: function (id)
+  {
+    return axios.delete("api/calendar/" + id)
   }
 };

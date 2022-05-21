@@ -12,6 +12,24 @@ router.get("/", (req, res) =>
         .then((events) => res.json(events))
 });
 
+// @route GET api/calendar
+// @desc Get all events
+// @access Public
+router.get("/event/:id", (req, res) =>
+{
+    Calendar.findById(req.params.id)
+        .then((events) => res.json(events))
+});
+
+// @route GET api/calendar/:date
+// @desc Get all events for a particular date
+// @access Public
+router.get("/:date", (req, res) =>
+{
+    Calendar.find( { date: req.params.date})
+        .then((events) => res.json(events))
+});
+
 // @route POST api/calendar/post
 // @desc Add an event
 // @access Public

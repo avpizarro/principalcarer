@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 // Create Schema
 const CalendarSchema = new Schema({
     date: {
-        type: String,
-        default: "",
+        type: Date,
     },
     description: {
         type: String,
@@ -15,6 +14,8 @@ const CalendarSchema = new Schema({
         type: String,
         default: "",
     }
+}, {
+    timestamps: true
 });
 
 const Calendar = mongoose.model("Calendar", CalendarSchema);
