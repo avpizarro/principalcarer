@@ -68,7 +68,7 @@ const server = app.listen(PORT, () =>
 
 const io = socketIo(server, {
   cors: {
-    origin: "https://vast-caverns-75554.herokuapp.com",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   }
 });

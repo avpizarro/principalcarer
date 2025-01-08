@@ -12,14 +12,19 @@ function Chat({ socket, username, room, closeChat })
     {
         if (currentMessage !== "")
         {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+
+            // Add leading zero to minutes if less than 10
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
             const messageData = {
                 room: room,
                 author: username,
                 message: currentMessage,
-                time: new Date(Date.now()).getHours() +
-                    ":" +
-                    new Date(Date.now()).getMinutes(),
+                time: `${hours}:${formattedMinutes}`
             };
+            
             await socket.emit("send_message", messageData);
             setMessageList(oldMessages => [...oldMessages, messageData]);
             setCurrentMessage("");

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
 import Sun from "../../images/sun.png";
@@ -9,16 +9,61 @@ const socket = socketIOClient();
 
 function Canvas({ showCanvas, ExpandComponent, CloseComponent })
 {
+  const canvasRef = useRef(null); // Reference to the canvas container
+  const [canvasSize, setCanvasSize] = useState({ width: 320, height: 500});
+
   socket.on("message", (message) => console.log(message));
   socket.emit("clientMessage", "I am here");
 
+  // Add useEffect to get the new size of the canvas component
+  // as the window or component are resized
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      // Dynamically update canvas size based on container size
+      console.log('inUseEffect before:', canvasSize);
+      const updateCanvasSize = () => {
+        const canvasOuter = canvasRef.current;
+        setCanvasSize({
+          width: canvasOuter.clientWidth,
+          height: canvasOuter.clientHeight, //Adjust for any extra space, e.g., header
+        });
+      }
+
+      // Initial size update
+      updateCanvasSize();
+      console.log('inUseEffect after:', canvasSize);
+
+      const resizeObserver = new ResizeObserver(updateCanvasSize); // Listen for size changes
+      resizeObserver.observe(canvasRef.current);
+      console.log('resize observer:', canvasSize);
+      // Cleanup
+      return () => resizeObserver.disconnect();
+
+      // Set up event listener for window resize to update canvas size
+      // window.addEventListener("resize", updateCanvasSize);
+
+      // Cleanup listener on component unmount
+      // return () => window.removeEventListener("resize", updateCanvasSize);
+    }
+  }, [canvasRef]);
+
   const setup = (p5) =>
   {
-    if (document.getElementById("canvas"))
-    {
-      const canvasOuter = document.getElementById("canvas");
-      const renderer = p5.createCanvas(320, 500);
-      renderer.parent(canvasOuter);
+    // Old problematic solution, not using Reac hooks
+    // if (document.getElementById("canvas"))
+    // {
+    //   const canvasOuter = document.getElementById("canvas");
+    //   const renderer = p5.createCanvas(320, 500);
+    //   renderer.parent(canvasOuter);
+    // }
+
+    // New solution with useRef
+    if (canvasRef.current) {
+      const { width, height } = canvasSize;
+      const renderer = p5.createCanvas(width, height);
+      p5.pixelDensity(1); // Disable high-DPI scaling
+      renderer.parent(canvasRef.current)
     }
   };
 
@@ -42,17 +87,26 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
     }
     if (p5.keyCode === p5.RIGHT_ARROW)
     {
+      // Add action for right arrow key
     }
   };
 
   const windowResized = (p5) =>
   {
-    const canvasOuter = document.getElementById("canvas");
-    p5.resizeCanvas(
-      canvasOuter.clientWidth,
-      canvasOuter.clientHeight - 80,
-      true
-    );
+    // Old solution
+
+    // const canvasOuter = document.getElementById("canvas");
+    // p5.resizeCanvas(
+    //   canvasOuter.clientWidth,
+    //   canvasOuter.clientHeight - 80,
+    //   true
+    // );
+
+    // New solution to resize with useState
+    const { width, height } = canvasSize;
+    console.log('window resized', width, height)
+    p5.resizeCanvas(width, height, true);
+
   };
 
   const mouseDragged = (p5) =>
@@ -90,7 +144,10 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
   if (!showCanvas)
   {
     return (
-      <div id="canvas">
+      <div 
+        id="canvas" 
+        ref={canvasRef}
+        >
         <div
           className="columns is-12 is-container is-centered is-mobile is-multiline"
           style={{ marginTop: "3px" }}
@@ -121,7 +178,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
     );
   }
   return (
-    <div id="canvas">
+    <div id="canvas" ref={canvasRef}>
       <div
         className="columns is-12 is-container is-centered is-mobile is-multiline"
         style={{ marginTop: "3px" }}
