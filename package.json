@@ -4,7 +4,7 @@
   "description": "An app to help you care and interact with your loved one, with features to help the long distance carer.",
   "main": "server.js",
   "engines": {
-    "node": "23.5.0"
+    "node": "22.13.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
