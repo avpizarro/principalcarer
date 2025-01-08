@@ -17,52 +17,36 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
 
   // Add useEffect to get the new size of the canvas component
   // as the window or component are resized
-
   useEffect(() => {
     if (canvasRef.current) {
+
       // Dynamically update canvas size based on container size
-      console.log('inUseEffect before:', canvasSize);
       const updateCanvasSize = () => {
         const canvasOuter = canvasRef.current;
         setCanvasSize({
           width: canvasOuter.clientWidth,
-          height: canvasOuter.clientHeight, //Adjust for any extra space, e.g., header
+          height: 500, // Set height to stop the canvas to grow too much vertically
         });
       }
 
       // Initial size update
       updateCanvasSize();
-      console.log('inUseEffect after:', canvasSize);
 
       const resizeObserver = new ResizeObserver(updateCanvasSize); // Listen for size changes
       resizeObserver.observe(canvasRef.current);
-      console.log('resize observer:', canvasSize);
+
       // Cleanup
       return () => resizeObserver.disconnect();
-
-      // Set up event listener for window resize to update canvas size
-      // window.addEventListener("resize", updateCanvasSize);
-
-      // Cleanup listener on component unmount
-      // return () => window.removeEventListener("resize", updateCanvasSize);
     }
-  }, [canvasRef]);
+  }, []);
 
   const setup = (p5) =>
   {
-    // Old problematic solution, not using Reac hooks
-    // if (document.getElementById("canvas"))
-    // {
-    //   const canvasOuter = document.getElementById("canvas");
-    //   const renderer = p5.createCanvas(320, 500);
-    //   renderer.parent(canvasOuter);
-    // }
-
     // New solution with useRef
     if (canvasRef.current) {
       const { width, height } = canvasSize;
       const renderer = p5.createCanvas(width, height);
-      p5.pixelDensity(1); // Disable high-DPI scaling
+      // p5.pixelDensity(1); // Disable high-DPI scaling
       renderer.parent(canvasRef.current)
     }
   };
@@ -93,18 +77,9 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
 
   const windowResized = (p5) =>
   {
-    // Old solution
-
-    // const canvasOuter = document.getElementById("canvas");
-    // p5.resizeCanvas(
-    //   canvasOuter.clientWidth,
-    //   canvasOuter.clientHeight - 80,
-    //   true
-    // );
-
+  
     // New solution to resize with useState
     const { width, height } = canvasSize;
-    console.log('window resized', width, height)
     p5.resizeCanvas(width, height, true);
 
   };

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Icon } from "react-bulma-components";
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { register, reset } from '../../features/auth/authSlice';
+import { register } from '../../features/auth/authSlice';
 
 const SignUpForm = () =>
 {
@@ -18,7 +18,7 @@ const SignUpForm = () =>
 
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )
 
