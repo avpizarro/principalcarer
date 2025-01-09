@@ -2,7 +2,7 @@ import React from 'react';
 import "moment-timezone";
 import clock from "../../images/clock.png";
 
-function OneClock( {children, id, city} ) {
+function OneClock( {children, id, city, time} ) {
   return (
     <div
       className="column is-6 is-centered has-text-weight-bolds p-4 m-0 pt-3 is-mobile"
@@ -20,6 +20,7 @@ function OneClock( {children, id, city} ) {
           <br></br>
           {city}
           <br></br>
+          {time}
           {children}
         </span>
       </div>

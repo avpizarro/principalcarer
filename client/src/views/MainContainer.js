@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
-import Moment from "react-moment";
 import "moment-timezone";
 import moment from "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -435,12 +434,15 @@ function MainContainer()
       {
         const clocksList = res.data.map((item) =>
         {
+          let date = new Date();
           return {
             city: item.city,
             timezone: item.timezone,
             id: item._id,
+            time: date.toLocaleTimeString('en-US', { timeZone: item.timezone, hour: '2-digit', minute: '2-digit'})
           };
         });
+        console.log(clocksList);
         setClocks(clocksList);
       })
       .catch((err) => console.log(err));
@@ -476,6 +478,7 @@ function MainContainer()
       });
       if (chosenTimeZone[0])
       {
+        console.log(chosenTimeZone[0])
         addClock({
           city: city.replace("_", " "),
           timezone: chosenTimeZone[0],
@@ -516,7 +519,8 @@ function MainContainer()
             key={clock.city}
             id={clock.id}
             city={clock.city}
-            children={<Moment format="hh:mm a" tz={clock.timezone} />}
+            time={clock.time}
+            children={<p>Time</p>}
           />
         );
       });
@@ -528,9 +532,9 @@ function MainContainer()
           key={clock.city}
           id={clock.id}
           city={clock.city}
+          time={clock.time}
           children={
             <>
-              <Moment format="hh:mm a" tz={clock.timezone} />
               <br></br>{" "}
               <button
                 className="minus-button"
