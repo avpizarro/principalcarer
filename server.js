@@ -66,9 +66,11 @@ const server = app.listen(PORT, () =>
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 );
 
+const allowedOrigins = process.env.NODE_ENV === "production" ? "https://principalcarer.vercel.app/" : "http://localhost:3000";
+
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
   }
 });
