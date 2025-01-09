@@ -27,8 +27,7 @@ const LoginForm = () =>
       toast.error(message);
     }
     dispatch(reset());
-  // }, [isError]);
-  }, []);
+  }, [isError, message, dispatch]);
 
   const onChange = (e) =>
   {
