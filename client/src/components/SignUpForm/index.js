@@ -28,7 +28,8 @@ const SignUpForm = () =>
     {
       toast.error(message);
     }
-  }, [isError]);
+  // }, [isError]);
+  }, []);
 
   const onChange = (e) =>
   {

@@ -23,20 +23,20 @@ const Navbar = (props) =>
   {
     return (
       <nav
-        class="navbar is-transparent"
+        className="navbar is-transparent"
         role="navigation"
         aria-label="dropdown navigation"
       >
-        <a class="navbar-item">
+        <a className="navbar-item">
           <img src={Brand} alt="Logo" />
         </a>
 
-        <div class="navbar-item has-dropdown is-active" style={{ color: "black" }}
+        <div className="navbar-item has-dropdown is-active" style={{ color: "black" }}
         >
-          <a class="navbar-link" onClick={props.closeMobileNavigation}         style={{ color: "black" }}
+          <a className="navbar-link" onClick={props.closeMobileNavigation}         style={{ color: "black" }}
 >Menu</a>
 
-          <div class="navbar-dropdown is-boxed">
+          <div className="navbar-dropdown is-boxed">
             {!user ? 
             <div className="navbar-item">
               <div className="buttons">
@@ -58,9 +58,9 @@ const Navbar = (props) =>
             </div>
           </div>
             }
-            <a class="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "black" }}
             >Documents</a>
-            <a class="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "black" }}
             >About</a>
             <a className="navbar-item" style={{ color: "black" }}
             >Jobs</a>

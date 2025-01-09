@@ -442,7 +442,6 @@ function MainContainer()
             time: date.toLocaleTimeString('en-US', { timeZone: item.timezone, hour: '2-digit', minute: '2-digit'})
           };
         });
-        console.log(clocksList);
         setClocks(clocksList);
       })
       .catch((err) => console.log(err));
@@ -478,7 +477,6 @@ function MainContainer()
       });
       if (chosenTimeZone[0])
       {
-        console.log(chosenTimeZone[0])
         addClock({
           city: city.replace("_", " "),
           timezone: chosenTimeZone[0],
