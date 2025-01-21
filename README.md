@@ -48,4 +48,4 @@ If a copy of the License was not distributed with this file, You can obtain one 
 For further information please visit my GitHub page:
 https://github.com/avpizarro
 
-Or email me directly :e-mail: avpizarro@live.com
+Or email me directly :e-mail: avaldespizarro@outlook.com
