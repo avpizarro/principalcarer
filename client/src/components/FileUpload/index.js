@@ -1,12 +1,19 @@
 import React from 'react';
 import { Fragment, useState, useEffect } from "react";
-import { Image } from 'cloudinary-react';
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from '@cloudinary/url-gen';
 import API from "../../utils/API";
 import DeletePhoto from "../IconDeletePhoto";
 import SearchImage from "../IconSearchImage";
 import IconImageUpload from "../IconImageUpload";
 import Modal from "../Modal";
 import "./style.css";
+
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'dmrpspydu'
+  }
+});
 
 const FileUpload = () =>
 {
@@ -21,33 +28,30 @@ const FileUpload = () =>
   const [publicIds, setPublicIds] = useState("");
   const [imageToDeleteId, setImageToDeleteId] = useState("");
 
-  // Function to retrieve the last image uploaded
-  async function loadImage()
+  // Function to retrieve the active image from backend on component mount
+  async function loadActiveImage()
   {
-    // await API.getHomeImages()
-    await API.getUploadedImages()
-      .then((res) =>
-      {
-        const images = res.data.map((item) =>
-        {
-          return {
-            // fileName: item.fileName,
-            // filePath: item.filePath,
-            // id: item._id,
-            public_id: item
-          };
-        })
-        setUploadedFile(images[images.length - 1].public_id);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const activeResponse = await API.getActiveImage();
+      if (activeResponse.data.activePublicId) {
+        setUploadedFile(activeResponse.data.activePublicId);
+      } else {
+        // If no active image, fall back to most recent
+        const fallbackResponse = await API.getFallbackImage();
+        if (fallbackResponse.data.fallbackPublicId) {
+          setUploadedFile(fallbackResponse.data.fallbackPublicId);
+        }
+      }
+    } catch (err) {
+      console.log("Error loading active image:", err);
+    }
   }
 
-  // Render the component again when last image has been deleted
-  useEffect(() =>
-  {
-    loadImage();
+  // Load active image on component mount
+  useEffect(() => {
+    loadActiveImage();
     reloadImages();
-  }, [imageToDeleteId]);
+  }, []);
 
   // Render the component again when an image is uploaded so
   // the modal shows the new image too
@@ -82,7 +86,16 @@ const FileUpload = () =>
         API.uploadImage({ file: reader.result })
           .then(response =>
           {
-            setUploadedFile(response.data.public_id);
+            const publicId = response.data.public_id;
+            // Set the newly uploaded image as active
+            API.setActiveImage(publicId)
+              .then(() => {
+                setUploadedFile(publicId);
+              })
+              .catch((err) => {
+                console.log("Error setting active image:", err);
+                setUploadedFile(publicId);
+              });
           });
       }
     }
@@ -96,10 +109,26 @@ const FileUpload = () =>
   // and to display the previous image uploaded
   const removeImage = async (e) =>
   {
-    // await API.deleteHomeImg(uploadedFileId);
     e.preventDefault();
     setImageToDeleteId(e.target.id);
+    
+    // Delete from Cloudinary
     await API.deleteUploadedImage(e.target.id);
+    
+    // Get fallback image after deletion
+    try {
+      const fallbackResponse = await API.getFallbackImage();
+      if (fallbackResponse.data.fallbackPublicId) {
+        setUploadedFile(fallbackResponse.data.fallbackPublicId);
+        // Update backend to new fallback
+        await API.setActiveImage(fallbackResponse.data.fallbackPublicId);
+      } else {
+        setUploadedFile("");
+      }
+    } catch (err) {
+      console.log("Error loading fallback image:", err);
+      setUploadedFile("");
+    }
   }
 
   // Function to display the Upload Form
@@ -144,7 +173,18 @@ const FileUpload = () =>
   const changeImage = (e) =>
   {
     e.preventDefault();
-    setUploadedFile(e.target.src.split("/")[e.target.src.split("/").length - 1]);
+    const lastPart = e.target.src.split("/").pop().split("?")[0];
+    
+    // Persist the selected image to backend
+    API.setActiveImage(lastPart)
+      .then(() => {
+        setUploadedFile(lastPart);
+      })
+      .catch((err) => {
+        console.log("Error saving active image:", err);
+        // Still update local state even if save fails
+        setUploadedFile(lastPart);
+      });
   }
 
   // Function to show the upload image form
@@ -186,12 +226,10 @@ const FileUpload = () =>
   return (
     <Fragment>
       {uploadedFile ? (
-        <Image
+        <AdvancedImage
           className="mt-6"
-          width="80%"
-          cloudName="dmrpspydu"
-          style={{ borderRadius: "20px" }}
-          publicId={uploadedFile} />
+          cldImg={cld.image(uploadedFile)}
+          style={{ borderRadius: "20px", width: "80%" }} />
       ) : null}
       <div>
         <button
@@ -227,13 +265,11 @@ const FileUpload = () =>
           children={publicIds.map((item, index) =>
           {
             return (
-              <Image
+              <AdvancedImage
                 className="modalImage"
                 key={index}
-                cloudName="dmrpspydu"
-                publicId={item}
-                width="100px"
-                style={{ margin: "10px" }}
+                cldImg={cld.image(item)}
+                style={{ margin: "10px", width: "100px" }}
                 onClick={changeImage}
               />
             )
