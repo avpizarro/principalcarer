@@ -29,6 +29,28 @@ router.get("/", async (req, res) =>
   res.send(publicIds);
 })
 
+// @route GET /api/upload/fallback
+// @desc Get the most recently uploaded image (for fallback when active is deleted)
+// @access Public
+router.get("/fallback", async (req, res) =>
+{
+  try {
+    const { resources } = await cloudinary.search.expression()
+      .sort_by('uploaded_at', 'desc')
+      .max_results(1)
+      .execute();
+    
+    if (resources && resources.length > 0) {
+      res.json({ fallbackPublicId: resources[0].public_id });
+    } else {
+      res.json({ fallbackPublicId: null });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ fallbackPublicId: null, error: error.message });
+  }
+})
+
 router.delete("/:id", async (req, res) =>
 {
   await cloudinary.uploader.destroy(req.params.id, function (error, result)
