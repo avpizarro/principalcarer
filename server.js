@@ -2,7 +2,6 @@ const express = require("express");
 const { errorHandler } = require('./middleware/errorMiddleware');
 
 // const jwt = require("jsonwebtoken");
-var bodyParser = require('body-parser');
 
 require("dotenv").config();
 
@@ -24,7 +23,7 @@ const calendar = require("./routes/api/calendarRoutes");
 
 // Define middleware here
 // app.use(express.json());
-app.use(bodyParser.json({ limit: "50mb" }));
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb", parameterLimit: 50000 }));
 app.use(errorHandler);
 
@@ -66,7 +65,7 @@ const server = app.listen(PORT, () =>
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 );
 
-const allowedOrigins = process.env.NODE_ENV === "production" ? "https://principalcarer.vercel.app/" : "http://localhost:3000";
+const allowedOrigins = process.env.NODE_ENV === "production" ? "https://principalcarer.onrender.com" : "http://localhost:3000";
 
 const io = socketIo(server, {
   cors: {
