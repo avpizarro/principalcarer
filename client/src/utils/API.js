@@ -128,5 +128,20 @@ export default {
   removeEvent: function (id)
   {
     return axios.delete("api/calendar/" + id)
+  },
+  // Gets the currently selected/active image
+  getActiveImage: function ()
+  {
+    return axios.get("/api/homeimage/active");
+  },
+  // Sets the currently selected/active image
+  setActiveImage: function (publicId)
+  {
+    return axios.post("/api/homeimage/active", { activePublicId: publicId });
+  },
+  // Gets the most recently uploaded image (fallback)
+  getFallbackImage: function ()
+  {
+    return axios.get("/api/upload/fallback");
   }
 };
