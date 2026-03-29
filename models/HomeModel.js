@@ -11,6 +11,10 @@ const homeSchema = new mongoose.Schema({
       type: String,
       default: "",
     },
+    activePublicId: {
+      type: String,
+      default: null,
+    },
 });
 
 const Home = mongoose.model("Home", homeSchema);
