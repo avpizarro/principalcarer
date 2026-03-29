@@ -1,46 +1,55 @@
 import React from 'react';
 import ExpandButton from "../ExpandButton";
+import AnimalImageCard from "./AnimalImageCard";
 import "./style.css";
 
 function Entretainement({ children,  showEntertainement, ExpandComponent, CloseComponent }) {
   if (!showEntertainement) {
-
-  return (
-    <div className="entertainemet" id="entertainement">
-    <div
-      className="columns is-12 is-container is-centered is-mobile is-multiline entertainemetTitle"
-      style={{ marginTop: "0px" }}
-    >
-      <div
-        className="column is-12 is-centered has-text-weight-bolds"
-        style={{ color: "black", textAlign: "center" }}
-      >
-        <div>
-          <div>Entertainement</div>
+    return (
+      <div className="entertainemet" id="entertainement">
+        <div
+          className="columns is-12 is-container is-centered is-mobile is-multiline entertainemetTitle"
+          style={{ marginTop: "0px" }}
+        >
+          <div
+            className="column is-12 is-centered has-text-weight-bolds"
+            style={{ color: "black", textAlign: "center" }}
+          >
+            <div>
+              <div>Entertainement</div>
+            </div>
+          </div>
         </div>
+        <ExpandButton ExpandComponent={ExpandComponent} />
       </div>
-    </div>
-    <ExpandButton ExpandComponent={ExpandComponent} />
-  </div>
-);
+    );
   }
+
   return(
     <div className="entertainemet" id="entertainement">
-    <div
-      className="columns is-12 is-container is-centered is-mobile is-multiline"
-      style={{ marginTop: "0px" }}
-    >
       <div
-        className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
-        style={{ color: "black", textAlign: "center" }}
+        className="columns is-12 is-container is-centered is-mobile is-multiline"
+        style={{ marginTop: "0px" }}
       >
-        <div>
-          <div>Entertainement</div>
+        <div
+          className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
+          style={{ color: "black", textAlign: "center" }}
+        >
+          <div>
+            <div>Entertainement</div>
+          </div>
         </div>
       </div>
+      <ExpandButton CloseComponent={CloseComponent} Expand={showEntertainement} />
+      
+      {/* Animal Image Card Feature */}
+      <div className="entertainement-content">
+        <AnimalImageCard provider="dog" />
+      </div>
+
+      {/* Render children if provided */}
+      {children && <div className="entertainement-children">{children}</div>}
     </div>
-    <ExpandButton CloseComponent={CloseComponent} Expand={showEntertainement} />
-  </div>
   );
 }
 
