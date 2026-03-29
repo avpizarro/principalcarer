@@ -24,12 +24,30 @@ router.post("/post", (req, res) => {
 // @route DELETE api/clock
 // @desc Delete a clock
 // @access Public
-router.delete("/:id", (req, res) => {
-  Clock.findById(req.params.id)
-    .then((clock) =>
-      clock.remove().then(() => res.json({ success: true }))
-    )
-    .catch((err) => res.status(404).json({ success: false }));
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedClock = await Clock.findByIdAndDelete(req.params.id);
+
+    if (!deletedClock) {
+      return res.status(404).json({
+        success: false,
+        message: "Clock not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Clock deleted",
+      deletedClock,
+    });
+  } catch (err) {
+    console.error("DELETE /api/clock/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;
