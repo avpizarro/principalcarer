@@ -80,6 +80,7 @@ const SignUpForm = () =>
           <Form.Field>
             <Form.Control>
               <Form.Input
+                renderAs="input"
                 type="text"
                 id="name"
                 name="name"
@@ -99,7 +100,7 @@ const SignUpForm = () =>
           <Form.Field>
             <Form.Field kind="group">
               <Form.Control>
-                <Form.Select id="relationship" type="text" name="relationship" value={relationship} onChange={onChange}>
+                <Form.Select renderAs="select" id="relationship" type="text" name="relationship" value={relationship} onChange={onChange}>
                   <option value="select-dropdown">
                     What is your relationship to Nina?
                   </option>
@@ -114,6 +115,7 @@ const SignUpForm = () =>
           <Form.Field>
             <Form.Control>
               <Form.Input
+                renderAs="input"
                 type="email"
                 id="email"
                 name="email"
@@ -132,6 +134,7 @@ const SignUpForm = () =>
           <Form.Field>
             <Form.Control>
               <Form.Input
+                renderAs="input"
                 type="password"
                 id="password"
                 placeholder="Enter your password"

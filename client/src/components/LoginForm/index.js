@@ -73,6 +73,7 @@ const LoginForm = () =>
           <Form.Field>
             <Form.Control>
               <Form.Input
+                renderAs="input"
                 type="email"
                 id="email"
                 placeholder="Enter your email"
@@ -92,6 +93,7 @@ const LoginForm = () =>
           <Form.Field>
             <Form.Control>
               <Form.Input
+                renderAs="input"
                 type="password"
                 id="password"
                 name="password"
