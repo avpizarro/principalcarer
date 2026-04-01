@@ -70,10 +70,30 @@ router.post("/active", (req, res) => {
 // @route DELETE api/home
 // @desc Delete a home image
 // @access Public
-router.delete("/:id", (req, res) => {
-  Home.findById(req.params.id)
-    .then((homeImg) => homeImg.remove().then(() => res.json({ success: true })))
-    .catch((err) => res.status(404).json({ success: false }));
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedHomeImg = await Home.findByIdAndDelete(req.params.id);
+
+    if (!deletedHomeImg) {
+      return res.status(404).json({
+        success: false,
+        message: "Home image not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Home image deleted",
+      deletedHomeImg,
+    });
+  } catch (err) {
+    console.error("DELETE /api/homeimage/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;

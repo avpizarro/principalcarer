@@ -26,7 +26,11 @@ router.get("/event/:id", (req, res) =>
 // @access Public
 router.get("/:date", (req, res) =>
 {
-    Calendar.find( { date: req.params.date})
+  const startDate = new Date(req.params.date);
+  const endDate = new Date(startDate)
+  endDate.setDate(endDate.getDate() + 1);
+
+  Calendar.find({ date: { $gte: startDate, $lt: endDate } })
         .then((events) => res.json(events))
 });
 
@@ -53,14 +57,30 @@ router.put("/:id", (req, res) =>
 // @route DELETE api/calendar/:id
 // @desc Remove an event
 // @access Public
-router.delete("/:id", (req, res) => 
+router.delete("/:id", async (req, res) => 
 {
-    Calendar.findById(req.params.id)
-        .then(event =>
-            event.remove()
-                .then(() =>
-                    res.json({ success: true })))
-        .catch((err) => res.status(404).json({ success: false, error: err }))
-})
+  try {
+    const deletedEvent = await Calendar.findByIdAndDelete(req.params.id);
 
+    if (!deletedEvent) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Event deleted",
+      deletedEvent,
+    });
+  } catch (err) {
+    console.error("DELETE /api/calendar/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+})
 module.exports = router;

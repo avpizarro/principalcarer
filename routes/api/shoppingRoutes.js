@@ -24,12 +24,30 @@ router.post("/post", (req, res) => {
 // @route DELETE api/Shoppings
 // @desc Delete a Shoppings
 // @access Public
-router.delete("/:id", (req, res) => {
-  Shopping.findById(req.params.id)
-    .then(item =>
-      item.remove().then(() => res.json({ success: true }))
-    )
-    .catch((err) => res.status(404).json({ success: false }));
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedItem = await Shopping.findByIdAndDelete(req.params.id);
+
+    if (!deletedItem) {
+      return res.status(404).json({
+        success: false,
+        message: "Shopping item not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Shopping item deleted",
+      deletedItem,
+    });
+  } catch (err) {
+    console.error("DELETE /api/shopping/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;

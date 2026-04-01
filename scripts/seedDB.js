@@ -98,7 +98,7 @@ const homeSeed = [
   },
 ];
 
-db.Medication.remove({})
+db.Medication.deleteMany({})
   .then(() => db.Medication.collection.insertMany(medicationSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -109,7 +109,7 @@ db.Medication.remove({})
     process.exit(1);
   });
 
-db.Appointment.remove({})
+db.Appointment.deleteMany({})
   .then(() => db.Appointment.collection.insertMany(appointmentSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -120,7 +120,7 @@ db.Appointment.remove({})
     process.exit(1);
   });
 
-db.Clock.remove({})
+db.Clock.deleteMany({})
   .then(() => db.Clock.collection.insertMany(clockSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -131,7 +131,7 @@ db.Clock.remove({})
     process.exit(1);
   });
 
-db.Budget.remove({})
+db.Budget.deleteMany({})
   .then(() => db.Budget.collection.insertMany(budgetSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -142,7 +142,7 @@ db.Budget.remove({})
     process.exit(1);
   });
 
-db.Task.remove({})
+db.Task.deleteMany({})
   .then(() => db.Task.collection.insertMany(taskSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -153,7 +153,7 @@ db.Task.remove({})
     process.exit(1);
   });
 
-db.Shopping.remove({})
+db.Shopping.deleteMany({})
   .then(() => db.Shopping.collection.insertMany(shoppingSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -164,7 +164,7 @@ db.Shopping.remove({})
     process.exit(1);
   });
 
-  db.Home.remove({})
+  db.Home.deleteMany({})
   .then(() => db.Home.collection.insertMany(homeSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");

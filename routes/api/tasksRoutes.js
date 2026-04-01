@@ -24,12 +24,30 @@ router.post("/post", (req, res) => {
 // @route DELETE api/tasks
 // @desc Delete a Tasks
 // @access Public
-router.delete("/:id", (req, res) => {
-  Task.findById(req.params.id)
-    .then(task =>
-      task.remove().then(() => res.json({ success: true }))
-    )
-    .catch((err) => res.status(404).json({ success: false }));
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+
+    if (!deletedTask) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Task deleted",
+      deletedTask,
+    });
+  } catch (err) {
+    console.error("DELETE /api/tasks/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;

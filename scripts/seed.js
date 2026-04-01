@@ -24,7 +24,7 @@ const taskSeed = [
     },
   ];
 
-db.Task.remove({})
+db.Task.deleteMany({})
   .then(() => db.Task.collection.insertMany(taskSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");
@@ -35,7 +35,7 @@ db.Task.remove({})
     process.exit(1);
   });
 
-db.Shopping.remove({})
+db.Shopping.deleteMany({})
   .then(() => db.Shopping.collection.insertMany(shoppingSeed))
   .then((data) => {
     console.log(data.result.n + " records inserted!");

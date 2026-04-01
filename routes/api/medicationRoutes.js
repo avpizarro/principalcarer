@@ -24,12 +24,30 @@ router.post("/post", (req, res) => {
 // @route DELETE api/medication
 // @desc Delete a medication
 // @access Public
-router.delete("/:id", (req, res) => {
-  Medication.findById(req.params.id)
-    .then((medication) =>
-      medication.remove().then(() => res.json({ success: true }))
-    )
-    .catch((err) => res.status(404).json({ success: false }));
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedMedication = await Medication.findByIdAndDelete(req.params.id);
+
+    if (!deletedMedication) {
+      return res.status(404).json({
+        success: false,
+        message: "Medication not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Medication deleted",
+      deletedMedication,
+    });
+  } catch (err) {
+    console.error("DELETE /api/medication/:id error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;
