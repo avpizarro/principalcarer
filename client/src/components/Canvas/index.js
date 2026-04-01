@@ -136,7 +136,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
               position: "absolute",
               left: "0px",
               bottom: "2px",
-              zIndex: 1000,
+              zIndex: 1,
             }}
           />
           <div
@@ -167,7 +167,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
             position: "absolute",
             left: "0px",
             top: "2px",
-            zIndex: 1000,
+            zIndex: 2,
           }}
         />
         <div
