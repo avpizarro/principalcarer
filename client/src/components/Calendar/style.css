@@ -5,11 +5,29 @@
 .react-calendar {
   border-radius: 10px !important;
   margin: auto;
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: var(--color-surface-hover) !important;
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: black;
+  color: var(--color-text);
   font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+  color: var(--color-text-muted);
+}
+
+.react-calendar__tile:disabled {
+  background-color: var(--color-surface-hover) !important;
+  color: var(--color-text-muted);
 }
 
 .react-calendar__tile--active {
@@ -19,13 +37,14 @@
 
 .react-calendar__tile--now {
   background: rgb(251, 205, 237);
+  color: #202020;
   border-radius: 20px !important;
 }
 
 .react-calendar__month-view__days__day:hover,
 .react-calendar__navigation__arrow:hover,
 .react-calendar__navigation__label:hover {
-  background: #eee !important;
+  background: var(--color-surface-hover) !important;
   border-radius: 20px !important;
 }
 
@@ -44,7 +63,7 @@
 
 .events-list {
   list-style: none;
-  border: solid 1px #a0a096;
+  border: solid 1px var(--color-border);
   width:  350px;
   max-width: 100%;
   margin: auto;
@@ -64,6 +83,7 @@
 
 .event-button {
   background: transparent;
+  color: var(--color-text);
 }
 
 .delete-event-button {

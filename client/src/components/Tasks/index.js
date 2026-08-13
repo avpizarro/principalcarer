@@ -16,7 +16,7 @@ function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, 
         >
           <div
             className="column is-12 is-centered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Tasks</div>
@@ -35,7 +35,7 @@ function Tasks({ children, showTasks, changeName, addItemData, ExpandComponent, 
       >
         <div
           className="column is-12 is-centered has-text-weight-bolds"
-          style={{ color: "black", textAlign: "center" }}
+          style={{ color: "var(--color-text)", textAlign: "center" }}
         >
           <div>
             <div>Tasks</div>

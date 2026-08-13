@@ -28,8 +28,8 @@ console.log(datepicker.data.value());
 }, []);
 return (
     <div>
-<div className="mt-6" style={{color: "black"}}>
-<p className="is-6 mb-4" style={{color: "black"}}>Pick a Date</p>
+<div className="mt-6" style={{color: "var(--color-text)"}}>
+<p className="is-6 mb-4" style={{color: "var(--color-text)"}}>Pick a Date</p>
 <input id="dob" type="date" />
 </div>
     </div>

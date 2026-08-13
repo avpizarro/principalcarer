@@ -142,7 +142,7 @@ function Calendar({ showCalendar, ExpandComponent, CloseComponent })
           />
           <div
             className="column is-6 is-centered is-vcentered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Calendar</div>
@@ -172,7 +172,7 @@ function Calendar({ showCalendar, ExpandComponent, CloseComponent })
         />
         <div
           className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
-          style={{ color: "black", textAlign: "center", maxWidth: "90%" }}
+          style={{ color: "var(--color-text)", textAlign: "center", maxWidth: "90%" }}
         >
           <div>
             <div>Calendar</div>

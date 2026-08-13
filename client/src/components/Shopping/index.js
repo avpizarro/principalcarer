@@ -38,7 +38,7 @@ function Shopping({
           />
           <div
             className="column is-6 is-centered has-text-weight-bolds shoppingTitle"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Shopping</div>
@@ -65,7 +65,7 @@ function Shopping({
 
           <div
             className="column is-6 is-centered has-text-weight-bolds pl-0 pr-0 shoppingTitle"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>Shopping</div>
           </div>

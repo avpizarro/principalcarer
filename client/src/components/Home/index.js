@@ -15,7 +15,7 @@ function Home({ children, showHome, ExpandComponent, CloseComponent })
         >
           <div
             className="column is-12 has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Home</div>
@@ -35,7 +35,7 @@ function Home({ children, showHome, ExpandComponent, CloseComponent })
       >
         <div
           className="column is-12 has-text-weight-bolds"
-          style={{ color: "black", textAlign: "center" }}
+          style={{ color: "var(--color-text)", textAlign: "center" }}
         >
           <div>
             <div>Home</div>
