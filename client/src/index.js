@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from '../src/app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from './theme/ThemeContext';
 import 'bulma-calendar/dist/js/bulma-calendar.min.js';
 import 'bulma-calendar/dist/css/bulma-calendar.min.css';
 
@@ -14,7 +15,9 @@ const root = createRoot(container); //create a root
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   // document.getElementById('root')

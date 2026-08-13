@@ -14,10 +14,12 @@ body {
   font-family: 'Akzidenz', sans-serif;
   position: relative;
   overflow: auto;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .btn-logout:hover {
-  background-color: #eee !important;
+  background-color: var(--color-surface-hover) !important;
 }
 
 .btn-logout:focus-visible {
@@ -45,7 +47,7 @@ body {
   margin-top: 20px;
   border-style: solid;
   border-width: 4px;
-  border-color: black;
+  border-color: var(--color-border);
   border-radius: 20px;
   min-height: 60px;
   min-width: 200px;

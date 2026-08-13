@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from '../../features/auth/authSlice';
 import { FaSignOutAlt } from 'react-icons/fa';
 import Brand from "../../images/brand.png";
+import ThemeToggle from "../ThemeToggle";
 
 
 const Navbar = (props) =>
@@ -31,24 +32,27 @@ const Navbar = (props) =>
           <img src={Brand} alt="Logo" />
         </a>
 
-        <div className="navbar-item has-dropdown is-active" style={{ color: "black" }}
+        <div className="navbar-item has-dropdown is-active" style={{ color: "var(--color-text)" }}
         >
-          <a className="navbar-link" onClick={props.closeMobileNavigation}         style={{ color: "black" }}
+          <a className="navbar-link" onClick={props.closeMobileNavigation}         style={{ color: "var(--color-text)" }}
 >Menu</a>
 
           <div className="navbar-dropdown is-boxed">
-            {!user ? 
+            <div className="navbar-item">
+              <ThemeToggle />
+            </div>
+            {!user ?
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button" onClick={props.showSignUpForm} style={{ color: "black" }}
+                <a className="button" onClick={props.showSignUpForm} style={{ color: "var(--color-text)" }}
                 >
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light" onClick={props.showLoginForm} style={{ color: "black" }}>
+                <a className="button is-light" onClick={props.showLoginForm}>
                   Log in
                 </a>
               </div>
-            </div> : 
+            </div> :
             <div className="navbar-item">
             <div className="buttons">
               <a className="button btn-logout" onClick={onLogout}
@@ -58,16 +62,16 @@ const Navbar = (props) =>
             </div>
           </div>
             }
-            <a className="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "var(--color-text)" }}
             >Documents</a>
-            <a className="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "var(--color-text)" }}
             >About</a>
-            <a className="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "var(--color-text)" }}
             >Jobs</a>
-            <a className="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "var(--color-text)" }}
             >Contact</a>
             <hr className="navbar-divider"></hr>
-            <a className="navbar-item" style={{ color: "black" }}
+            <a className="navbar-item" style={{ color: "var(--color-text)" }}
             >Report an issue</a>
           </div>
         </div>
@@ -116,14 +120,17 @@ const Navbar = (props) =>
           </div>
 
           <div className="navbar-end">
-          {!user ? 
+          <div className="navbar-item">
+            <ThemeToggle />
+          </div>
+          {!user ?
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button" onClick={props.showSignUpForm} style={{ color: "black" }}
+                <a className="button" onClick={props.showSignUpForm} style={{ color: "var(--color-text)" }}
                 >
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light" onClick={props.showLoginForm} style={{ color: "black" }}>
+                <a className="button is-light" onClick={props.showLoginForm}>
                   Log in
                 </a>
               </div>

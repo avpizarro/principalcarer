@@ -24,6 +24,9 @@ import
 // Import css framework
 import "bulma/css/bulma.css";
 
+// Import theme tokens (must load before App.css so its variables are available)
+import "./theme/tokens.css";
+
 // Import own stylesheet
 import "./App.css";
 
