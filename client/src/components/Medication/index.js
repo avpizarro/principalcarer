@@ -15,7 +15,7 @@ function Medication({ children, showMed, ExpandComponent, CloseComponent })
         >
           <div
             className="column is-12 is-centered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Medication</div>
@@ -38,7 +38,7 @@ function Medication({ children, showMed, ExpandComponent, CloseComponent })
         <div
           className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0"
           style={{
-            color: "black",
+            color: "var(--color-text)",
             textAlign: "center",
             zIndex: 1000,
             marginTop: "80px",

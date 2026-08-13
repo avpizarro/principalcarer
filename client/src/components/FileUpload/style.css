@@ -3,12 +3,17 @@
 }
 
 .imagesBtn {
-  background-color: white;
+  background-color: var(--color-surface);
+  color: var(--color-text);
   border: none;
 }
 
+.imagesBtn svg {
+  fill: currentColor;
+}
+
 .imagesBtn:hover {
-  background-color: #eee;
+  background-color: var(--color-surface-hover);
   border-radius: 20px;
 }
 

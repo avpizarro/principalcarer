@@ -5,12 +5,12 @@ function StyledInput( {inputHelp, changeName, addItemData, placeholder} ) {
     return (
         <div
         className="column is-12 has-text-weight-bolds pb-5 pt-0 is-mobile"
-        style={{ color: "black", width: "90%", margin: "auto" }}
+        style={{ color: "var(--color-text)", width: "90%", margin: "auto" }}
       >
         <div
           className="field has-addons"
           style={{
-            borderBottomColor: "black",
+            borderBottomColor: "var(--color-border)",
             borderBottom: "2px",
             borderBottomStyle: "solid",
           }}

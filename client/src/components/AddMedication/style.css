@@ -1,4 +1,4 @@
 .plus-button-addMedication {
-    background: #F7F7F7;
+    background: var(--color-surface);
     padding: 5px;
 }

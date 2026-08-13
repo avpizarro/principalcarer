@@ -15,12 +15,12 @@ function StyledInputDouble({
   return (
     <div
       className="column is-12 has-text-weight-bolds pb-0 pt-0"
-      style={{ color: "black", margin: "auto" }}
+      style={{ color: "var(--color-text)", margin: "auto" }}
     ><div className="styledInputDouble" style={{ width: "90%", margin: "auto" }}>
         <div
           className="field has-addons addMedField"
           style={{
-            borderBottomColor: "black",
+            borderBottomColor: "var(--color-border)",
             borderBottom: "2px",
             borderBottomStyle: "solid",
           }}
@@ -44,7 +44,7 @@ function StyledInputDouble({
         <div
           className="field has-addons addMedField"
           style={{
-            borderBottomColor: "black",
+            borderBottomColor: "var(--color-border)",
             borderBottom: "2px",
             borderBottomStyle: "solid",
           }}

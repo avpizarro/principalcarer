@@ -1,9 +1,9 @@
 .minus-button {
-  background: white;
+  background: var(--color-surface);
 }
 
 .button-medication {
-  background: #f9f9f9;
+  background: var(--color-surface);
 }
 
 .arrow-back-button {
@@ -22,7 +22,7 @@
 }
 
 .minus-button:hover {
-  background: #eee;
+  background: var(--color-surface-hover);
   border-radius: 4px;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .plus-button {
-  background: white;
+  background: var(--color-surface);
 }
 
 .input:focus-visible {
@@ -49,7 +49,7 @@
 .arrow-back-button:hover,
 .button-medication:hover,
 .event-button:hover {
-  background: #eee;
+  background: var(--color-surface-hover);
   border-radius: 4px;
   z-index: 99;
 }
