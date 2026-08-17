@@ -4,12 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from '../../features/auth/authSlice';
 import { FaSignOutAlt } from 'react-icons/fa';
 import Brand from "../../images/brand.png";
+import BrandDark from "../../images/brand-dark.png";
+import { useTheme } from "../../theme/ThemeContext";
 import ThemeToggle from "../ThemeToggle";
 
 
 const Navbar = (props) =>
 {
   const dispatch = useDispatch();
+  const { theme } = useTheme();
+  const brandImage = theme === "dark" ? BrandDark : Brand;
 
   const { user } = useSelector(
     (state) => state.auth
@@ -29,7 +33,7 @@ const Navbar = (props) =>
         aria-label="dropdown navigation"
       >
         <a className="navbar-item">
-          <img src={Brand} alt="Logo" />
+          <img src={brandImage} alt="Principal Carer" />
         </a>
 
         <div className="navbar-item has-dropdown is-active" style={{ color: "var(--color-text)" }}
@@ -83,7 +87,7 @@ const Navbar = (props) =>
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item">
-            <img src={Brand} alt="Logo" />
+            <img src={brandImage} alt="Principal Carer" />
           </a>
 
           <a

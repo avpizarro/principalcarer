@@ -13,6 +13,14 @@
   background-position-y: 2rem;
 }
 
+[data-theme="dark"] .medication {
+  background-image: url("../../images/pill-dark.gif");
+}
+
+[data-theme="dark"] .medicationExpanded {
+  background-image: url("../../images/pillExpand-dark.png");
+}
+
 
 @media  (min-width:1167px) {
   .medicationTitle {

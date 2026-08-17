@@ -51,7 +51,7 @@ function SocialLife({ showMessage, ExpandComponent, CloseComponent })
           />
           <div
             className="column is-6 is-centered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Message</div>
@@ -83,7 +83,7 @@ function SocialLife({ showMessage, ExpandComponent, CloseComponent })
         />
         <div
           className="column is-6 is-centered has-text-weight-bolds"
-          style={{ color: "black", textAlign: "center" }}
+          style={{ color: "var(--color-text)", textAlign: "center" }}
         >
           <div className='message-title-open'>Message</div>
         </div>

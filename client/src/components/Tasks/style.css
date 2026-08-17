@@ -6,6 +6,10 @@
   min-height: "60px";
 }
 
+[data-theme="dark"] .task {
+  background-image: url("../../images/book-dark.gif");
+}
+
 
 @media  (min-width:1167px) {
   .medicationTitle {

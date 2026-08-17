@@ -1,8 +1,12 @@
 import React from 'react';
 import "moment-timezone";
 import clock from "../../images/clock.png";
+import clockDark from "../../images/clock-dark.png";
+import { useTheme } from "../../theme/ThemeContext";
 
 function OneClock( {children, id, city, time} ) {
+  const { theme } = useTheme();
+
   return (
     <div
       className="column is-6 is-centered has-text-weight-bolds p-4 m-0 pt-3 is-mobile"
@@ -12,7 +16,7 @@ function OneClock( {children, id, city, time} ) {
         <span className="m-2" id={id}>
           <img
             className="mb-0 mr-2 clockImage"
-            src={clock}
+            src={theme === "dark" ? clockDark : clock}
             alt="clock"
             height="20px"
             width="20px"

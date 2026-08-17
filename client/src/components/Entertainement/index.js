@@ -13,7 +13,7 @@ function Entretainement({ children,  showEntertainement, ExpandComponent, CloseC
         >
           <div
             className="column is-12 is-centered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Entertainement</div>
@@ -33,7 +33,7 @@ function Entretainement({ children,  showEntertainement, ExpandComponent, CloseC
       >
         <div
           className="column is-12 is-centered has-text-weight-bolds pl-0 pr-0 mt-2"
-          style={{ color: "black", textAlign: "center" }}
+          style={{ color: "var(--color-text)", textAlign: "center" }}
         >
           <div>
             <div>Entertainement</div>

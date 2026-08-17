@@ -6,3 +6,6 @@
   min-height: "60px";
 }
 
+[data-theme="dark"] .home {
+  background-image: url("../../images/house-dark.gif");
+}

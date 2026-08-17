@@ -1,5 +1,7 @@
 import React from 'react';
 import shopping from "../../images/shopping.png";
+import shoppingDark from "../../images/shopping-dark.png";
+import { useTheme } from "../../theme/ThemeContext";
 import ExpandButton from "../ExpandButton";
 import "./style.css";
 
@@ -16,6 +18,9 @@ function Shopping({
   CloseComponent
 })
 {
+  const { theme } = useTheme();
+  const shoppingImage = theme === "dark" ? shoppingDark : shopping;
+
   if (!showShopping)
   {
     return (
@@ -26,7 +31,7 @@ function Shopping({
         >
           <img
             className="ml-3"
-            src={shopping}
+            src={shoppingImage}
             alt="Shopping"
             style={{
               height: "100px",
@@ -58,7 +63,7 @@ function Shopping({
         <div className="column">
           <img
             className="ml-3"
-            src={shopping}
+            src={shoppingImage}
             alt="Shopping"
             style={{ height: "100px", zIndex: 1000, position: "absolute" }}
           />

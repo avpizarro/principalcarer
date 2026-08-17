@@ -3,6 +3,8 @@ import Sketch from "react-p5";
 import socketIOClient from "socket.io-client";
 import Sun from "../../images/sun.png";
 import Drawing from "../../images/drawing.png";
+import DrawingDark from "../../images/drawing-dark.png";
+import { useTheme } from "../../theme/ThemeContext";
 import ExpandButton from "../ExpandButton";
 
 const socket = socketIOClient();
@@ -11,6 +13,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
 {
   const canvasRef = useRef(null); // Reference to the canvas container
   const [canvasSize, setCanvasSize] = useState({ width: 320, height: 500});
+  const { theme } = useTheme();
 
   socket.on("message", (message) => console.log(message));
   socket.emit("clientMessage", "I am here");
@@ -64,7 +67,8 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
   {
     if (p5.keyCode === p5.LEFT_ARROW)
     {
-      p5.loadImage(Drawing, (img) =>
+      const drawingImage = theme === "dark" ? DrawingDark : Drawing;
+      p5.loadImage(drawingImage, (img) =>
       {
         p5.image(img, 20, 60);
       });
@@ -141,7 +145,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
           />
           <div
             className="column is-6 is-centered has-text-weight-bolds"
-            style={{ color: "black", textAlign: "center" }}
+            style={{ color: "var(--color-text)", textAlign: "center" }}
           >
             <div>
               <div>Canvas</div>
@@ -172,7 +176,7 @@ function Canvas({ showCanvas, ExpandComponent, CloseComponent })
         />
         <div
           className="column is-6 is-centered has-text-weight-bolds"
-          style={{ color: "black", textAlign: "center" }}
+          style={{ color: "var(--color-text)", textAlign: "center" }}
         >
           <div>
             <div className="mb-4">Canvas</div>

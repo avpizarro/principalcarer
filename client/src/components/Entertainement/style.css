@@ -6,6 +6,10 @@
   min-height: "60px";
 }
 
+[data-theme="dark"] .entertainemet {
+  background-image: url("../../images/compu-dark.gif");
+}
+
 @media  (min-width:1167px) {
   .entertainemetTitle {
     margin-left: 30px;
@@ -42,4 +46,3 @@
     padding: 1rem 0;
   }
 }
-
